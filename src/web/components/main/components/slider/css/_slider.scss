@@ -1,0 +1,92 @@
+.slider {
+    height: 100%;
+
+    .carousel {
+        height: 100%;
+    }
+
+    .carousel__slider {
+        height: 100%;
+    }
+
+    &__box {
+        display: flex;
+        position: relative;
+        height: 408px;
+
+        &:not(:last-child) {
+            margin-bottom: 17px;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    &__info {
+        position: absolute;
+        bottom: 0;
+        padding: 20px;
+
+        span {
+            &:not(:last-child) {
+                margin-right: 5px;
+            }
+        }
+
+        h4 {
+            width: 398px;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 26.0817px;
+            line-height: 33px;
+            color: #ffffff;
+        }
+
+        &--item {
+            display: flex;
+
+            p {
+                color: #fff;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 10.4793px;
+                line-height: 14px;
+                margin-bottom: 0;
+
+                svg {
+                    margin-right: 5px;
+                }
+
+                &:not(:last-child) {
+                    margin-right: 21px;
+                }
+            }
+        }
+    }
+
+    &__buttonBox {
+        position: absolute;
+        bottom: 12px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 25px;
+
+        button {
+            background-color: transparent;
+            outline: 0 !important;
+            border: none;
+            &:not(:last-child) {
+                margin-right: 33px;
+            }
+
+            svg {
+                color: #fff;
+                font-size: 25px;
+            }
+        }
+    }
+}

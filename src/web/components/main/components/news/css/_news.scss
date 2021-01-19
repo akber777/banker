@@ -1,0 +1,131 @@
+.news {
+    width: 260px;
+
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+
+        h1 {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 19.5613px;
+            color: #014577;
+            margin-bottom: 0;
+        }
+
+        .react-switch-bg {
+            background-color: #b4b4b4 !important;
+        }
+
+        .react-switch-handle {
+            box-shadow: unset !important;
+        }
+    }
+
+    &__content {
+        display: flex;
+        margin-top: 45px;
+        padding: 0 29px;
+        padding-right: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid #d6d6d6;
+        margin-bottom: 20px;
+    }
+
+    &__wrapper {
+        display: flex;
+        position: relative;
+        padding-right: 30px;
+        min-height: 92px;
+
+        &:not(:last-child) {
+            margin-bottom: 18px;
+        }
+
+        &:after {
+            position: absolute;
+            content: "";
+            bottom: 0;
+            width: 89%;
+            height: 1px;
+            background-color: #d6d6d6;
+            left: 0;
+        }
+    }
+
+    &__contentLeft {
+        margin-right: 18px;
+        display: flex;
+
+        span {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 15px;
+            color: #9c9c9c;
+        }
+    }
+
+    &__contentRight {
+        display: flex;
+        width: 100%;
+
+        > a {
+            width: 100%;
+
+            p {
+                align-items: center;
+                display: flex;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 15px;
+                color: #202020;
+
+                span {
+                    font-size: 10px !important;
+                }
+            }
+        }
+    }
+
+    &__contentInfo {
+        display: flex;
+        justify-content: space-between;
+
+        .share {
+            display: flex;
+            p:last-child {
+                margin-left: 15px;
+            }
+        }
+
+        svg {
+            margin-right: 5px;
+            color: #b4b4b4;
+        }
+
+        p {
+            font-style: normal;
+            font-weight: normal;
+            font-size: 8.3834px;
+            line-height: 11px;
+            color: #9d9d9d;
+        }
+    }
+
+    .scrollarea .scrollbar-container {
+        opacity: 1 !important;
+        width: 3px;
+        background-color: transparent !important;
+    }
+
+    .scrollarea .scrollbar-container.vertical .scrollbar {
+        background-color: #014577 !important;
+        width: 3px;
+    }
+}

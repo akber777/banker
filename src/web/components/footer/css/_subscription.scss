@@ -1,0 +1,123 @@
+.subscription {
+    &__title {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 23.2872px;
+        line-height: 19px;
+        color: #202020;
+    }
+
+    &__switch {
+        display: flex;
+        align-items: center;
+        margin-top: 32px;
+
+        &--item {
+            display: flex;
+            align-items: center;
+
+            &:not(:last-child) {
+                margin-right: 31px;
+            }
+
+            span {
+                margin-left: 7px;
+            }
+        }
+
+        .react-switch-bg {
+            background-color: #e8e8e8 !important;
+            border: 2px solid #979797;
+        }
+
+        .react-switch-handle {
+            background-color: #979797 !important;
+            box-shadow: unset !important;
+        }
+    }
+
+    .active {
+        .react-switch-bg {
+            border: 2px solid #014577 !important;
+        }
+
+        .react-switch-handle {
+            background-color: #014577 !important;
+        }
+
+        & ~ .react-switch-handle {
+            background-color: #014577 !important;
+        }
+    }
+
+    .data {
+        .react-switch-bg {
+            border: 2px solid #014577 !important;
+        }
+
+        .react-switch-handle {
+            background-color: #014577 !important;
+        }
+
+        & ~ .react-switch-handle {
+            background-color: #014577 !important;
+        }
+    }
+
+    &__wrapperData {
+        display: flex;
+        flex-direction: column;
+
+        &--buttonBox {
+            margin-top: 40px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+
+            input {
+                width: 366px;
+                height: 41.92px;
+
+                &::placeholder {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14.9038px;
+                    line-height: 19px;
+                    color: #c0c0c0;
+                }
+
+                &::-moz-placeholder {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14.9038px;
+                    line-height: 19px;
+                    color: #c0c0c0;
+                }
+
+                &::-webkit-input-placeholder {
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 14.9038px;
+                    line-height: 19px;
+                    color: #c0c0c0;
+                }
+            }
+
+            a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 128.55px;
+                height: 41.92px;
+                background: #014577;
+                border-radius: 3.72596px;
+                margin-left: 8px;
+                font-style: normal;
+                font-weight: 600;
+                font-size: 14.9038px;
+                line-height: 17px;
+                color: #ffffff;
+            }
+        }
+    }
+}

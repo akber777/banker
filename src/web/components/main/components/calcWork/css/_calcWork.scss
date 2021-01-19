@@ -1,0 +1,48 @@
+.calc {
+    .card {
+        max-width: 550px;
+        margin: 0 auto;
+        margin-top: 30px;
+        padding: 25px;
+    }
+
+    label {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .result-li .calculator-result {
+        font-size: 20px;
+    }
+
+    .result-li {
+        transition: background-color 1s ease;
+        font-weight: bold;
+    }
+
+    .list-group-flush .list-group-item {
+        margin: 0;
+    }
+
+    .card .btn-outline-success {
+        padding: 9px;
+        font-size: 13px;
+        width: 80%;
+        margin-top: 20px;
+    }
+
+    .td-page-content ul.list-group-flush {
+        margin-bottom: 0;
+    }
+
+    .manat {
+        width: 20px;
+        vertical-align: 0;
+        margin-right: 5px;
+    }
+    @media screen and (min-width: 800px) {
+        .calculator {
+            font-size: 150%;
+        }
+    }
+}

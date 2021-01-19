@@ -1,0 +1,121 @@
+.mostReadNews {
+    margin-top: 61px;
+    &__title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid #01345a;
+        padding: 0 20px;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+
+        h1 {
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 25px;
+            color: #01345a;
+            margin-bottom: 0;
+        }
+    }
+
+    &__radioBox {
+        display: flex;
+        align-items: center;
+
+        label {
+            &:not(:last-child) {
+                margin-right: 32px;
+            }
+
+            input {
+                background: #01345a;
+                border: 1px solid #01345a;
+            }
+        }
+    }
+
+    &__newsBox {
+        &--img {
+            position: relative;
+            // height: 250px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+
+            .layout {
+                position: absolute;
+                border-radius: 4px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+                border-radius: 5px;
+            }
+
+            img {
+                border-radius: 4px;
+                width: 100%;
+                height: 100%;
+            }
+
+            svg {
+                position: absolute;
+                right: 23px;
+                bottom: 20px;
+            }
+        }
+    }
+
+    .newsMobile__newsSelf {
+        &:last-child {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+            margin-bottom: 15px;
+        }
+
+        a {
+            display: flex;
+
+            div {
+                width: 100%;
+            }
+
+            > span {
+                margin-top: -8px;
+                margin-right: 25px;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 36px;
+                color: #000000;
+            }
+
+            p {
+                span {
+                    &:last-child {
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 16px;
+                        line-height: 23px;
+                        color: #202020;
+                    }
+                }
+            }
+        }
+    }
+
+    .itemsBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 36px;
+
+        .showMore {
+            color: #fff;
+            border-radius: 3px;
+            display: inline-flex;
+            padding: 10px 25px;
+            color: #fff;
+            background: #005a9d;
+        }
+    }
+}

@@ -1,0 +1,236 @@
+.home {
+    position: relative;
+
+    &__leftBanner {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        @media (max-width: 1397px) {
+            width: 154px;
+        }
+
+        @media (max-width: 1244px) {
+            width: 110px;
+        }
+
+        @media (max-width: 1200px) {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &__rightBanner {
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        img {
+            width: 100%;
+        }
+
+        @media (max-width: 1397px) {
+            width: 154px;
+        }
+
+        @media (max-width: 1244px) {
+            width: 110px;
+        }
+
+        @media (max-width: 1200px) {
+            display: none;
+        }
+    }
+
+    &__currency {
+        border-bottom: 0.465745px solid #d6d6d6;
+        padding: 15px 85px;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+
+        p {
+            font-family: "Montserrat";
+            margin-bottom: 0;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 11.5066px;
+            line-height: 14px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+
+            &:not(:last-child) {
+                margin-right: 20px;
+            }
+
+            span {
+                font-weight: bold;
+                margin-left: 3px;
+            }
+
+            img {
+                margin-left: 4px;
+            }
+        }
+    }
+
+    &__bannerTop {
+        background-color: #ececec;
+        min-height: 72px;
+        margin-top: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 27px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &__leftBox {
+        display: flex;
+        width: calc((100% - 260px) - 15px);
+        margin-right: 15px;
+        // height: 408px;
+        flex-direction: column;
+    }
+
+    &__bannerBottom {
+        margin-top: 28px;
+        min-height: 127px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &__leftBoxBanner {
+        width: 159px;
+    }
+
+    &__leftBoxWrapper {
+        display: flex;
+        width: 100%;
+    }
+
+    &__leftBoxSlider {
+        width: 630px;
+        height: 408px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__leftBoxBanner {
+        margin-left: 27px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &__sectionOne {
+        display: flex;
+    }
+
+    &__population {
+        margin-top: 25px;
+        display: flex;
+
+        .news {
+            padding-top: 25px;
+        }
+    }
+
+    &__populationWrapper {
+        display: flex;
+        width: calc((100% - 260px) - 15px);
+        margin-right: 15px;
+
+        .news__content {
+            padding-right: 10px;
+        }
+
+        .news__contentLeft {
+            display: none;
+        }
+
+        .news__contentInfo {
+            justify-content: space-between;
+
+            p {
+                margin-right: 10px !important;
+                font-size: 9px;
+
+                span {
+                    &:not(:last-child) {
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+        .news__wrapper {
+            padding-right: 40px;
+        }
+    }
+
+    &__populationLeft {
+        width: 260px;
+    }
+
+    &__populationRight {
+        width: 534px;
+
+        .slider {
+            height: 267px;
+            &:not(:last-child) {
+                margin-bottom: 25px;
+            }
+        }
+
+        .slider__info {
+            h4 {
+                font-style: normal;
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 33px;
+                color: #ffffff;
+                width: 100%;
+            }
+        }
+
+        .slider__box {
+            height: 100%;
+        }
+    }
+
+    &__populationBanner {
+        padding-left: 15px;
+        width: 260px;
+
+        img {
+            width: 100%;
+            margin-left: 15px;
+            height: calc(50% - 5px);
+            &:not(:last-child) {
+                margin-bottom: 25px;
+            }
+        }
+    }
+
+    .flex {
+        width: 260px;
+        height: 524px;
+    }
+}
