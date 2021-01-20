@@ -210,17 +210,6 @@ const NewsDetail = () => {
     }, [])
 
 
-    useLayoutEffect(() => {
-
-        document.querySelector('.fixed').classList.remove('noFixed')
-
-
-        window.scrollTo({
-            top: 0
-        });
-
-    }, [pathname])
-
 
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {

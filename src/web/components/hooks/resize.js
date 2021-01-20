@@ -2,6 +2,7 @@
 import React, { useLayoutEffect } from 'react';
 
 import $ from 'jquery';
+import { func } from 'prop-types';
 
 
 
@@ -31,6 +32,27 @@ const Resize = () => {
 
 
         resize()
+
+
+
+        $(window).scroll(function () {
+
+            if ($(this).scrollTop() > 248) {
+                if ($('.fixed').hasClass('noFixed') === false) {
+                    $('.fixed').addClass('noFixed');
+                    $('.home__leftBanner').addClass('fixedBannerLeft')
+                    $('.home__rightBanner').addClass('fixedBannerRight')
+                }
+            } else {
+                $('.fixed').removeClass('noFixed');
+                $('.home__leftBanner').removeClass('fixedBannerLeft')
+                $('.home__rightBanner').removeClass('fixedBannerRight')
+            }
+
+        })
+
+
+
 
 
     }, [])

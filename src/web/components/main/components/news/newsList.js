@@ -41,7 +41,10 @@ import { apiValue } from '../../../atoms/atoms';
 // query func
 
 import { requiredNew } from '../../../queries/queries';
-import { detectItemList, detectItemNews } from '../../../helper/helper';
+
+
+import { detectItemList, detectItemNews, detectItemListEnd } from '../../../helper/helper';
+
 
 
 const NewsList = () => {
@@ -68,50 +71,71 @@ const NewsList = () => {
 
     let { pathname } = useLocation();
 
+    let [page, setPage] = useState(1)
+
+    let [news, setNews] = useState([])
 
 
-    let { data, isLoading } = useQuery(['newsList', pathname], async () => {
 
-        const res = await axios.get(baseUrl + 'news' + pathname + `?include=${newsList.toString()}`)
+
+    let { data, isLoading, isFetching } = useQuery(['newsList', pathname, page], async () => {
+
+        const res = await axios.get(baseUrl + 'news' + pathname + `?include=${newsList.toString()}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                page: page,
+                number: 21
+            }
+        })
+
+
 
         return res.data
 
     }, {
-        refetchOnWindowFocus: true
+        refetchOnWindowFocus: true,
     })
+
+
+    useLayoutEffect(() => {
+
+        setNews([])
+
+
+
+
+    }, [pathname])
+
+
+    window.onscroll = function () {
+
+
+        if (isFetching === false) {
+            if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
+
+                if (data.data.news.data.length !== 0 && data.data.news.data.length !== 1) {
+                    setPage(page = page + 1)
+
+                    console.log(page)
+                }
+            }
+        }
+    }
 
 
 
     useLayoutEffect(() => {
 
-        document.querySelector('.fixed') !== null && (document.querySelector('.fixed').classList.remove('noFixed'))
+        if (isLoading === false) {
 
-        window.onscroll = function () {
-
-
-            let scrollTop = this.scrollY;
-
-            if (scrollTop > 240) {
-
-                document.querySelector('.fixed').classList.add('noFixed')
-                document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
-
-
-            } else {
-                document.querySelector('.fixed').classList.remove('noFixed')
-                document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
+            if (data.data.news.data.length !== 0) {
+                setNews(oldArray => [...oldArray, ...data.data.news.data])
             }
-
         }
 
 
-        window.scrollTo({
-            top: 0
-        });
+    }, [data])
 
-    }, [])
 
 
     // required news
@@ -128,14 +152,13 @@ const NewsList = () => {
     })
 
 
-
-    useLayoutEffect(() => {
+    window.onbeforeunload = function () {
 
         window.scrollTo({
             top: 0
         });
+    }
 
-    }, [pathname])
 
 
     let mutation = useMutation(data => data);
@@ -157,7 +180,6 @@ const NewsList = () => {
 
     return (
         <main className='newsList' >
-
             <div className='home__leftBanner'>
                 <img src={require('../../../images/left.jpg').default} alt='' />
             </div>
@@ -274,16 +296,20 @@ const NewsList = () => {
                     </div>
                     <div className='newsList__flexBox'>
                         <div className='newsList__left'>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemList(21)
+                                        }
+                                    </Row>
+                                )
+                            }
                             <Row>
                                 {
-                                    isLoading === true && (
-                                        detectItemList(20)
-                                    )
-                                }
-                                {
-                                    isLoading !== true && (
-                                        data.data.news.data.map((item) => (
-                                            <Col md='6' lg='4' className='mb-4' key={item.id}>
+                                    news.length !== 0 && (
+                                        news.map((item, index) => (
+                                            <Col md='6' lg='4' className='mb-4' key={index}>
                                                 <NavLink to={'/' + item.slug}>
                                                     < div className='newsList__flex'>
                                                         <div className='newsList__flex--img'>
@@ -317,17 +343,24 @@ const NewsList = () => {
                                                                         </p>
                                                                     )
                                                                 }
-
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </NavLink>
                                             </Col>
-
                                         ))
                                     )
                                 }
                             </Row>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemListEnd(3)
+                                        }
+                                    </Row>
+                                )
+                            }
                         </div>
                         <div className='newsList__right'>
                             <div className='news__title'>

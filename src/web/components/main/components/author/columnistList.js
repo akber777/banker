@@ -24,7 +24,7 @@ import Switch from "react-switch";
 
 // helper
 
-import { detectItemList } from '../../../helper/helper';
+import { detectItemList, detectItemListEnd } from '../../../helper/helper';
 
 // query
 
@@ -58,9 +58,11 @@ const ColumnList = () => {
     let { pathname } = useLocation();
 
 
+    let [page, setPage] = useState(1)
 
+    let [opinion, setOpinion] = useState([])
 
-    let { data, isLoading } = useQuery(['opinion', pathname], async () => {
+    let { data, isLoading, isFetching } = useQuery(['opinion', pathname], async () => {
 
         const res = await axios.get(baseUrl + 'news' + pathname + `?include=${columnist.toString()}`)
 
@@ -71,34 +73,41 @@ const ColumnList = () => {
     })
 
 
+
+    window.onscroll = function () {
+
+
+        if (isFetching === false) {
+
+            if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
+
+                if (data.data.opinions.data.length !== 0 && data.data.opinions.data.length !== 1) {
+                    mutation.mutate(
+                        setPage(page = page + 1)
+                    )
+                }
+            }
+        }
+    }
+
+
     useLayoutEffect(() => {
 
-        window.onscroll = function () {
 
+        if (isLoading === false) {
 
-            let scrollTop = this.scrollY;
-
-            if (scrollTop > 240) {
-
-                document.querySelector('.fixed').classList.add('noFixed')
-                document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
-
-
-            } else {
-                document.querySelector('.fixed').classList.remove('noFixed')
-                document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
+            if (data.data.opinions.data.length !== 0) {
+                setOpinion(oldArray => [...oldArray, ...data.data.opinions.data])
             }
-
         }
 
 
-        window.scrollTo({
-            top: 248
-        });
+        return () => {
 
-    }, [])
+            setOpinion([])
+        }
+
+    }, [data])
 
 
     // required news
@@ -223,15 +232,19 @@ const ColumnList = () => {
                     </div>
                     <div className='newsList__flexBox'>
                         <div className='newsList__left blog__left'>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemList(21)
+                                        }
+                                    </Row>
+                                )
+                            }
                             <Row>
                                 {
-                                    isLoading === true && (
-                                        detectItemList(20)
-                                    )
-                                }
-                                {
                                     isLoading !== true && (
-                                        data.data.opinions.data.map((item) => (
+                                        opinion.map((item) => (
                                             <Col md='6' lg='4' key={item.id}>
                                                 <NavLink to={'/opinion/' + item.slug}>
                                                     < div className='blog__imgBox'>
@@ -284,6 +297,15 @@ const ColumnList = () => {
                                     )
                                 }
                             </Row>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemListEnd(3)
+                                        }
+                                    </Row>
+                                )
+                            }
                         </div>
                         <div className='newsList__right'>
                             <div className='news__title'>

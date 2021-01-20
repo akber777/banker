@@ -39,6 +39,8 @@ export const checkSalary = (type) => {
 
 let itemList = []
 
+let itemListEnd = []
+
 let itemNews = []
 
 
@@ -74,6 +76,39 @@ export const detectItemList = (item) => {
 
 }
 
+
+
+export const detectItemListEnd = (item) => {
+
+    for (let i = 0; i < item; i++) {
+
+        if (itemListEnd.includes(i) === false) {
+            itemListEnd.push(i)
+        }
+    }
+
+    return itemListEnd.map((item, index) => (
+        <Col md='6' lg='4' className='pb-4' key={index}>
+            <NavLink to={''}>
+                <div className="placeholder wave" style={{ height: 'auto' }}>
+                    <div className="square"></div>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                    <div className="line"></div>
+                </div>
+                <div className='blog__imgBox'>
+
+                </div>
+                <div className='blog__content'>
+                    <div className='blog__content--title'>
+
+                    </div>
+                </div>
+            </NavLink>
+        </Col>
+    ))
+
+}
 
 
 

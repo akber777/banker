@@ -35,7 +35,7 @@ import { baseUrl } from '../../../api/api';
 
 // helper
 
-import { detectItemList, detectItemNews } from '../../../helper/helper';
+import { detectItemList, detectItemNews, detectItemListEnd } from '../../../helper/helper';
 
 
 // recoil
@@ -55,9 +55,21 @@ const AuthorList = () => {
     let { pathname } = useLocation();
 
 
+    useLayoutEffect(() => {
 
+        window.scrollTo({
+            top: 0
+        });
 
-    let { data, isLoading } = useQuery(['opinion', pathname], async () => {
+    }, [pathname])
+
+    let mutation = useMutation(data => data);
+
+    let [page, setPage] = useState(1)
+
+    let [author, setAuthor] = useState([])
+
+    let { data, isLoading, isFetching } = useQuery(['opinion', pathname], async () => {
 
         const res = await axios.get(baseUrl + 'news' + pathname)
 
@@ -68,34 +80,39 @@ const AuthorList = () => {
     })
 
 
+    window.onscroll = function () {
+
+
+        if (isFetching === false) {
+            if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
+
+                if (data.data.length !== 0 && data.data.length !== 1) {
+                    mutation.mutate(
+                        setPage(page = page + 1)
+                    )
+                }
+            }
+        }
+    }
+
+
     useLayoutEffect(() => {
 
-        window.onscroll = function () {
 
+        if (isLoading === false) {
 
-            let scrollTop = this.scrollY;
-
-            if (scrollTop > 240) {
-
-                document.querySelector('.fixed').classList.add('noFixed')
-                document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
-
-
-            } else {
-                document.querySelector('.fixed').classList.remove('noFixed')
-                document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
+            if (data.data.length !== 0) {
+                setAuthor(oldArray => [...oldArray, ...data.data])
             }
-
         }
 
 
-        window.scrollTo({
-            top: 248
-        });
+        return () => {
 
-    }, [])
+            setAuthor([])
+        }
+
+    }, [data])
 
 
     // required news
@@ -112,15 +129,7 @@ const AuthorList = () => {
     })
 
 
-    useLayoutEffect(() => {
 
-        window.scrollTo({
-            top: 0
-        });
-
-    }, [pathname])
-
-    let mutation = useMutation(data => data);
 
 
     let onOf = (checked) => {
@@ -208,15 +217,19 @@ const AuthorList = () => {
                     </div>
                     <div className='newsList__flexBox'>
                         <div className='newsList__left blog__left'>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemList(21)
+                                        }
+                                    </Row>
+                                )
+                            }
                             <Row>
                                 {
-                                    isLoading === true && (
-                                        detectItemList(20)
-                                    )
-                                }
-                                {
                                     isLoading !== true && (
-                                        data.data.map((item) => (
+                                        author.map((item) => (
                                             <Col md='6' lg='4' key={item.id}>
                                                 <NavLink to={'/opinion/' + item.slug}>
                                                     <div className='blog__imgBox'>
@@ -270,6 +283,15 @@ const AuthorList = () => {
                                 }
 
                             </Row>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemListEnd(3)
+                                        }
+                                    </Row>
+                                )
+                            }
                         </div>
                         <div className='newsList__right'>
                             <div className='news__title'>

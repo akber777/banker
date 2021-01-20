@@ -137,6 +137,7 @@ const HomePage = () => {
             setChecked(false)
         }
 
+
     }, [])
 
 
@@ -173,6 +174,7 @@ const HomePage = () => {
             top: 248
         });
     }
+
 
 
     return (

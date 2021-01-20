@@ -1,5 +1,7 @@
 // import components
 
+import { useLayoutEffect } from 'react';
+
 import Header from './web/components/header/header';
 
 import Footer from './web/components/footer/footer';
@@ -68,7 +70,9 @@ function App() {
 
   let windowWith = window.innerWidth;
 
-
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
 
   return (

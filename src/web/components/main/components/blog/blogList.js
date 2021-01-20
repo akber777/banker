@@ -42,7 +42,7 @@ import { apiValue } from '../../../atoms/atoms';
 
 import { requiredNew } from '../../../queries/queries';
 
-import { detectItemNews, detectItemList } from '../../../helper/helper';
+import { detectItemNews, detectItemList, detectItemListEnd } from '../../../helper/helper';
 
 
 const BlogList = () => {
@@ -69,8 +69,12 @@ const BlogList = () => {
 
     let { pathname } = useLocation();
 
+    let [page, setPage] = useState(1)
 
-    let { data, isLoading } = useQuery(['newsList', pathname], async () => {
+    let [blogs, setBlogs] = useState([])
+
+
+    let { data, isLoading, isFetching } = useQuery(['newsList', pathname], async () => {
 
         const res = await axios.get(baseUrl + 'news' + pathname + `?include=${blogList.toString()}`)
 
@@ -81,34 +85,51 @@ const BlogList = () => {
     })
 
 
+    let mutation = useMutation(data => data);
+
+
+    // pagination
     useLayoutEffect(() => {
 
-        window.onscroll = function () {
+        setBlogs([])
+
+    }, [pathname])
 
 
-            let scrollTop = this.scrollY;
-
-            if (scrollTop > 240) {
-
-                document.querySelector('.fixed').classList.add('noFixed')
-                document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
+    window.onscroll = function () {
 
 
-            } else {
-                document.querySelector('.fixed').classList.remove('noFixed')
-                document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
+        if (isFetching === false) {
+            if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
+
+                if (data.data.blogs.data.length !== 0 && data.data.blogs.data.length !== 1) {
+                    mutation.mutate(
+                        setPage(page = page + 1)
+                    )
+                }
             }
+        }
+    }
 
+
+    useLayoutEffect(() => {
+
+
+        if (isLoading === false) {
+
+            if (data.data.blogs.data.length !== 0) {
+                setBlogs(oldArray => [...oldArray, ...data.data.blogs.data])
+            }
         }
 
 
-        window.scrollTo({
-            top: 248
-        });
+        return () => {
 
-    }, [])
+            setBlogs([])
+        }
+
+    }, [data])
+
 
 
     // required news
@@ -127,16 +148,6 @@ const BlogList = () => {
 
 
 
-    useLayoutEffect(() => {
-
-        window.scrollTo({
-            top: 0
-        });
-
-    }, [pathname])
-
-
-    let mutation = useMutation(data => data);
 
 
     let onOf = (checked) => {
@@ -273,16 +284,20 @@ const BlogList = () => {
                     </div>
                     <div className='newsList__flexBox blog_left'>
                         <div className='newsList__left'>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemList(21)
+                                        }
+                                    </Row>
+                                )
+                            }
                             <Row>
                                 {
-                                    isLoading === true && (
-                                        detectItemList(20)
-                                    )
-                                }
-                                {
                                     isLoading !== true && (
-                                        data.data.blogs.data.map((item) => (
-                                            <Col md='6' lg='4' className='mb-4' key={item.id}>
+                                        blogs.map((item, index) => (
+                                            <Col md='6' lg='4' className='mb-4' key={index}>
                                                 <NavLink to={'/blog/' + item.slug}>
                                                     < div className='newsList__flex'>
                                                         <div className='newsList__flex--img'>
@@ -320,6 +335,15 @@ const BlogList = () => {
                                     )
                                 }
                             </Row>
+                            {
+                                isLoading === true && (
+                                    <Row>
+                                        {
+                                            detectItemListEnd(3)
+                                        }
+                                    </Row>
+                                )
+                            }
                         </div>
                         <div className='newsList__right'>
                             <div className='news__title'>
