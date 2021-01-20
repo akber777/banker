@@ -65,7 +65,7 @@ const HomePage = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -79,7 +79,7 @@ const HomePage = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -89,7 +89,7 @@ const HomePage = () => {
 
     // required news
     let requiredNews = useQuery(['requiredNews', apiLate], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -162,7 +162,7 @@ const HomePage = () => {
 
     // required news
     let blogHome = useQuery(['blogHome', ''], homeBlog, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 

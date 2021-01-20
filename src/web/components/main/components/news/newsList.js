@@ -93,7 +93,7 @@ const NewsList = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
     })
 
 
@@ -143,9 +143,10 @@ const NewsList = () => {
 
     let [apiVal, setApiVal] = useRecoilState(apiValue)
 
+
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 

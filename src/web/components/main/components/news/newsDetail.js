@@ -97,7 +97,7 @@ const NewsDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -169,20 +169,6 @@ const NewsDetail = () => {
                     document.querySelector('.newsDetail__socialFixed').style.left = '0';
                     document.querySelector('.newsDetail__socialFixed').style.top = '0';
                 }
-
-
-                if (this.scrollY > 240) {
-
-                    document.querySelector('.fixed').classList.add('noFixed')
-                    document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                    document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
-
-
-                } else {
-                    document.querySelector('.fixed').classList.remove('noFixed')
-                    document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                    document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
-                }
             }
 
         }
@@ -213,7 +199,7 @@ const NewsDetail = () => {
 
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -252,7 +238,7 @@ const NewsDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: false
     })
 

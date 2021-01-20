@@ -124,7 +124,7 @@ const AuthorList = () => {
 
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 

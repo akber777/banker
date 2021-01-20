@@ -53,7 +53,7 @@ const Vacancies = () => {
 
 
     let vacancySelectable = useQuery(['vacancySelect', ''], vacancySelect, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
     })
 
 

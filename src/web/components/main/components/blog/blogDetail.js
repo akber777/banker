@@ -68,7 +68,7 @@ const BlogDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -81,7 +81,7 @@ const BlogDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: false
     })
 
@@ -194,7 +194,7 @@ const BlogDetail = () => {
 
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 

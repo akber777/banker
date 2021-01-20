@@ -39,7 +39,9 @@ import 'moment/locale/az';
 const Header = () => {
 
 
-    let { data, isLoading } = useQuery(['headerMenu', ''], headerMenu)
+    let { data, isLoading } = useQuery(['headerMenu', ''], headerMenu, {
+        refetchOnWindowFocus: false
+    })
 
     let date = moment();
 

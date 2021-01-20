@@ -66,7 +66,7 @@ const OpinionDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
@@ -79,7 +79,7 @@ const OpinionDetail = () => {
         return res.data
 
     }, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: false
     })
 
@@ -192,7 +192,7 @@ const OpinionDetail = () => {
 
     // required news
     let requiredNews = useQuery(['requiredNew', apiVal], requiredNew, {
-        refetchOnWindowFocus: true,
+        refetchOnWindowFocus: false,
         refetchIntervalInBackground: true
     })
 
