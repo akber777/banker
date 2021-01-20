@@ -110,13 +110,11 @@ const NewsList = () => {
     window.onscroll = function () {
 
 
-        if (isFetching === false) {
+        if (isLoading === false) {
             if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
 
                 if (data.data.news.data.length !== 0 && data.data.news.data.length !== 1) {
                     setPage(page = page + 1)
-
-                    console.log(page)
                 }
             }
         }

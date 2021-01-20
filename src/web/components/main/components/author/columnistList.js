@@ -77,7 +77,7 @@ const ColumnList = () => {
     window.onscroll = function () {
 
 
-        if (isFetching === false) {
+        if (isLoading === false) {
 
             if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
 

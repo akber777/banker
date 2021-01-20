@@ -83,7 +83,7 @@ const AuthorList = () => {
     window.onscroll = function () {
 
 
-        if (isFetching === false) {
+        if (isLoading === false) {
             if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
 
                 if (data.data.length !== 0 && data.data.length !== 1) {

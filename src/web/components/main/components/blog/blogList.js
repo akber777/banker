@@ -99,7 +99,7 @@ const BlogList = () => {
     window.onscroll = function () {
 
 
-        if (isFetching === false) {
+        if (isLoading === false) {
             if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
 
                 if (data.data.blogs.data.length !== 0 && data.data.blogs.data.length !== 1) {
