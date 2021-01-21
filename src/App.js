@@ -57,9 +57,8 @@ import Resize from './web/components/hooks/resize';
 import {
   Switch,
   Route,
-  useLocation
+  useLocation,
 } from "react-router-dom";
-
 
 
 

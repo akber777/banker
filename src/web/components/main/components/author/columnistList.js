@@ -62,52 +62,53 @@ const ColumnList = () => {
 
     let [opinion, setOpinion] = useState([])
 
-    let { data, isLoading, isFetching } = useQuery(['opinion', pathname], async () => {
+    let { data, isLoading } = useQuery(['opinion', pathname], async () => {
 
-        const res = await axios.get(baseUrl + 'news' + pathname + `?include=${columnist.toString()}`)
+        const res = await axios.get(baseUrl + 'news' + pathname + `?include=${columnist.toString()}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                page: page,
+                number: 21
+            }
+        })
 
         return res.data
 
     }, {
-        refetchOnWindowFocus: true
+        refetchOnWindowFocus: false
     })
 
+
+
+    useLayoutEffect(() => {
+
+        setOpinion([])
+
+        setPage(1)
+
+    }, [pathname])
 
 
     window.onscroll = function () {
 
 
         if (isLoading === false) {
-
             if (window.pageYOffset + window.innerHeight >= document.body.clientHeight - document.querySelector('.footer').clientHeight - 200) {
 
-                if (data.data.opinions.data.length !== 0 && data.data.opinions.data.length !== 1) {
-                    mutation.mutate(
-                        setPage(page = page + 1)
-                    )
+                if (data.data.opinions.data.length !== 0) {
+                    setPage(page = page + 1)
+                    if (isLoading === false) {
+                        if (opinion.includes(...data.data.opinions.data) === false) {
+                            setOpinion(oldArray => [...oldArray, ...data.data.opinions.data])
+                        }
+                    }
                 }
             }
         }
+
     }
 
 
-    useLayoutEffect(() => {
-
-
-        if (isLoading === false) {
-
-            if (data.data.opinions.data.length !== 0) {
-                setOpinion(oldArray => [...oldArray, ...data.data.opinions.data])
-            }
-        }
-
-
-        return () => {
-
-            setOpinion([])
-        }
-
-    }, [data])
 
 
     // required news
@@ -243,7 +244,58 @@ const ColumnList = () => {
                             }
                             <Row>
                                 {
-                                    isLoading !== true && (
+                                    isLoading === false && opinion.length === 0 ?
+                                        data.data.opinions.data.map((item) => (
+                                            <Col md='6' lg='4' key={item.id}>
+                                                <NavLink to={'/opinion/' + item.slug}>
+                                                    < div className='blog__imgBox'>
+                                                        <img src={item.img !== null && item.img !== undefined && (item.img.cover)} alt='' />
+                                                    </div>
+                                                    <div className='blog__content'>
+                                                        <div className='blog__content--title'>
+                                                            <div>
+                                                                <p>
+                                                                    {
+                                                                        item.post_date
+                                                                    }
+                                                                </p>
+                                                                <p>
+                                                                    <FontAwesomeIcon icon={faEye} />
+                                                                    {
+                                                                        item.viewcount.data.count
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                            <div>
+                                                                <FontAwesomeIcon icon={faShare} />
+                                                            </div>
+                                                        </div>
+                                                        <div className='blog__content--titleMiddle'>
+                                                            <h4>{item.title}</h4>
+                                                        </div>
+                                                        <div className='blog__content--text'>
+                                                            <p>
+                                                                {
+                                                                    item.description
+                                                                }
+                                                            </p>
+                                                            <div className='blogLayer'>
+
+                                                            </div>
+                                                        </div>
+                                                        <div className='blog__content--link'>
+                                                            <span>
+                                                                {
+                                                                    item.columnist.data !== null && item.columnist.data !== undefined && (item.columnist.data.name)
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </NavLink>
+                                            </Col>
+
+                                        ))
+                                        :
                                         opinion.map((item) => (
                                             <Col md='6' lg='4' key={item.id}>
                                                 <NavLink to={'/opinion/' + item.slug}>
@@ -294,7 +346,6 @@ const ColumnList = () => {
                                             </Col>
 
                                         ))
-                                    )
                                 }
                             </Row>
                             {
