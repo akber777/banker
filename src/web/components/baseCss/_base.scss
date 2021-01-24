@@ -26,63 +26,23 @@
     }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 992px) and(max-width:1530px) {
     .container,
     .container-lg,
     .container-md,
     .container-sm,
     .container-xl {
-        max-width: 100%;
+        max-width: 80%;
     }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1530px) and (max-width: 1919px) {
     .container,
     .container-lg,
     .container-md,
     .container-sm,
     .container-xl {
-        max-width: 960px;
-    }
-}
-
-@media (min-width: 1300px) {
-    .container,
-    .container-lg,
-    .container-md,
-    .container-sm,
-    .container-xl {
-        max-width: 960px;
-    }
-}
-
-@media (min-width: 1458px) {
-    .container,
-    .container-lg,
-    .container-md,
-    .container-sm,
-    .container-xl {
-        max-width: 980px;
-    }
-}
-
-@media (min-width: 1500px) {
-    .container,
-    .container-lg,
-    .container-md,
-    .container-sm,
-    .container-xl {
-        max-width: 1020px;
-    }
-}
-
-@media (min-width: 1700px) {
-    .container,
-    .container-lg,
-    .container-md,
-    .container-sm,
-    .container-xl {
-        max-width: 1060px;
+        max-width: calc(100% - 430px);
     }
 }
 
@@ -92,7 +52,7 @@
     .container-md,
     .container-sm,
     .container-xl {
-        max-width: 1100px;
+        max-width: 1490px;
     }
 }
 
@@ -203,13 +163,13 @@
 // list
 
 .overNews {
-    height: 450px !important;
+    height: 650px !important;
     overflow: hidden !important;
     margin-bottom: 25px;
 }
 
 .overNewsFlex {
-    height: 500px !important;
+    height: 730px !important;
     overflow: hidden !important;
     margin-bottom: 25px;
 }

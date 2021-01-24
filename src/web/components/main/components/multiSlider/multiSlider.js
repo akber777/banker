@@ -23,9 +23,9 @@ import Carousel from "react-multi-carousel";
 import { Row, Col } from 'reactstrap';
 
 
-const MultiSlider = ({
+const MultiSlider = React.memo(function MultiSlider({
     ...props
-}) => {
+}) {
 
     const responsive = {
         superLargeDesktop: {
@@ -390,7 +390,7 @@ const MultiSlider = ({
             }
         </>
     );
-}
+})
 
 
 MultiSlider.propTypes = {

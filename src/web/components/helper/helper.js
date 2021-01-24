@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 
 export const checkedUrl = (type) => {
 
-
     if (type.type === 'url') {
         return type.url
     }

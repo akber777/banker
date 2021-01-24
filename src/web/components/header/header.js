@@ -19,7 +19,7 @@ import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 
 // react router
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 // query 
 
@@ -48,12 +48,16 @@ const Header = () => {
     let myDate = date.format('LLLL')
 
 
-    const checkedUrl = (type) => {
+    let { pathname } = useLocation()
 
+    const checkedUrl = (type) => {
 
 
         if (type.type === 'url') {
             return type.url
+        }
+        else if (type.type === 'header') {
+            return pathname
         }
         else if (type.type === 'static-page') {
             return `/${type.reference}`

@@ -43,7 +43,7 @@ import Tab from 'react-bootstrap/Tab';
 
 
 
-const NewsPart = () => {
+const NewsPart = React.memo(function MultiSlider() {
 
 
 
@@ -180,6 +180,6 @@ const NewsPart = () => {
             </div>
         </div >
     );
-}
+})
 
 export default NewsPart;

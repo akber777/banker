@@ -254,7 +254,6 @@ const NewsList = () => {
 
                         <Carousel
                             responsive={responsive}
-                            additionalTransfrom={0}
                             arrows={false}
                             autoPlaySpeed={3000}
                             autoPlay={false}
@@ -262,7 +261,6 @@ const NewsList = () => {
                             showDots={false}
                             infinite={true}
                             focusOnSelect={false}
-                            minimumTouchDrag={20}
                             itemClass="carousel-item-padding"
 
                         >

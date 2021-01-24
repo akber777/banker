@@ -95,6 +95,10 @@
                 height: 88px;
                 margin: 0 !important;
 
+                @media (max-width: 1223px) {
+                    top: 245px;
+                }
+
                 .newsPart__in {
                     p {
                         color: #202020;
@@ -189,6 +193,10 @@
                 -ms-transform: translateY(-50%);
                 -o-transform: translateY(-50%);
                 transform: translateY(-50%);
+
+                @media (max-width: 1223px) {
+                    top: 61%;
+                }
 
                 .newsPart__in {
                     p {
@@ -286,6 +294,10 @@
                 -ms-transform: translateY(-50%);
                 -o-transform: translateY(-50%);
                 transform: translateY(-50%);
+
+                @media (max-width: 1223px) {
+                    top: 61%;
+                }
 
                 .newsPart__in {
                     p {

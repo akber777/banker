@@ -243,7 +243,7 @@ const HomePage = () => {
                                 {
                                     homeSliderTop.isLoading === true && (
                                         <div class="placeholder wave waveSliderTop">
-                                            <div className="square" style={{ height: '408px' }}></div>
+                                            <div className="square" style={{ height: '570px' }}></div>
                                         </div>
                                     )
                                 }

@@ -22,23 +22,23 @@ import PropTypes from 'prop-types';
 import datetimeDifference from "datetime-difference";
 
 
-const NewsPage = ({
+const NewsPage = React.memo(function NewsPage({
     ...props
-}) => {
+}) {
 
 
     return (
         <div className='news'>
             <div className='news__content'>
-                <Scrollbars
-                    style={{ height: 450 }}
-                    speed={0.5}
-                    className="area"
-                    contentClassName="content"
-                >
-                    {
-                        props.popularData !== undefined && (
-                            props.popularData.data.map((item, index) => (
+                {
+                    props.popularData !== undefined && (
+                        <Scrollbars
+                            style={{ height: 750 }}
+                            speed={0.5}
+                            className="area"
+                            contentClassName="content"
+                        >
+                            {  props.popularData.data.map((item, index) => (
 
                                 index >= 2 && (
                                     <div className='news__wrapper' key={item.news.data.id}>
@@ -104,126 +104,137 @@ const NewsPage = ({
                                 )
 
                             ))
+                            }
+                        </Scrollbars>
+                    )
+                }
+                {
 
-                        )
-                    }
-                    {
-                        props.requNews !== undefined && (
-
-                            props.requNews.data.map(item => (
-                                item.news !== undefined ?
-                                    <div className='news__wrapper' key={item.news.data.id}>
-                                        <div className='news__contentLeft'>
-                                            <span>
-                                                {
-                                                    item.news.data.post_date.split(' ')[1].split(':')[0] + ':' + item.news.data.post_date.split(' ')[1].split(':')[1]
-                                                }
-                                            </span>
-                                        </div>
-                                        <div className='news__contentRight'>
-                                            <NavLink to={'/' + item.news.data.slug}>
-                                                <p>
+                    props.requNews !== undefined && (
+                        <Scrollbars
+                            style={{ height: 650 }}
+                            speed={0.5}
+                            className="area"
+                            contentClassName="content"
+                        >
+                            {
+                                props.requNews.data.map(item => (
+                                    item.news !== undefined ?
+                                        <div className='news__wrapper' key={item.news.data.id}>
+                                            <div className='news__contentLeft'>
+                                                <span>
                                                     {
-                                                        item.news.data.title
+                                                        item.news.data.post_date.split(' ')[1].split(':')[0] + ':' + item.news.data.post_date.split(' ')[1].split(':')[1]
                                                     }
-                                                </p>
-                                                <div className='news__contentInfo'>
-                                                    <div className='share'>
-                                                        <p>
-                                                            {
-                                                                props.icon === true && (
-                                                                    <FontAwesomeIcon icon={faClock} />
-                                                                )
-                                                            }
-                                                            {
-
-                                                                datetimeDifference(new Date(item.news.data.post_date), new Date()).minutes !== 0 && (
-                                                                    <span>
-                                                                        {
-                                                                            datetimeDifference(new Date(item.news.data.post_date), new Date()).minutes + ' dəqiqə'
-                                                                        }
-                                                                    </span>
-                                                                )
-
-                                                            }
-                                                        </p>
-                                                        <p>
-                                                            <FontAwesomeIcon icon={faEye} />
-                                                            <span>
+                                                </span>
+                                            </div>
+                                            <div className='news__contentRight'>
+                                                <NavLink to={'/' + item.news.data.slug}>
+                                                    <p>
+                                                        {
+                                                            item.news.data.title
+                                                        }
+                                                    </p>
+                                                    <div className='news__contentInfo'>
+                                                        <div className='share'>
+                                                            <p>
                                                                 {
-                                                                    item.news.data.viewcount.data.count
+                                                                    props.icon === true && (
+                                                                        <FontAwesomeIcon icon={faClock} />
+                                                                    )
                                                                 }
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <div className='share'>
-                                                        <FontAwesomeIcon icon={faShare} />
+                                                                {
 
+                                                                    datetimeDifference(new Date(item.news.data.post_date), new Date()).minutes !== 0 && (
+                                                                        <span>
+                                                                            {
+                                                                                datetimeDifference(new Date(item.news.data.post_date), new Date()).minutes + ' dəqiqə'
+                                                                            }
+                                                                        </span>
+                                                                    )
+
+                                                                }
+                                                            </p>
+                                                            <p>
+                                                                <FontAwesomeIcon icon={faEye} />
+                                                                <span>
+                                                                    {
+                                                                        item.news.data.viewcount.data.count
+                                                                    }
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div className='share'>
+                                                            <FontAwesomeIcon icon={faShare} />
+
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </NavLink>
+                                                </NavLink>
+                                            </div>
                                         </div>
-                                    </div>
-                                    :
-                                    <div className='news__wrapper' key={item.id}>
-                                        <div className='news__contentLeft'>
-                                            <span>
-                                                {
-                                                    item.post_date.split(' ')[1].split(':')[0] + ':' + item.post_date.split(' ')[1].split(':')[1]
-                                                }
-                                            </span>
-                                        </div>
-                                        <div className='news__contentRight'>
-                                            <NavLink to={'/' + item.slug}>
-                                                <p>
+                                        :
+                                        <div className='news__wrapper' key={item.id}>
+                                            <div className='news__contentLeft'>
+                                                <span>
                                                     {
-                                                        item.title
+                                                        item.post_date.split(' ')[1].split(':')[0] + ':' + item.post_date.split(' ')[1].split(':')[1]
                                                     }
-                                                </p>
-                                                <div className='news__contentInfo'>
-                                                    <div className='share'>
-                                                        <p>
-                                                            {
-                                                                props.icon === true && (
-                                                                    <FontAwesomeIcon icon={faClock} />
-                                                                )
-                                                            }
-                                                            {
-
-                                                                datetimeDifference(new Date(item.post_date), new Date()).minutes !== 0 && (
-                                                                    <span>
-                                                                        {
-                                                                            datetimeDifference(new Date(item.post_date), new Date()).minutes + ' dəqiqə'
-                                                                        }
-                                                                    </span>
-                                                                )
-
-                                                            }
-                                                        </p>
-                                                        <p>
-                                                            <FontAwesomeIcon icon={faEye} />
-                                                            <span>
+                                                </span>
+                                            </div>
+                                            <div className='news__contentRight'>
+                                                <NavLink to={'/' + item.slug}>
+                                                    <p>
+                                                        {
+                                                            item.title
+                                                        }
+                                                    </p>
+                                                    <div className='news__contentInfo'>
+                                                        <div className='share'>
+                                                            <p>
                                                                 {
-                                                                    item.viewcount.data.count
+                                                                    props.icon === true && (
+                                                                        <FontAwesomeIcon icon={faClock} />
+                                                                    )
                                                                 }
-                                                            </span>
-                                                        </p>
+                                                                {
+
+                                                                    datetimeDifference(new Date(item.post_date), new Date()).minutes !== 0 && (
+                                                                        <span>
+                                                                            {
+                                                                                datetimeDifference(new Date(item.post_date), new Date()).minutes + ' dəqiqə'
+                                                                            }
+                                                                        </span>
+                                                                    )
+
+                                                                }
+                                                            </p>
+                                                            <p>
+                                                                <FontAwesomeIcon icon={faEye} />
+                                                                <span>
+                                                                    {
+                                                                        item.viewcount.data.count
+                                                                    }
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div className='share'>
+                                                            <FontAwesomeIcon icon={faShare} />
+                                                        </div>
                                                     </div>
-                                                    <div className='share'>
-                                                        <FontAwesomeIcon icon={faShare} />
-                                                    </div>
-                                                </div>
-                                            </NavLink>
+                                                </NavLink>
+                                            </div>
                                         </div>
-                                    </div>
-                            ))
-                        )
-                    }
-                </Scrollbars>
+                                ))
+                            }
+                        </Scrollbars>
+                    )
+
+                }
             </div>
         </div >
     );
-}
+
+})
 
 NewsPage.propTypes = {
 

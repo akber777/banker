@@ -174,6 +174,9 @@ const NewsDetail = () => {
         }
 
 
+
+
+
     }, [data])
 
 
