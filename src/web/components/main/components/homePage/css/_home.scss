@@ -15,7 +15,7 @@
         }
 
         img {
-            width: 100%;
+            max-width: 100%;
         }
 
         @media (max-width: 992px) {
@@ -31,9 +31,11 @@
         position: absolute;
         right: 0;
         top: 0;
+        display: flex;
+        justify-content: flex-end;
 
         img {
-            width: 100%;
+            max-width: 100%;
         }
 
         @media (min-width: 992px) and (max-width: 1530px) {

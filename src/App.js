@@ -22,6 +22,9 @@ import BlogDetail from './web/components/main/components/blog/blogDetail';
 
 import BlogList from './web/components/main/components/blog/blogList';
 
+import BlogListAll from './web/components/main/components/blog/blogListAll';
+
+
 import OpinionDetail from './web/components/main/components/author/opinionDetail';
 
 import AuthorList from './web/components/main/components/author/authorList';
@@ -115,6 +118,9 @@ function App() {
               {/* bloglist */}
               <Route path="/blog/category/*" >
                 <BlogList />
+              </Route>
+              <Route path="/blog" >
+                <BlogListAll />
               </Route>
               {/* bloglist */}
 
