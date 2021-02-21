@@ -31,6 +31,11 @@
             margin-right: 15px;
             margin-bottom: 15px;
 
+            &:nth-child(4n)
+            {
+                margin-right: 0;
+            }
+
             &:nth-child(2) {
                 position: relative;
                 background-color: #f5f5f5;
@@ -591,7 +596,7 @@
 
     &__right {
         position: relative;
-        width: 260px;
+        // width: 260px;
         display: flex;
         flex-direction: column;
         margin-top: 98px;

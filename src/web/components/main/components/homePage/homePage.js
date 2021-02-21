@@ -335,7 +335,7 @@ const HomePage = () => {
                     </div>
                     <div className='home__populationBanner'>
                         <img src={'https://banker.az/wp-content/uploads/2021/01/banker.jpg'} alt='' />
-                        <img src={'https://banker.az/wp-content/uploads/2020/12/Azerbaycan_Mevduat_Kiral%C4%B1k_Kasa_yuzde10_Banner_500x500.png'} alt='' />
+                        <img src={'https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png'} alt='' />
                     </div>
                 </div>
                 {/* <div className='home__bannerBottom'>
