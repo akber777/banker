@@ -119,9 +119,13 @@ function App() {
               <Route path="/blog/category/*" >
                 <BlogList />
               </Route>
+              <Route path="/blog/*" >
+                <BlogDetail />
+              </Route>
               <Route path="/blog" >
                 <BlogListAll />
               </Route>
+
               {/* bloglist */}
 
 

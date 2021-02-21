@@ -224,7 +224,7 @@ const BlogList = React.memo(function BlogList() {
                     <div className='newsList__content--title'>
                         <h1>
                             {
-                                isLoading === false && (data.data.name)
+                                isLoading === false && data !== undefined && (data.data.name)
                             }
                         </h1>
                     </div>
@@ -290,7 +290,7 @@ const BlogList = React.memo(function BlogList() {
                             }
                             <Row>
                                 {
-                                    isLoading === false && blogs.length === 0 ?
+                                    isLoading === false && data !== undefined && blogs.length === 0 ?
                                         data.data.blogs.data.map((item, index) => (
                                             <Col md='6' lg='4' className='mb-4' key={index}>
                                                 <NavLink to={'/blog/' + item.slug}>

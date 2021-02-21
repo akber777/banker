@@ -249,7 +249,7 @@ const BlogListAll = () => {
                                     news.length === 0 && isLoading === false ?
                                         data.data.map((item, index) => (
                                             <Col md='6' lg='4' className='mb-4' key={index}>
-                                                <NavLink to={'/' + item.slug}>
+                                                <NavLink to={'/blog/' + item.slug}>
                                                     < div className='newsList__flex'>
                                                         <div className='newsList__flex--img'>
                                                             <img src={item.img !== null && (item.img.cover)} alt='' />

@@ -308,7 +308,7 @@ const NewsDetail = () => {
                                 <img src={require('../../../images/up.png').default} alt='' />
                             </p>
                         </div>
-                        <div className='home__bannerTop'>
+                        <div className='home__bannerTop' style={{ backgroundColor: 'rgb(255 255 255)' }}>
                             <img src={'https://banker.az/wp-content/uploads/2020/12/DevOps-19DEK-static-banner-970x90-1.png'} alt='' />
                         </div>
                         <div className='newsDetail__flexBox'>
@@ -376,7 +376,7 @@ const NewsDetail = () => {
                                     <div className='newsDetail__buttonTop'>
                                         {
                                             data === undefined && (
-                                                <div class="placeholder wave categoriesWave">
+                                                <div className="placeholder wave categoriesWave">
                                                     <div className="line"></div>
                                                     <div className="line"></div>
                                                     <div className="line"></div>
@@ -514,8 +514,8 @@ const NewsDetail = () => {
                                              </span>
                                         </a>
                                     </div>
-                                    <div className='home__bannerTop'>
-                                        <img src={require('../../../images/data.png').default} alt='' />
+                                    <div className='home__bannerTop' style={{ backgroundColor: '#010101' }}>
+                                        <img src={'https://banker.az/wp-content/uploads/2021/01/XB-SWISSTOOL-1450x300px.jpg'} alt='' />
                                     </div>
                                     <div className='newsDetail__self'>
                                         {
@@ -525,7 +525,7 @@ const NewsDetail = () => {
                                         }
                                     </div>
                                     <div className='home__bannerTop'>
-                                        <img src={require('../../../images/kontakt.png').default} alt='' />
+                                        <img src={'https://banker.az/wp-content/uploads/2021/02/1450x300-2.jpg'} alt='' />
                                     </div>
                                     <div className='newsDetail__vacancies'>
                                         <div className='newsDetail__vacancies--title'>
@@ -667,43 +667,46 @@ const NewsDetail = () => {
                             <h4>Oxşar xəbərlər</h4>
                         </div>
                         <div className='newsDetail__bottomContent--info'>
-                            <Carousel
-                                responsive={responsive}
-                                additionalTransfrom={0}
-                                arrows={true}
-                                autoPlaySpeed={3000}
-                                autoPlay={false}
-                                centerMode={false}
-                                showDots={false}
-                                infinite={true}
-                                // className={'sliderPartners__self'}
-                                focusOnSelect={false}
-                                minimumTouchDrag={40}
-                                itemClass="carousel-item-padding"
+                            {
+                                related.data !== undefined && (
+                                    <Carousel
+                                        responsive={responsive}
+                                        additionalTransfrom={0}
+                                        arrows={true}
+                                        autoPlaySpeed={3000}
+                                        autoPlay={false}
+                                        centerMode={false}
+                                        showDots={false}
+                                        infinite={true}
+                                        // className={'sliderPartners__self'}
+                                        focusOnSelect={false}
+                                        minimumTouchDrag={40}
+                                        itemClass="carousel-item-padding"
+                                    >
+                                        {
+                                            related.isLoading === false && typeof (related.data) !== 'string' && related.isError === false && (
+                                                related.data.data.map((item) => (
+                                                    <div className='newsDetail__bottomContent--slideItem' key={item.id}>
+                                                        <NavLink to={'/' + item.slug}>
+                                                            <div className='leayoutItem'>
 
-                            >
-                                {
-                                    related.isLoading === false && related.isError === false && (
-                                        related.data.data.map((item) => (
-                                            <div className='newsDetail__bottomContent--slideItem' key={item.id}>
-                                                <NavLink to={'/' + item.slug}>
-                                                    <div className='leayoutItem'>
-
+                                                            </div>
+                                                            <img src={item.img !== null && item.img && item.img.thumb} alt='' />
+                                                            <div className='newsDetail__bottomContent--slideItem__in'>
+                                                                <p>
+                                                                    {
+                                                                        item.title
+                                                                    }
+                                                                </p>
+                                                            </div>
+                                                        </NavLink>
                                                     </div>
-                                                    <img src={item.img !== null && item.img && item.img.thumb} alt='' />
-                                                    <div className='newsDetail__bottomContent--slideItem__in'>
-                                                        <p>
-                                                            {
-                                                                item.title
-                                                            }
-                                                        </p>
-                                                    </div>
-                                                </NavLink>
-                                            </div>
-                                        ))
-                                    )
-                                }
-                            </Carousel>
+                                                ))
+                                            )
+                                        }
+                                    </Carousel>
+                                )
+                            }
                         </div>
                         <div className='newsDetail__multiNews'>
                             <div className='newsDetail__left p-0'>

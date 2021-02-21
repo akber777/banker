@@ -468,8 +468,8 @@ const OpinionDetail = () => {
                                              </span>
                                         </a>
                                     </div>
-                                    <div className='home__bannerTop'>
-                                        <img src={require('../../../images/data.png').default} alt='' />
+                                    <div className='home__bannerTop' style={{backgroundColor:'#010101'}}>
+                                        <img src={'https://banker.az/wp-content/uploads/2021/01/XB-SWISSTOOL-1450x300px.jpg'} alt='' />
                                     </div>
                                     <div className='newsDetail__self'>
                                         {
@@ -479,7 +479,7 @@ const OpinionDetail = () => {
                                         }
                                     </div>
                                     <div className='home__bannerTop'>
-                                        <img src={require('../../../images/kontakt.png').default} alt='' />
+                                        <img src={'https://banker.az/wp-content/uploads/2021/02/1450x300-2.jpg'} alt='' />
                                     </div>
                                     <div className='newsDetail__vacancies'>
                                         <div className='newsDetail__vacancies--title'>

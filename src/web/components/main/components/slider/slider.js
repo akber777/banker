@@ -126,7 +126,7 @@ const Slides = ({
                     :
                     <>
                         {
-                            props.news !== undefined && (
+                            props.news !== undefined ?
                                 props.news.data.map((item, index) => (
                                     index < 2 && (
                                         <div className='slider__box' key={item.news.data.id}>
@@ -183,7 +183,17 @@ const Slides = ({
                                     )
 
                                 ))
-                            )
+                                :
+                                <>
+                                    <div className="placeholder wave waveSliderTop" style={{ height: '400px' }}>
+                                        <div className="square" style={{ height: '400px' }}></div>
+                                    </div>
+                                    <div className="placeholder wave waveSliderTop" style={{ height: '400px',marginTop:'15px' }}>
+                                        <div className="square" style={{ height: '400px' }}></div>
+                                    </div>
+                                </>
+
+
                         }
                     </>
             }

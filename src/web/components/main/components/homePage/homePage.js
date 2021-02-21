@@ -233,7 +233,7 @@ const HomePage = () => {
                         <img src={require('../../../images/up.png').default} alt='' />
                     </p>
                 </div>
-                <div className='home__bannerTop'>
+                <div className='home__bannerTop' style={{ backgroundColor: '#fff' }} >
                     <img src={'https://banker.az/wp-content/uploads/2020/12/DevOps-19DEK-static-banner-970x90-1.png'} alt='' />
                 </div>
                 <div className='home__sectionOne'>
@@ -242,7 +242,7 @@ const HomePage = () => {
                             <div className='home__leftBoxSlider'>
                                 {
                                     homeSliderTop.isLoading === true && (
-                                        <div class="placeholder wave waveSliderTop">
+                                        <div className="placeholder wave waveSliderTop">
                                             <div className="square" style={{ height: '570px' }}></div>
                                         </div>
                                     )
@@ -256,11 +256,11 @@ const HomePage = () => {
                                     )
                                 }
                             </div>
-                            <div className='home__leftBoxBanner'>
+                            <div className='home__leftBoxBanner' style={{ backgroundColor: '#ececec' }}>
                                 <img src={require('../../../images/turanBank.jpg').default} alt='' />
                             </div>
                         </div>
-                        <div className='home__bannerBottom'>
+                        <div className='home__bannerBottom' style={{ backgroundColor: '#ececec' }}>
                             <img src={require('../../../images/pasha.jpg').default} alt='' />
                         </div>
                     </div>
@@ -389,11 +389,17 @@ const HomePage = () => {
                 {/* <MultiSlider
                     sliderType={'month'}
                 /> */}
-                <div className='home__bannerBottom'>
-                    <img src={'https://banker.az/wp-content/uploads/2020/10/karabakh-is-azerbaijan-banker.az-740x175-1.jpg'} alt='' />
+                <div className='home__bannerBottom' style={{ backgroundColor: '#11316c' }}>
+                    <img src={'https://banker.az/wp-content/uploads/2021/02/12-il-Kampaniya-banker.az_.jpg'} alt='' />
                 </div>
                 <Blog blogData={blogHome.data} />
+                <div className='home__bannerBottom' style={{ backgroundColor: '#11316c' }}>
+                    <img src={'https://banker.az/wp-content/uploads/2021/02/12-il-Kampaniya-banker.az_.jpg'} alt='' />
+                </div>
                 <Author />
+                <div className='home__bannerBottom' style={{ backgroundColor: '#11316c', marginBottom: '50px' }}>
+                    <img src={'https://banker.az/wp-content/uploads/2021/02/12-il-Kampaniya-banker.az_.jpg'} alt='' />
+                </div>
                 {/* <div className='home__bannerBottom'>
                     <img src={require('../../../images/topBanner.jpg').default} alt='' />
                 </div> */}

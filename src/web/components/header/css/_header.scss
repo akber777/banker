@@ -6,9 +6,12 @@
     &__topBanner {
         position: relative;
         height: 78px;
+        background: #005e79;
+        display: flex;
+        justify-content: center;
 
         img {
-            width: 100%;
+            max-width: 100%;
             height: 100%;
         }
     }

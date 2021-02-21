@@ -72,8 +72,12 @@ const Header = () => {
     return (
         <>
             <header className='header'>
-                <div className='header__topBanner'>
-                    <img src={require('../images/topBanner.jpg').default} alt='' />
+                <div className='header__topBanner' style={{ backgroundColor: pathname !== '/' ? 'rgb(211 49 88)' : 'rgb(0 125 140)' }}>
+                    {
+                        pathname !== '/' ?
+                            <img src={'https://ads.netant.az/www/images/f7438e76f421f513dd256a988d6c7a43.png'} alt='' /> :
+                            <img src={'https://banker.az/wp-content/uploads/2020/09/1.gif'} alt='' />
+                    }
                 </div>
                 <Container>
                     <div className='header__nav'>
@@ -113,8 +117,11 @@ const Header = () => {
                         </div>
                     </div>
                 </Container>
-                <div className='header__topBanner'>
-                    <img src={require('../images/topBanner.jpg').default} alt='' />
+                <div className='header__topBanner' style={{ backgroundColor: pathname !== '/' ? 'rgb(0 125 140)' : 'rgb(0 125 140)' }}>
+                    {
+                       <img src={'https://banker.az/wp-content/uploads/2020/09/1.gif'} alt='' />
+                            
+                    }
                 </div>
                 <div className='header__navBox'>
                     <Container>
