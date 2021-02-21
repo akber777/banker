@@ -179,7 +179,9 @@
 
     &__right {
         // width: 273px;
-        padding-left: 15px;
+        // padding-left: 15px;
+        display: flex;
+        
 
         img {
             width: 100%;

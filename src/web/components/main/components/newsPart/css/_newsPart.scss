@@ -31,8 +31,7 @@
             margin-right: 15px;
             margin-bottom: 15px;
 
-            &:nth-child(4n)
-            {
+            &:nth-child(4n) {
                 margin-right: 0;
             }
 
@@ -601,13 +600,17 @@
         flex-direction: column;
         margin-top: 98px;
 
-        img {
-            width: 100%;
-            height: calc(50% - 8px);
-
-            &:not(:last-child) {
-                margin-bottom: 15px;
+        div {
+            img {
+                max-width: 100%;
             }
+            
+                height: calc(50% - 8px);
+
+                &:not(:last-child) {
+                    margin-bottom: 15px;
+                }
+           
         }
     }
 

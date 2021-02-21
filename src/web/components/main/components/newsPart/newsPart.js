@@ -174,8 +174,12 @@ const NewsPart = React.memo(function MultiSlider() {
                             Bütün xəbərlər
                         </NavLink>
                     </div> */}
-                    <img src={'https://banker.az/wp-content/uploads/2020/12/360x380-1.jpg'} alt='' />
-                    <img src={'https://banker.az/wp-content/uploads/2020/08/400x420.gif'} alt='' />
+                    <div style={{ backgroundColor: 'rgb(98 37 190)' }}>
+                        <img src={'https://banker.az/wp-content/uploads/2020/12/360x380-1.jpg'} alt='' />
+                    </div>
+                    <div style={{ backgroundColor: 'rgb(179 227 252)' }}>
+                        <img src={'https://banker.az/wp-content/uploads/2020/08/400x420.gif'} alt='' />
+                    </div>
                 </div>
             </div>
         </div >

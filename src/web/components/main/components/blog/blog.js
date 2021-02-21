@@ -77,15 +77,12 @@ const Blog = (props) => {
                                             </div>
                                         </NavLink>
                                     </Col>
-
                                 ))
-
                             )
                         }
-
                     </Row>
                 </div>
-                <div className='blog__right'>
+                <div className='blog__right' style={{backgroundColor:'#e3e3e3'}}>
                     <img src={require('../../../images/ziraat.jpg').default} alt='' />
                 </div>
             </div>

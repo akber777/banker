@@ -334,13 +334,20 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className='home__populationBanner'>
-                        <img src={'https://banker.az/wp-content/uploads/2021/01/banker.jpg'} alt='' />
-                        <img src={'https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png'} alt='' />
+                        <div style={{ backgroundColor: '#0874b2' }}>
+                            <img src={'https://banker.az/wp-content/uploads/2021/01/banker.jpg'} alt='' />
+                        </div>
+                        <div style={{ backgroundColor: 'rgb(81 19 19)' }}>
+                            <img src={'https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png'} alt='' />
+                        </div>
                     </div>
                 </div>
                 {/* <div className='home__bannerBottom'>
                     <img src={require('../../../images/topBanner.jpg').default} alt='' />
                 </div> */}
+                <div className='home__bannerBottom' style={{ backgroundColor: '#11316c' }}>
+                    <img src={'https://banker.az/wp-content/uploads/2021/02/12-il-Kampaniya-banker.az_.jpg'} alt='' />
+                </div>
                 <NewsPart />
                 {/* <div className='home__bannerBottom'>
                     <img src={require('../../../images/topBanner.jpg').default} alt='' />
