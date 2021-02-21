@@ -478,7 +478,7 @@ const OpinionDetail = () => {
                                             )
                                         }
                                     </div>
-                                    <div className='home__bannerTop'>
+                                    <div className='home__bannerTop' style={{backgroundColor:'#fff'}}>
                                         <img src={'https://banker.az/wp-content/uploads/2021/02/1450x300-2.jpg'} alt='' />
                                     </div>
                                     <div className='newsDetail__vacancies'>

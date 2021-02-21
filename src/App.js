@@ -114,7 +114,6 @@ function App() {
               {/* list */}
 
 
-
               {/* bloglist */}
               <Route path="/blog/category/*" >
                 <BlogList />
