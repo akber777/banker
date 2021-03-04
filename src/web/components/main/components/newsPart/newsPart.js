@@ -95,7 +95,7 @@ const NewsPart = React.memo(function MultiSlider() {
                     </div> */}
                     <div className='wrapper'>
                         {
-                            isLoading === false && (
+                            isLoading === false && data !== undefined && (
                                 <Tabs
                                     defaultActiveKey={data.data[0].name}
                                     id="uncontrolled-tab-example">

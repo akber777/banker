@@ -119,8 +119,8 @@ const Header = () => {
                 </Container>
                 <div className='header__topBanner' style={{ backgroundColor: pathname !== '/' ? 'rgb(0 125 140)' : 'rgb(0 125 140)' }}>
                     {
-                       <img src={'https://banker.az/wp-content/uploads/2020/09/1.gif'} alt='' />
-                            
+                        <img src={'https://banker.az/wp-content/uploads/2020/09/1.gif'} alt='' />
+
                     }
                 </div>
                 <div className='header__navBox'>
