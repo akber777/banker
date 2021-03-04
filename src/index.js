@@ -12,7 +12,6 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import "react-multi-carousel/lib/styles.css";
-import 'react-alice-carousel/lib/alice-carousel.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './web/components/baseCss/_base.scss';

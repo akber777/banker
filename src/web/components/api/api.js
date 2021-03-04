@@ -1,2 +1,2 @@
 
-export const baseUrl = 'https://apibanker.gocreative.az/api/v1/'
+export const baseUrl = 'http://apibanker.apar.az/api/v1/'
