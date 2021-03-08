@@ -2,6 +2,9 @@ import React, { useLayoutEffect } from 'react';
 
 // css
 import './css/_calcWorkNew.scss';
+import '../calcWork/css/_calcWork.scss';
+import "../homePage/css/_home.scss";
+
 
 
 // tools
@@ -15,28 +18,6 @@ const CalcWorkNew = () => {
 
 
     useLayoutEffect(() => {
-
-        window.onscroll = function () {
-
-            let scrollTop = this.scrollY;
-
-
-            if (scrollTop > 240) {
-
-                document.querySelector('.fixed').classList.add('noFixed')
-                document.querySelector('.home__leftBanner').classList.add('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.add('fixedBannerRight')
-
-
-            } else {
-                document.querySelector('.fixed').classList.remove('noFixed')
-                document.querySelector('.home__leftBanner').classList.remove('fixedBannerLeft')
-                document.querySelector('.home__rightBanner').classList.remove('fixedBannerRight')
-            }
-
-
-
-        }
 
         window.scrollTo({
             top: 248

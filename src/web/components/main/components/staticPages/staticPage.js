@@ -1,6 +1,8 @@
 import React, { useLayoutEffect } from 'react';
 
-
+// css
+import "../homePage/css/_home.scss";
+import "../news/css/_newsDetail.scss";
 
 
 // tools
@@ -118,13 +120,6 @@ const StaticPage = () => {
 
     return (
         <main className='newsDetail' style={{ minHeight: 500 }}>
-            {
-                isLoading === true && (
-                    <div className='loading'>
-                        <img src={'https://dinosa.ru/local/templates/dinosa/images/loading--big.gif'} alt='' />
-                    </div>
-                )
-            }
             <div className='home__leftBanner'>
                 <img src={require('../../../images/left.jpg').default} alt='' />
             </div>

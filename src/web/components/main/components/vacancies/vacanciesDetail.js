@@ -4,7 +4,8 @@ import React, { useLayoutEffect } from 'react';
 
 // css
 import './css/_vacancyDetail.scss';
-
+import "../homePage/css/_home.scss";
+import "../news/css/_newsDetail.scss";
 
 // tools
 

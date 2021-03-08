@@ -8,7 +8,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 import News from '../news/newsPage';
 
 // css
-// import './css/_newsDetail.scss';
+import '../news/css/_newsDetail.scss';
+import "../homePage/css/_home.scss";
 
 // tools
 
