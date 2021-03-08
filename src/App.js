@@ -1,74 +1,123 @@
 // import components
 
-import { useLayoutEffect } from 'react';
+import Loadable from "react-loadable";
 
-import Header from './web/components/header/header';
+import { useLayoutEffect } from "react";
 
-import Footer from './web/components/footer/footer';
+import Header from "./web/components/header/header";
 
-import HomePage from './web/components/main/components/homePage/homePage';
-
-import NewsDetail from './web/components/main/components/news/newsDetail';
-
-import NewsList from './web/components/main/components/news/newsList';
-
-import Vacancies from './web/components/main/components/vacancies/vacancies';
-
-import VacanciesDetail from './web/components/main/components/vacancies/vacanciesDetail';
-
-import StaticPage from './web/components/main/components/staticPages/staticPage';
-
-import BlogDetail from './web/components/main/components/blog/blogDetail';
-
-import BlogList from './web/components/main/components/blog/blogList';
-
-import BlogListAll from './web/components/main/components/blog/blogListAll';
-
-
-import OpinionDetail from './web/components/main/components/author/opinionDetail';
-
-import AuthorList from './web/components/main/components/author/authorList';
-
-import ColumnList from './web/components/main/components/author/columnistList';
-
-import CreditCalculator from './web/components/main/components/creditCalculator/creditCalculator';
-
-import CalcWork from './web/components/main/components/calcWork/calcWork';
-
-import CalcWorkNew from './web/components/main/components/calcWorkNew/calcWorkNew';
-
-import Valyuta from './web/components/main/components/valyuta/valyuta';
+import Footer from "./web/components/footer/footer";
 
 // web end
 
-
-
 // ------------------------------------------------------------------//
 
-
-
 // mobile start
-import MobileHeader from './mobile/components/header/header';
-import MobileHome from './mobile/components/main/homePage/homePage';
-
-
+import MobileHeader from "./mobile/components/header/header";
+import MobileHome from "./mobile/components/main/homePage/homePage";
 
 // resize
-import Resize from './web/components/hooks/resize';
+import Resize from "./web/components/hooks/resize";
 
 // import router
-import {
-  Switch,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 
+// loadable Component
 
+const Loading = () => (
+  <div className="loadableCom">
+    <div class="load"></div>
+  </div>
+);
+
+const HomePage = Loadable({
+  loader: () => import("./web/components/main/components/homePage/homePage"),
+  loading: Loading,
+});
+
+const NewsDetail = Loadable({
+  loader: () => import("./web/components/main/components/news/newsDetail"),
+  loading: Loading,
+});
+
+const NewsList = Loadable({
+  loader: () => import("./web/components/main/components/news/newsList"),
+  loading: Loading,
+});
+
+const Vacancies = Loadable({
+  loader: () => import("./web/components/main/components/vacancies/vacancies"),
+  loading: Loading,
+});
+
+const VacanciesDetail = Loadable({
+  loader: () =>
+    import("./web/components/main/components/vacancies/vacanciesDetail"),
+  loading: Loading,
+});
+
+const StaticPage = Loadable({
+  loader: () =>
+    import("./web/components/main/components/staticPages/staticPage"),
+  loading: Loading,
+});
+
+const BlogDetail = Loadable({
+  loader: () => import("./web/components/main/components/blog/blogDetail"),
+  loading: Loading,
+});
+
+const BlogList = Loadable({
+  loader: () => import("./web/components/main/components/blog/blogList"),
+  loading: Loading,
+});
+
+const BlogListAll = Loadable({
+  loader: () => import("./web/components/main/components/blog/blogListAll"),
+  loading: Loading,
+});
+
+const OpinionDetail = Loadable({
+  loader: () => import("./web/components/main/components/author/opinionDetail"),
+  loading: Loading,
+});
+
+const AuthorList = Loadable({
+  loader: () => import("./web/components/main/components/author/authorList"),
+  loading: Loading,
+});
+
+const ColumnList = Loadable({
+  loader: () => import("./web/components/main/components/author/columnistList"),
+  loading: Loading,
+});
+
+const CreditCalculator = Loadable({
+  loader: () =>
+    import(
+      "./web/components/main/components/creditCalculator/creditCalculator"
+    ),
+  loading: Loading,
+});
+
+const CalcWork = Loadable({
+  loader: () => import("./web/components/main/components/calcWork/calcWork"),
+  loading: Loading,
+});
+
+const CalcWorkNew = Loadable({
+  loader: () =>
+    import("./web/components/main/components/calcWorkNew/calcWorkNew"),
+  loading: Loading,
+});
+
+const Valyuta = Loadable({
+  loader: () => import("./web/components/main/components/valyuta/valyuta"),
+  loading: Loading,
+});
 
 function App() {
-
   let { pathname } = useLocation();
-
 
   let windowWith = window.innerWidth;
 
@@ -76,138 +125,122 @@ function App() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-
   return (
     <>
-      {
-        windowWith > 992 ?
-          <div className="App" >
-            <Resize />
-            <Header />
-            <Switch>
-              {/* Home Page */}
-              <Route path="/" exact>
-                <HomePage />
+      {windowWith > 992 ? (
+        <div className="App">
+          <Resize />
+          <Header />
+          <Switch>
+            {/* Home Page */}
+            <Route path="/" exact>
+              <HomePage />
+            </Route>
+            {pathname !== "/" &&
+              pathname.split("/")[1] !== "jobs" &&
+              pathname.split("/")[1] !== "category" &&
+              pathname.split("/")[1] !== "reklam" &&
+              pathname.split("/")[1] !== "blog" &&
+              pathname.split("/")[1] !== "opinion" &&
+              pathname.split("/")[1] !== "columnist" &&
+              pathname.split("/")[1] !== "kredit-kalkulyatoru" &&
+              pathname.split("/")[1] !== "emekhaqqi" &&
+              pathname.split("/")[1] !== "emekhaqqi2019" &&
+              pathname.split("/")[1] !== "valyuta" && (
+                <Route path="/*">
+                  <NewsDetail />
+                </Route>
+              )}
+            {/* list */}
+            <Route path="/category/*">
+              <NewsList />
+            </Route>
+            {/* list */}
+
+            {/* bloglist */}
+            <Route path="/blog/category/*">
+              <BlogList />
+            </Route>
+            <Route path="/blog/*">
+              <BlogDetail />
+            </Route>
+            <Route path="/blog">
+              <BlogListAll />
+            </Route>
+
+            {/* bloglist */}
+
+            {/* vacancies */}
+            {pathname === "/jobs" && (
+              <Route path="/jobs">
+                <Vacancies />
               </Route>
-              {
-                pathname !== '/'
-                && pathname.split('/')[1] !== 'jobs'
-                && pathname.split('/')[1] !== 'category'
-                && pathname.split('/')[1] !== 'reklam'
-                && pathname.split('/')[1] !== 'blog'
-                && pathname.split('/')[1] !== 'opinion'
-                && pathname.split('/')[1] !== 'columnist'
-                && pathname.split('/')[1] !== 'kredit-kalkulyatoru'
-                && pathname.split('/')[1] !== 'emekhaqqi'
-                && pathname.split('/')[1] !== 'emekhaqqi2019'
-                && pathname.split('/')[1] !== 'valyuta'
-                && (
-                  <Route path="/*" >
-                    <NewsDetail />
-                  </Route>
-                )
-              }
-              {/* list */}
-              <Route path="/category/*" >
-                <NewsList />
+            )}
+            {pathname !== "/jobs" && (
+              <Route path="/jobs/*">
+                <VacanciesDetail />
               </Route>
-              {/* list */}
+            )}
+            {/* vacancies */}
 
+            {/* blog */}
+            <Route path="/blog/*">
+              <BlogDetail />
+            </Route>
+            {/* blog end */}
 
-              {/* bloglist */}
-              <Route path="/blog/category/*" >
-                <BlogList />
-              </Route>
-              <Route path="/blog/*" >
-                <BlogDetail />
-              </Route>
-              <Route path="/blog" >
-                <BlogListAll />
-              </Route>
+            {/* staticpages */}
+            <Route path="/reklam">
+              <StaticPage />
+            </Route>
+            {/* staticpages end */}
 
-              {/* bloglist */}
+            {/* author */}
+            <Route path="/opinion/*">
+              <OpinionDetail />
+            </Route>
+            <Route path="/opinion">
+              <AuthorList />
+            </Route>
+            <Route path="/columnist/*">
+              <ColumnList />
+            </Route>
+            {/* author end */}
 
+            {/* credit calculator */}
+            <Route path="/kredit-kalkulyatoru">
+              <CreditCalculator />
+            </Route>
 
+            {/* work calculator */}
+            <Route path="/emekhaqqi">
+              <CalcWork />
+            </Route>
 
-              {/* vacancies */}
-              {
-                pathname === '/jobs' && (
-                  <Route path="/jobs" >
-                    <Vacancies />
-                  </Route>
-                )
-              }
-              {
-                pathname !== '/jobs' && (
-                  <Route path="/jobs/*" >
-                    <VacanciesDetail />
-                  </Route>
-                )
-              }
-              {/* vacancies */}
+            {/* work calculator new*/}
+            <Route path="/emekhaqqi2019">
+              <CalcWorkNew />
+            </Route>
 
-              {/* blog */}
-              <Route path="/blog/*" >
-                <BlogDetail />
-              </Route>
-              {/* blog end */}
+            {/*valyuta*/}
+            <Route path="/valyuta">
+              <Valyuta />
+            </Route>
 
-              {/* staticpages */}
-              <Route path="/reklam" >
-                <StaticPage />
-              </Route>
-              {/* staticpages end */}
-
-              {/* author */}
-              <Route path="/opinion/*" >
-                <OpinionDetail />
-              </Route>
-              <Route path="/opinion" >
-                <AuthorList />
-              </Route>
-              <Route path="/columnist/*" >
-                <ColumnList />
-              </Route>
-              {/* author end */}
-
-
-              {/* credit calculator */}
-              <Route path="/kredit-kalkulyatoru" >
-                <CreditCalculator />
-              </Route>
-
-              {/* work calculator */}
-              <Route path="/emekhaqqi" >
-                <CalcWork />
-              </Route>
-
-
-              {/* work calculator new*/}
-              <Route path="/emekhaqqi2019" >
-                <CalcWorkNew />
-              </Route>
-
-
-              {/*valyuta*/}
-              <Route path="/valyuta" >
-                <Valyuta />
-              </Route>
-
-              {/* author end */}
-
-            </Switch>
-            <Footer />
-          </div >
-          :
-          <div className="App" >
-            <MobileHeader />
-            <Switch>
-              <Route path="/" exact>
-                <MobileHome />
-              </Route>
-            </Switch>
-          </div>
-      }
+            {/* author end */}
+          </Switch>
+          <Footer />
+        </div>
+      ) : (
+        <div className="App">
+          <MobileHeader />
+          <Switch>
+            <Route path="/" exact>
+              <MobileHome />
+            </Route>
+          </Switch>
+        </div>
+      )}
     </>
   );
 }

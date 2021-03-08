@@ -4,7 +4,8 @@ import React, { useLayoutEffect, useState } from 'react';
 
 // css
 import './css/_valyuta.scss';
-
+import "../homePage/css/_home.scss";
+import "../news/css/_newsDetail.scss";
 
 
 // tools

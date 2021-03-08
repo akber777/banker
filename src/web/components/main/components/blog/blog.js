@@ -2,7 +2,8 @@ import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 
 // css
-import './css/_blog.scss';
+import "./css/_blog.scss";
+
 
 // tools
 

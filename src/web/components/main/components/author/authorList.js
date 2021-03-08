@@ -3,6 +3,10 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 // css
 // -----------
+import "../homePage/css/_home.scss";
+import "../blog/css/_blog.scss";
+import "../news/css/_newsList.scss";
+import "../news/css/_newsDetail.scss";
 
 import News from '../news/newsPage';
 
