@@ -37,7 +37,13 @@ import { baseUrl } from "../../../api/api";
 import { useRecoilState } from "recoil";
 
 // atoms
-import { apiLatest } from "../../../atoms/atoms";
+import {
+  apiLatest,
+  pageRequired,
+  numberRequired,
+  pageMostRead,
+  numberMostRead,
+} from "../../../atoms/atoms";
 
 // query func
 
@@ -48,8 +54,13 @@ import Switch from "react-switch";
 import Author from "../author/author";
 import { detectItemNews } from "../../../helper/helper";
 
-const HomePage = () => {
+// router dom
+import { Link, useLocation } from "react-router-dom";
+
+const HomePage = (...props) => {
   // home page first slider
+
+  const { pathname } = useLocation();
 
   let homeSliderTop = useQuery(
     ["homeSliderTop"],
@@ -65,26 +76,56 @@ const HomePage = () => {
   );
 
   // homepage most read news and two images news
+
+  let [pageMost, setPageMost] = useRecoilState(pageMostRead);
+  let [numberMost, setNumberMost] = useRecoilState(numberMostRead);
+
   let mostRead = useQuery(
-    ["mostRead"],
+    ["mostRead", pageMost, numberMost],
     async () => {
-      const res = await axios.get(baseUrl + "news/most-read-7");
+      const res = await axios.get(baseUrl + "news/most-read-7", {
+        headers: {
+          "Content-Type": "application/json",
+          page: pageMost,
+          number: numberMost,
+        },
+      });
 
       return res.data;
     },
     {
       refetchOnWindowFocus: false,
       refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageMost((pageMost = pageMost - 1));
+          setNumberMost(20);
+        }
+      },
     }
   );
 
   let [apiLate, setApiVal] = useRecoilState(apiLatest);
 
+  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
+
+  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+
   // required news
-  let requiredNews = useQuery(["requiredNews", apiLate], requiredNew, {
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: true,
-  });
+  let requiredNews = useQuery(
+    ["requiredNews", apiLate, pageRequ, numberRequ],
+    requiredNew,
+    {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageRequ((pageRequ = pageRequ - 1));
+          setNumberRequ(20);
+        }
+      },
+    }
+  );
 
   let mutation = useMutation((data) => data);
 
@@ -103,8 +144,12 @@ const HomePage = () => {
 
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
+      setPageRequ(1);
+      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
+      setPageRequ(1);
+      setNumberRequ(20);
     }
   };
 
@@ -200,7 +245,7 @@ const HomePage = () => {
               <div className="home__leftBoxSlider">
                 {homeSliderTop.isLoading === true && (
                   <div className="placeholder wave waveSliderTop">
-                    <div className="square" style={{ height: "570px" }}></div>
+                    <div className="square" style={{ height: "440px" }}></div>
                   </div>
                 )}
                 {homeSliderTop.isLoading === false && (
@@ -256,25 +301,46 @@ const HomePage = () => {
                 icon={true}
               />
             )}
+            <div
+              className="moreNewsBtn"
+              onClick={() => {
+                setPageRequ((pageRequ = pageRequ + 1));
+                setNumberRequ((numberRequ = numberRequ + 20));
+              }}
+            >
+              <Link to={pathname}>Daha Çox Xəbər</Link>
+            </div>
           </div>
         </div>
         <div className="home__population popularNews">
           <div className="home__populationWrapper">
-            <div
-              className={`home__populationLeft ${
-                mostRead.isLoading === true ? "overNewsFlex popularFlex" : ""
-              }`}
-            >
-              <h4>{"Populyar"}</h4>
-              {mostRead.isLoading === true && detectItemNews(15)}
-              {mostRead.isLoading === false && (
-                <News
-                  title={"Populyar"}
-                  switch={false}
-                  popularData={mostRead.data}
-                  icon={true}
-                />
-              )}
+            <div>
+              <div
+                className={`home__populationLeft ${
+                  mostRead.isLoading === true ? "overNewsFlex popularFlex" : ""
+                }`}
+              >
+                <h4>{"Populyar"}</h4>
+                {mostRead.isLoading === true && detectItemNews(15)}
+                {mostRead.isLoading === false && (
+                  <News
+                    title={"Populyar"}
+                    switch={false}
+                    popularData={mostRead.data}
+                    icon={true}
+                  />
+                )}
+              </div>
+              <div
+                style={{ marginTop: 25 }}
+                className="moreNewsBtn"
+                onClick={() => {
+                  setPageMost((pageMost = pageMost + 1));
+                  setNumberMost((numberMost = numberMost + 20));
+                }}
+              >
+                <Link to={pathname}>Daha Çox Xəbər</Link>
+              </div>
             </div>
             <div className="home__populationRight">
               <Slides slides={false} news={mostRead.data} />

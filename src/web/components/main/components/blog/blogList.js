@@ -15,7 +15,7 @@ import News from "../news/newsPage";
 // sider
 import Carousel from "react-multi-carousel";
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 
 // switch
 import Switch from "react-switch";
@@ -38,7 +38,7 @@ import { blogList } from "../../../api/include";
 import { useRecoilState } from "recoil";
 
 //atom
-import { apiValue } from "../../../atoms/atoms";
+import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
 
 // query func
 
@@ -133,19 +133,38 @@ const BlogList = React.memo(function BlogList() {
 
   let [apiVal, setApiVal] = useRecoilState(apiValue);
 
+  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
+
+  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+
+
   // required news
-  let requiredNews = useQuery(["requiredNew", apiVal], requiredNew, {
-    refetchOnWindowFocus: true,
-    refetchIntervalInBackground: true,
-  });
+  let requiredNews = useQuery(
+    ["requiredNew", apiVal, pageRequ, numberRequ],
+    requiredNew,
+    {
+      refetchOnWindowFocus: true,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageRequ((pageRequ = pageRequ - 1));
+          setNumberRequ(20);
+        }
+      },
+    }
+  );
 
   let onOf = (checked) => {
     setChecked(checked);
 
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
+      setPageRequ(1);
+      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/most-read-24"));
+      setPageRequ(1);
+      setNumberRequ(20);
     }
   };
 
@@ -366,7 +385,16 @@ const BlogList = React.memo(function BlogList() {
                   />
                 )}
               </div>
-
+              <div
+                style={{ marginBottom: 15 }}
+                className="moreNewsBtn"
+                onClick={() => {
+                  setPageRequ((pageRequ = pageRequ + 1));
+                  setNumberRequ((numberRequ = numberRequ + 20));
+                }}
+              >
+                <Link to={pathname}>Daha Çox Xəbər</Link>
+              </div>
               {/* <div className='newsDetail__raitings'>
                                 <div className='newsDetail__raitings--title'>
                                     <h4>Bölmə tərəfdaşı</h4>

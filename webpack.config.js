@@ -1,15 +1,20 @@
 const path = require("path");
-const MinifyBundledPlugin = require('minifiy-bundled-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 
 module.exports = {
-  entry: path.resolve(__dirname, "build/static/js/2.2f3f2b4e.chunk"),
+  entry: path.resolve(__dirname, "build/static/js/4.23078a0a.chunk.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "afterCompres.js",
+    chunkFilename: "[name].js",
   },
-  plugins: [
-    new MinifyBundledPlugin({
-      patterns: ["**/assets/*.+(json|css|js)"],
-    }),
-  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        defaultVendors: {
+          filename: "[name].bundle.js",
+        },
+      },
+    },
+  },
 };

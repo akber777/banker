@@ -60,6 +60,7 @@
     &__contentLeft {
         margin-right: 18px;
         display: flex;
+        display: none;
 
         span {
             font-style: normal;
@@ -100,7 +101,7 @@
         .share {
             display: flex;
             p:last-child {
-                margin-left: 15px;
+                // margin-left: 15px;
             }
         }
 

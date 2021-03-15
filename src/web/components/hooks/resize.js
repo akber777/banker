@@ -17,8 +17,6 @@ const Resize = () => {
         });
       }
 
-
-      console.log(new_height)
     }
 
     resize();
@@ -37,6 +35,8 @@ const Resize = () => {
       }
     });
   });
+
+
 
   return "";
 };

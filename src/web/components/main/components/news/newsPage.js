@@ -3,7 +3,6 @@ import React from "react";
 // css
 import "./css/_news.scss";
 
-
 // fontawesome
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
@@ -16,10 +15,10 @@ import { NavLink } from "react-router-dom";
 // propTypes
 import PropTypes from "prop-types";
 
-// difference
-import datetimeDifference from "datetime-difference";
 
 const NewsPage = React.memo(function NewsPage({ ...props }) {
+
+
   return (
     <div className="news">
       <div className="news__content">
@@ -27,7 +26,7 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
           <Scrollbars
             style={{ height: 750 }}
             speed={0.5}
-            className="area"
+            className="area "
             contentClassName="content"
           >
             {props.popularData.data.map(
@@ -46,37 +45,16 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                         <p>{item.news.data.title}</p>
                         <div className="news__contentInfo">
                           <div className="share">
-                            <p>
+                            <p style={{ fontSize: 10, marginLeft: 0 }}>
                               {props.icon === true && (
                                 <FontAwesomeIcon icon={faClock} />
                               )}
-                              {datetimeDifference(
-                                new Date(item.news.data.post_date),
-                                new Date()
-                              ).hours !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(item.news.data.post_date),
-                                    new Date()
-                                  ).hours + " saat"}
-                                </span>
-                              )}
-                              {datetimeDifference(
-                                new Date(item.news.data.post_date),
-                                new Date()
-                              ).minutes !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(item.news.data.post_date),
-                                    new Date()
-                                  ).minutes + " dəqiqə"}
-                                </span>
-                              )}
+                              {item.news.data.post_date}
                             </p>
-                            <p>
+                            {/* <p>
                               <FontAwesomeIcon icon={faEye} />
                               {item.news.data.viewcount.data.count}
-                            </p>
+                            </p> */}
                           </div>
                           <div className="share">
                             <FontAwesomeIcon icon={faShare} />
@@ -91,9 +69,9 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
         )}
         {props.requNews !== undefined && (
           <Scrollbars
-            style={{ height: 650 }}
+            style={{ height: 500 }}
             speed={0.5}
-            className="area"
+            className="area scrollareaRequ"
             contentClassName="content"
           >
             {props.requNews.data.map((item) =>
@@ -115,21 +93,11 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                             {props.icon === true && (
                               <FontAwesomeIcon icon={faClock} />
                             )}
-                            {datetimeDifference(
-                              new Date(item.news.data.post_date),
-                              new Date()
-                            ).minutes !== 0 && (
-                              <span>
-                                {datetimeDifference(
-                                  new Date(item.news.data.post_date),
-                                  new Date()
-                                ).minutes + " dəqiqə"}
-                              </span>
-                            )}
+                            {item.post_date}
                           </p>
                           <p>
                             <FontAwesomeIcon icon={faEye} />
-                            <span>{item.news.data.viewcount.data.count}</span>
+                            {/* <span>{item.news.data.viewcount.data.count}</span> */}
                           </p>
                         </div>
                         <div className="share">
@@ -153,26 +121,16 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                       <p>{item.title}</p>
                       <div className="news__contentInfo">
                         <div className="share">
-                          <p>
+                          <p style={{ fontSize: 11 }}>
                             {props.icon === true && (
                               <FontAwesomeIcon icon={faClock} />
                             )}
-                            {datetimeDifference(
-                              new Date(item.post_date),
-                              new Date()
-                            ).minutes !== 0 && (
-                              <span>
-                                {datetimeDifference(
-                                  new Date(item.post_date),
-                                  new Date()
-                                ).minutes + " dəqiqə"}
-                              </span>
-                            )}
+                            {item.post_date}
                           </p>
-                          <p>
+                          {/* <p>
                             <FontAwesomeIcon icon={faEye} />
                             <span>{item.viewcount.data.count}</span>
-                          </p>
+                          </p> */}
                         </div>
                         <div className="share">
                           <FontAwesomeIcon icon={faShare} />

@@ -11,7 +11,7 @@ import News from "../news/newsPage";
 
 // tools
 
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 
 // switch
 import Switch from "react-switch";
@@ -32,7 +32,7 @@ import { baseUrl } from "../../../api/api";
 import { useRecoilState } from "recoil";
 
 //atom
-import { apiValue } from "../../../atoms/atoms";
+import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
 
 // query func
 
@@ -119,11 +119,25 @@ const BlogListAll = () => {
 
   let [apiVal, setApiVal] = useRecoilState(apiValue);
 
+  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
+
+  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+
   // required news
-  let requiredNews = useQuery(["requiredNew", apiVal], requiredNew, {
-    refetchOnWindowFocus: true,
-    refetchIntervalInBackground: true,
-  });
+  let requiredNews = useQuery(
+    ["requiredNews", apiVal, pageRequ, numberRequ],
+    requiredNew,
+    {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageRequ((pageRequ = pageRequ - 1));
+          setNumberRequ(20);
+        }
+      },
+    }
+  );
 
   window.onbeforeunload = function () {
     window.scrollTo({
@@ -138,8 +152,12 @@ const BlogListAll = () => {
 
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
+      setPageRequ(1);
+      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
+      setPageRequ(1);
+      setNumberRequ(20);
     }
   };
 
@@ -325,7 +343,16 @@ const BlogListAll = () => {
                   />
                 )}
               </div>
-
+              <div
+                style={{ marginBottom: 15 }}
+                className="moreNewsBtn"
+                onClick={() => {
+                  setPageRequ((pageRequ = pageRequ + 1));
+                  setNumberRequ((numberRequ = numberRequ + 20));
+                }}
+              >
+                <Link to={pathname}>Daha Çox Xəbər</Link>
+              </div>
               {/* <div className='newsDetail__raitings'>
                                 <div className='newsDetail__raitings--title'>
                                     <h4>{isLoading === false && (data.data.name)}</h4>

@@ -8,7 +8,6 @@ import "../blog/css/_blog.scss";
 import "../news/css/_newsList.scss";
 import "../news/css/_newsDetail.scss";
 
-
 import News from "../news/newsPage";
 
 // tools
@@ -19,7 +18,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faShare } from "@fortawesome/free-solid-svg-icons";
 
 // reaact router dom
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, Link } from "react-router-dom";
 
 // switch
 import Switch from "react-switch";
@@ -46,11 +45,14 @@ import { columnist } from "../../../api/include";
 import { useRecoilState } from "recoil";
 
 //atom
-import { apiValue } from "../../../atoms/atoms";
+import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
 
 // query func
 
 import { requiredNew } from "../../../queries/queries";
+
+// helper
+import { detectItemNews } from "../../../helper/helper";
 
 const ColumnList = () => {
   let { pathname } = useLocation();
@@ -115,11 +117,25 @@ const ColumnList = () => {
 
   let [apiVal, setApiVal] = useRecoilState(apiValue);
 
+  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
+
+  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+
   // required news
-  let requiredNews = useQuery(["requiredNew", apiVal], requiredNew, {
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: true,
-  });
+  let requiredNews = useQuery(
+    ["requiredNews", apiVal, pageRequ, numberRequ],
+    requiredNew,
+    {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageRequ((pageRequ = pageRequ - 1));
+          setNumberRequ(20);
+        }
+      },
+    }
+  );
 
   useLayoutEffect(() => {
     window.scrollTo({
@@ -134,8 +150,12 @@ const ColumnList = () => {
 
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
+      setPageRequ(1);
+      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
+      setPageRequ(1);
+      setNumberRequ(20);
     }
   };
 
@@ -203,8 +223,8 @@ const ColumnList = () => {
         <Container>
           <div className="newsList__content--title">
             {isLoading === true && (
-              <div class="placeholder wave" style={{ height: `${"20px"}` }}>
-                <div class="line" style={{ width: `${20 + "%"}` }}></div>
+              <div className="placeholder wave" style={{ height: `${"20px"}` }}>
+                <div className="line" style={{ width: `${20 + "%"}` }}></div>
               </div>
             )}
             {isLoading === false && data !== undefined && (
@@ -326,7 +346,12 @@ const ColumnList = () => {
                   />
                 </div>
               </div>
-              <div className="newsDetailed">
+              <div
+                className={`newsDetailed ${
+                  requiredNews.isLoading === true ? "overNews" : ""
+                }`}
+              >
+                {requiredNews.isLoading === true && detectItemNews(15)}
                 {requiredNews.isLoading === false && (
                   <News
                     title={"data"}
@@ -336,7 +361,16 @@ const ColumnList = () => {
                   />
                 )}
               </div>
-
+              <div
+                style={{ marginBottom: 15 }}
+                className="moreNewsBtn"
+                onClick={() => {
+                  setPageRequ((pageRequ = pageRequ + 1));
+                  setNumberRequ((numberRequ = numberRequ + 20));
+                }}
+              >
+                <Link to={pathname}>Daha Çox Xəbər</Link>
+              </div>
               <div className="newsDetail__raitings">
                 <div className="newsDetail__raitings--title">
                   <h4>Bölmə tərəfdaşı</h4>

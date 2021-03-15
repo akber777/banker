@@ -14,7 +14,6 @@ import Footer from "./web/components/footer/footer";
 
 // mobile start
 import MobileHeader from "./mobile/components/header/header";
-import MobileHome from "./mobile/components/main/homePage/homePage";
 
 // resize
 import Resize from "./web/components/hooks/resize";
@@ -22,7 +21,8 @@ import Resize from "./web/components/hooks/resize";
 // import router
 import { Switch, Route, useLocation } from "react-router-dom";
 
-// loadable Component
+// jquery
+import $ from "jquery";
 
 const Loading = () => (
   <div className="loadableCom">
@@ -113,6 +113,11 @@ const CalcWorkNew = Loadable({
 
 const Valyuta = Loadable({
   loader: () => import("./web/components/main/components/valyuta/valyuta"),
+  loading: Loading,
+});
+
+const MobileHome = Loadable({
+  loader: () => import("./mobile/components/main/homePage/homePage"),
   loading: Loading,
 });
 

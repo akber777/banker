@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 
 // css
 import "./css/_header.scss";
@@ -32,6 +32,10 @@ import { headerMenu } from "../queries/queries";
 import * as moment from "moment";
 import "moment/locale/az";
 
+// jquery
+
+import $ from 'jquery';
+
 const Header = () => {
   let { data, isLoading } = useQuery(["headerMenu", ""], headerMenu, {
     refetchOnWindowFocus: false,
@@ -55,8 +59,52 @@ const Header = () => {
     }
   };
 
+  useLayoutEffect(() => {
+    $(".closeSearch").on("click", function () {
+      $(".header__searchBoxContent").addClass("noSearch");
+    });
+
+    $(".header__searchBox").on("click", function () {
+      $(".header__searchBoxContent").removeClass("noSearch");
+    });
+  }, [data]);
+
   return (
     <>
+      <div className="header__searchBoxContent noSearch">
+        <div className="closeSearch">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.8063 0.249146L8.99984 7.05564L2.19335 0.249146L0.249023 2.19347L7.05552 8.99997L0.249023 15.8065L2.19335 17.7508L8.99984 10.9443L15.8063 17.7508L17.7507 15.8065L10.9442 8.99997L17.7507 2.19347L15.8063 0.249146Z"
+              fill="#D2D2D2"
+            ></path>
+          </svg>
+        </div>
+        <div className="header__searchBoxInfo">
+          <h4 className="header__searchBox--title">Axtarış</h4>
+          <input type="search" />
+          <div className="searchBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.1493 16.27C9.9509 16.2696 11.7006 15.6665 13.1198 14.5567L17.5817 19.0186L19.0169 17.5834L14.555 13.1215C15.6654 11.7021 16.2689 9.95206 16.2693 8.14999C16.2693 3.67282 12.6265 0.0299892 8.1493 0.0299892C3.67213 0.0299892 0.0292969 3.67282 0.0292969 8.14999C0.0292969 12.6272 3.67213 16.27 8.1493 16.27ZM8.1493 2.05999C11.5079 2.05999 14.2393 4.79135 14.2393 8.14999C14.2393 11.5086 11.5079 14.24 8.1493 14.24C4.79066 14.24 2.0593 11.5086 2.0593 8.14999C2.0593 4.79135 4.79066 2.05999 8.1493 2.05999Z"
+                fill="#014577"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
       <header className="header">
         <div
           className="header__topBanner"

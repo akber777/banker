@@ -1,8 +1,15 @@
 import React, { useLayoutEffect, useState } from "react";
+
+// fontawesome
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+// reactstrap
 import { Container } from "react-bootstrap";
-import { NavLink, useLocation } from "react-router-dom";
+
+// ract router dom
+import { NavLink, useLocation, Link } from "react-router-dom";
+
 // import Subscription from '../../../footer/subscription';
 import News from "../news/newsPage";
 
@@ -38,7 +45,7 @@ import Switch from "react-switch";
 import { useRecoilState } from "recoil";
 
 // atoms
-import { apiValue } from "../../../atoms/atoms";
+import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
 
 // query func
 
@@ -162,11 +169,25 @@ const OpinionDetail = () => {
     if (apiVal === "/important") setChecked(true);
   }, []);
 
+  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
+
+  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+
   // required news
-  let requiredNews = useQuery(["requiredNew", apiVal], requiredNew, {
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: true,
-  });
+  let requiredNews = useQuery(
+    ["requiredNews", apiVal, pageRequ, numberRequ],
+    requiredNew,
+    {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (succ.data.length === 0) {
+          setPageRequ((pageRequ = pageRequ - 1));
+          setNumberRequ(20);
+        }
+      },
+    }
+  );
 
   let mutation = useMutation((data) => data);
 
@@ -175,8 +196,12 @@ const OpinionDetail = () => {
 
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
+      setPageRequ(1);
+      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
+      setPageRequ(1);
+      setNumberRequ(20);
     }
   };
 
@@ -345,7 +370,7 @@ const OpinionDetail = () => {
                   </div>
                   <div className="newsDetail__title">
                     {isLoading === true && (
-                      <div class="placeholder wave">
+                      <div className="placeholder wave">
                         <div className="line"></div>
                         <div className="line"></div>
                         <div className="line"></div>
@@ -383,56 +408,12 @@ const OpinionDetail = () => {
                         {data !== undefined && (
                           <>
                             <p>
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).years !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).years + " il"}
-                                </span>
-                              )}
-
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).months !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).months + " ay"}
-                                </span>
-                              )}
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).hours !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).hours + " saat"}
-                                </span>
-                              )}
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).minutes !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).minutes + " dəqiqə"}
-                                </span>
-                              )}
+                              {data.data.post_date}
                             </p>
-                            <p>
+                            {/* <p>
                               <FontAwesomeIcon icon={faEye} />
                               {data.data.viewcount.data.count}
-                            </p>
+                            </p> */}
                           </>
                         )}
                       </div>
@@ -603,6 +584,16 @@ const OpinionDetail = () => {
                       icon={true}
                     />
                   )}
+                </div>
+                <div
+                  style={{ marginBottom: 25 }}
+                  className="moreNewsBtn"
+                  onClick={() => {
+                    setPageRequ((pageRequ = pageRequ + 1));
+                    setNumberRequ((numberRequ = numberRequ + 20));
+                  }}
+                >
+                  <Link to={pathname}>Daha Çox Xəbər</Link>
                 </div>
                 {/* <div className='newsDetail__raitings'>
                                             <div className='newsDetail__raitings--title'>
