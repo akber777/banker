@@ -34,7 +34,7 @@ import "moment/locale/az";
 
 // jquery
 
-import $ from 'jquery';
+import $ from "jquery";
 
 const Header = () => {
   let { data, isLoading } = useQuery(["headerMenu", ""], headerMenu, {
@@ -67,10 +67,83 @@ const Header = () => {
     $(".header__searchBox").on("click", function () {
       $(".header__searchBoxContent").removeClass("noSearch");
     });
+
+    $(".header__webMenuClose").on("click", function () {
+      $(".header__webMenu ").addClass("openWebmenu");
+    });
+
+    $(".header__navButtonImg").on("click", function () {
+      $(".header__webMenu ").removeClass("openWebmenu");
+    });
   }, [data]);
 
   return (
     <>
+      <div className="header__webMenu openWebmenu">
+        <div className="header__webMenuClose">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15.8063 0.249146L8.99984 7.05564L2.19335 0.249146L0.249023 2.19347L7.05552 8.99997L0.249023 15.8065L2.19335 17.7508L8.99984 10.9443L15.8063 17.7508L17.7507 15.8065L10.9442 8.99997L17.7507 2.19347L15.8063 0.249146Z"
+              fill="#D2D2D2"
+            ></path>
+          </svg>
+        </div>
+        <Container>
+          <div className="webLogoBox">
+            <NavLink to={"/"}>
+              <img src={require("../images/logo.png").default} alt="" />
+            </NavLink>
+          </div>
+          <div className="header__webBox">
+            <div className="header__webMenuItem">
+              <h4>Xeberler</h4>
+              <NavLink to={""}>Bu maraqlıdır</NavLink>
+              <NavLink to={""}>Ümumi iqtisadi məqalələr</NavLink>
+              <NavLink to={""}>Biznes</NavLink>
+              <NavLink to={""}>Menu1</NavLink>
+              <NavLink to={""}>
+                Əmək haqqının hesablanması üçün kalkulyator (2019)-YENİ
+              </NavLink>
+            </div>
+            <div className="header__webMenuItem">
+              <h4>Xeberler</h4>
+              <NavLink to={""}>Bu maraqlıdır</NavLink>
+              <NavLink to={""}>Ümumi iqtisadi məqalələr</NavLink>
+              <NavLink to={""}>Biznes</NavLink>
+              <NavLink to={""}>Menu1</NavLink>
+              <NavLink to={""}>
+                Əmək haqqının hesablanması üçün kalkulyator (2019)-YENİ
+              </NavLink>
+            </div>
+            <div className="header__webMenuItem">
+              <h4>Xeberler</h4>
+              <NavLink to={""}>Bu maraqlıdır</NavLink>
+              <NavLink to={""}>Ümumi iqtisadi məqalələr</NavLink>
+              <NavLink to={""}>Biznes</NavLink>
+              <NavLink to={""}>Menu1</NavLink>
+              <NavLink to={""}>
+                Əmək haqqının hesablanması üçün kalkulyator (2019)-YENİ
+              </NavLink>
+            </div>
+            <div className="header__webMenuItem">
+              <h4>Xeberler</h4>
+              <NavLink to={""}>Bu maraqlıdır</NavLink>
+              <NavLink to={""}>Ümumi iqtisadi məqalələr</NavLink>
+              <NavLink to={""}>Biznes</NavLink>
+              <NavLink to={""}>Menu1</NavLink>
+              <NavLink to={""}>
+                Əmək haqqının hesablanması üçün kalkulyator (2019)-YENİ
+              </NavLink>
+            </div>
+          </div>
+        </Container>
+      </div>
       <div className="header__searchBoxContent noSearch">
         <div className="closeSearch">
           <svg
@@ -106,25 +179,61 @@ const Header = () => {
         </div>
       </div>
       <header className="header">
-        <div
-          className="header__topBanner"
-          style={{
-            backgroundColor:
-              pathname !== "/" ? "rgb(211 49 88)" : "rgb(0 125 140)",
-          }}
-        >
+        <div className="header__topBanner">
           {pathname !== "/" ? (
-            <img
-              src={
-                "https://ads.netant.az/www/images/f7438e76f421f513dd256a988d6c7a43.png"
-              }
-              alt=""
-            />
+            <>
+              <div
+                className="header__leftBanner50"
+                style={{
+                  backgroundColor: "rgb(0, 125, 140)",
+                }}
+              >
+                <img
+                  src={"https://banker.az/wp-content/uploads/2020/09/1.gif"}
+                  alt=""
+                />
+              </div>
+              <div
+                className="header__leftBanner50"
+                style={{
+                  backgroundColor: "rgb(210 49 88)",
+                }}
+              >
+                <img
+                  src={
+                    "https://ads.netant.az/www/images/f7438e76f421f513dd256a988d6c7a43.png"
+                  }
+                  alt=""
+                />
+              </div>
+            </>
           ) : (
-            <img
-              src={"https://banker.az/wp-content/uploads/2020/09/1.gif"}
-              alt=""
-            />
+            <>
+              <div
+                className="header__leftBanner50"
+                style={{
+                  backgroundColor: "rgb(0, 125, 140)",
+                }}
+              >
+                <img
+                  src={"https://banker.az/wp-content/uploads/2020/09/1.gif"}
+                  alt=""
+                />
+              </div>
+              <div
+                className="header__leftBanner50"
+                style={{
+                  backgroundColor: "rgb(210 49 88)",
+                }}
+              >
+                <img
+                  src={
+                    "https://ads.netant.az/www/images/f7438e76f421f513dd256a988d6c7a43.png"
+                  }
+                  alt=""
+                />
+              </div>
+            </>
           )}
         </div>
         <Container>
