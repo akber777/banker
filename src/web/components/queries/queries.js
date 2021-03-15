@@ -12,7 +12,7 @@ export const requiredNew = async (key, data) => {
     headers: {
       "Content-Type": "application/json",
       page: key.queryKey[2],
-      number: key.queryKey[3],
+      number: 20,
     },
   });
 

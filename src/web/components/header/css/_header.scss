@@ -3,6 +3,17 @@
   background: #01345a;
   z-index: 555;
 
+
+  &__leftBanner50{
+    display: flex;
+    justify-content: flex-end;
+
+
+    &:last-child{
+      justify-content: flex-start;
+    }
+  }
+
   &__searchBoxContent {
     position: fixed;
     height: 234px;

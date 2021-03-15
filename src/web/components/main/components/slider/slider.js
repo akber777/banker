@@ -34,6 +34,9 @@ import PropTypes from "prop-types";
 const Slides = ({ ...props }) => {
   return (
     <div className="slider">
+      {
+        console.log(props)
+      }
       {props.slides === true ? (
         <CarouselProvider
           naturalSlideWidth={100}
@@ -83,10 +86,10 @@ const Slides = ({ ...props }) => {
       ) : (
         <>
           {props.news !== undefined ? (
-            props.news.data.map(
+            props.news.map(
               (item, index) =>
                 index < 2 && (
-                  <div className="slider__box" key={item.news.data.id}>
+                  <div className="slider__box" key={index}>
                     <NavLink to={item.news.data.slug}>
                       <div className="gradientNews"></div>
                       <img

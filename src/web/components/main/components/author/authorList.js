@@ -113,25 +113,37 @@ const AuthorList = () => {
 
   let [apiVal, setApiVal] = useRecoilState(apiValue);
 
-  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
-
-  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+  // scrollData
+  let [pageRequ, setPageRequ] = useState(1);
+  let [dataRequLatest, setDataRequLatest] = useState([]);
+  let [dataRequImportant, setDataRequImportant] = useState([]);
 
   // required news
-  let requiredNews = useQuery(
-    ["requiredNews", apiVal, pageRequ, numberRequ],
-    requiredNew,
-    {
-      refetchOnWindowFocus: false,
-      refetchIntervalInBackground: true,
-      onSuccess: function (succ) {
-        if (succ.data.length === 0) {
-          setPageRequ((pageRequ = pageRequ - 1));
-          setNumberRequ(20);
-        }
-      },
-    }
-  );
+  let requiredNews = useQuery(["requiredNews", apiVal, pageRequ], requiredNew, {
+    refetchOnWindowFocus: false,
+    refetchIntervalInBackground: true,
+    onSuccess: function (succ) {
+      if (
+        dataRequLatest.includes(...succ.data) === false &&
+        succ.data.length !== 0 &&
+        apiVal === "/latest"
+      ) {
+        setDataRequLatest((oldArray) => [...oldArray, ...succ.data]);
+      }
+
+      if (
+        dataRequImportant.includes(...succ.data) === false &&
+        succ.data.length !== 0 &&
+        apiVal === "/important"
+      ) {
+        setDataRequImportant((oldArray) => [...oldArray, ...succ.data]);
+      }
+    },
+  });
+
+  useLayoutEffect(() => {
+    setApiVal("/latest");
+  }, []);
 
   let onOf = (checked) => {
     setChecked(checked);
@@ -139,11 +151,9 @@ const AuthorList = () => {
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
       setPageRequ(1);
-      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
       setPageRequ(1);
-      setNumberRequ(20);
     }
   };
 
@@ -332,12 +342,24 @@ const AuthorList = () => {
                   requiredNews.isLoading === true ? "overNews" : ""
                 }`}
               >
-                {requiredNews.isLoading === true && detectItemNews(15)}
-                {requiredNews.isLoading === false && (
+                {requiredNews.isLoading === true &&
+                  dataRequLatest.length === 0 &&
+                  detectItemNews(15)}
+                {requiredNews.isLoading === false &&
+                dataRequLatest.length === 0 ? (
                   <News
                     title={"data"}
                     switch={true}
-                    requNews={requiredNews.data}
+                    requNews={requiredNews.data.data}
+                    icon={true}
+                  />
+                ) : (
+                  <News
+                    title={"data"}
+                    switch={true}
+                    requNews={
+                      apiVal === "/latest" ? dataRequLatest : dataRequImportant
+                    }
                     icon={true}
                   />
                 )}
@@ -347,7 +369,6 @@ const AuthorList = () => {
                 className="moreNewsBtn"
                 onClick={() => {
                   setPageRequ((pageRequ = pageRequ + 1));
-                  setNumberRequ((numberRequ = numberRequ + 20));
                 }}
               >
                 <Link to={pathname}>Daha Çox Xəbər</Link>

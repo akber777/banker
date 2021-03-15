@@ -56,6 +56,7 @@ import { detectItemNews } from "../../../helper/helper";
 
 // router dom
 import { Link, useLocation } from "react-router-dom";
+import { data } from "jquery";
 
 const HomePage = (...props) => {
   // home page first slider
@@ -77,17 +78,17 @@ const HomePage = (...props) => {
 
   // homepage most read news and two images news
 
-  let [pageMost, setPageMost] = useRecoilState(pageMostRead);
-  let [numberMost, setNumberMost] = useRecoilState(numberMostRead);
+  let [pageMost, setPageMost] = useState(1);
+  let [dataMost, setDataMost] = useState([]);
 
   let mostRead = useQuery(
-    ["mostRead", pageMost, numberMost],
+    ["mostRead", pageMost],
     async () => {
       const res = await axios.get(baseUrl + "news/most-read-7", {
         headers: {
           "Content-Type": "application/json",
           page: pageMost,
-          number: numberMost,
+          number: 20,
         },
       });
 
@@ -97,9 +98,11 @@ const HomePage = (...props) => {
       refetchOnWindowFocus: false,
       refetchIntervalInBackground: true,
       onSuccess: function (succ) {
-        if (succ.data.length === 0) {
-          setPageMost((pageMost = pageMost - 1));
-          setNumberMost(20);
+        if (
+          dataMost.includes(...succ.data) === false &&
+          succ.data.length !== 0
+        ) {
+          setDataMost((oldArray) => [...oldArray, ...succ.data]);
         }
       },
     }
@@ -107,36 +110,40 @@ const HomePage = (...props) => {
 
   let [apiLate, setApiVal] = useRecoilState(apiLatest);
 
-  let [pageRequ, setPageRequ] = useRecoilState(pageRequired);
-
-  let [numberRequ, setNumberRequ] = useRecoilState(numberRequired);
+  // scrollData
+  let [pageRequ, setPageRequ] = useState(1);
+  let [dataRequLatest, setDataRequLatest] = useState([]);
+  let [dataRequImportant, setDataRequImportant] = useState([]);
 
   // required news
   let requiredNews = useQuery(
-    ["requiredNews", apiLate, pageRequ, numberRequ],
+    ["requiredNews", apiLate, pageRequ],
     requiredNew,
     {
       refetchOnWindowFocus: false,
       refetchIntervalInBackground: true,
       onSuccess: function (succ) {
-        if (succ.data.length === 0) {
-          setPageRequ((pageRequ = pageRequ - 1));
-          setNumberRequ(20);
+        if (
+          dataRequLatest.includes(...succ.data) === false &&
+          succ.data.length !== 0 &&
+          apiLate === "/latest"
+        ) {
+          setDataRequLatest((oldArray) => [...oldArray, ...succ.data]);
+        }
+
+        if (
+          dataRequImportant.includes(...succ.data) === false &&
+          succ.data.length !== 0 &&
+          apiLate === "/important"
+        ) {
+          setDataRequImportant((oldArray) => [...oldArray, ...succ.data]);
         }
       },
     }
   );
 
-  let mutation = useMutation((data) => data);
-
-  // 13 news
-
-  let [checked, setChecked] = useState(false);
-
   useLayoutEffect(() => {
-    if (apiLate === "/latest") {
-      setChecked(false);
-    }
+    setApiVal("/latest");
   }, []);
 
   let onOf = (checked) => {
@@ -145,13 +152,17 @@ const HomePage = (...props) => {
     if (checked === true) {
       mutation.mutate(setApiVal("/important"));
       setPageRequ(1);
-      setNumberRequ(20);
     } else {
       mutation.mutate(setApiVal("/latest"));
       setPageRequ(1);
-      setNumberRequ(20);
     }
   };
+
+  let mutation = useMutation((data) => data);
+
+  // 13 news
+
+  let [checked, setChecked] = useState(false);
 
   // required news
   let blogHome = useQuery(["blogHome", ""], homeBlog, {
@@ -271,7 +282,11 @@ const HomePage = (...props) => {
           </div>
           <div
             className={`flex ${
-              requiredNews.isLoading === true ? "overNewsFlex" : ""
+              requiredNews.isLoading === true &&
+              dataRequImportant.length === 0 &&
+              dataRequLatest.length === 0
+                ? "overNewsFlex"
+                : ""
             }`}
           >
             <div className="news__title">
@@ -292,12 +307,23 @@ const HomePage = (...props) => {
                 />
               </div>
             </div>
-            {requiredNews.isLoading === true && detectItemNews(15)}
-            {requiredNews.isLoading === false && (
+            {requiredNews.isLoading === true &&
+              dataRequLatest.length === 0 &&
+              detectItemNews(15)}
+            {requiredNews.isLoading === false && dataRequLatest.length === 0 ? (
               <News
-                title={"Ən çox oxunanlar"}
+                title={"data"}
                 switch={true}
-                requNews={requiredNews.data}
+                requNews={requiredNews.data.data}
+                icon={true}
+              />
+            ) : (
+              <News
+                title={"data"}
+                switch={true}
+                requNews={
+                  apiLate === "/latest" ? dataRequLatest : dataRequImportant
+                }
                 icon={true}
               />
             )}
@@ -305,7 +331,6 @@ const HomePage = (...props) => {
               className="moreNewsBtn"
               onClick={() => {
                 setPageRequ((pageRequ = pageRequ + 1));
-                setNumberRequ((numberRequ = numberRequ + 20));
               }}
             >
               <Link to={pathname}>Daha Çox Xəbər</Link>
@@ -321,12 +346,21 @@ const HomePage = (...props) => {
                 }`}
               >
                 <h4>{"Populyar"}</h4>
-                {mostRead.isLoading === true && detectItemNews(15)}
-                {mostRead.isLoading === false && (
+                {mostRead.isLoading === true &&
+                  dataMost.length === 0 &&
+                  detectItemNews(15)}
+                {mostRead.isLoading === false && dataMost.length === 0 ? (
                   <News
                     title={"Populyar"}
                     switch={false}
-                    popularData={mostRead.data}
+                    popularData={mostRead.data.data}
+                    icon={true}
+                  />
+                ) : (
+                  <News
+                    title={"Populyar"}
+                    switch={false}
+                    popularData={dataMost}
                     icon={true}
                   />
                 )}
@@ -336,14 +370,17 @@ const HomePage = (...props) => {
                 className="moreNewsBtn"
                 onClick={() => {
                   setPageMost((pageMost = pageMost + 1));
-                  setNumberMost((numberMost = numberMost + 20));
                 }}
               >
                 <Link to={pathname}>Daha Çox Xəbər</Link>
               </div>
             </div>
             <div className="home__populationRight">
-              <Slides slides={false} news={mostRead.data} />
+              {mostRead.isLoading === false && dataMost.length === 0 ? (
+                <Slides slides={false} news={mostRead.data.data} />
+              ) : (
+                <Slides slides={false} news={dataMost} />
+              )}
             </div>
           </div>
           <div className="home__populationBanner">
