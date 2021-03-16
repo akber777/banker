@@ -330,10 +330,20 @@ const HomePage = (...props) => {
             <div
               className="moreNewsBtn"
               onClick={() => {
-                setPageRequ((pageRequ = pageRequ + 1));
+                if (requiredNews.isLoading === false) {
+                  setPageRequ((pageRequ = pageRequ + 1));
+                }
               }}
             >
-              <Link to={pathname}>Daha Çox Xəbər</Link>
+              <Link to={pathname}>
+                {requiredNews.isLoading === false ? (
+                  "Daha Çox Xəbər"
+                ) : (
+                  <div class="loader-1 center">
+                    <span></span>
+                  </div>
+                )}
+              </Link>
             </div>
           </div>
         </div>
@@ -369,10 +379,20 @@ const HomePage = (...props) => {
                 style={{ marginTop: 25 }}
                 className="moreNewsBtn"
                 onClick={() => {
-                  setPageMost((pageMost = pageMost + 1));
+                  if (mostRead.isLoading === false) {
+                    setPageMost((pageMost = pageMost + 1));
+                  }
                 }}
               >
-                <Link to={pathname}>Daha Çox Xəbər</Link>
+                <Link to={pathname}>
+                  {mostRead.isLoading === false ? (
+                    "Daha Çox Xəbər"
+                  ) : (
+                    <div class="loader-1 center">
+                      <span></span>
+                    </div>
+                  )}
+                </Link>
               </div>
             </div>
             <div className="home__populationRight">

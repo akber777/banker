@@ -153,7 +153,6 @@ const BlogListAll = () => {
     });
   };
 
-
   useLayoutEffect(() => {
     setApiVal("/latest");
   }, []);
@@ -341,7 +340,7 @@ const BlogListAll = () => {
               </div>
               <div
                 className={`newsDetailed ${
-                  requiredNews.isLoading === true ? "" : ""
+                  requiredNews.isLoading === true ? "overNews" : ""
                 }`}
               >
                 {requiredNews.isLoading === true &&
@@ -370,10 +369,20 @@ const BlogListAll = () => {
                 style={{ marginBottom: 15 }}
                 className="moreNewsBtn"
                 onClick={() => {
-                  setPageRequ((pageRequ = pageRequ + 1));
+                  if (requiredNews.isLoading === false) {
+                    setPageRequ((pageRequ = pageRequ + 1));
+                  }
                 }}
               >
-                <Link to={pathname}>Daha Çox Xəbər</Link>
+                <Link to={pathname}>
+                  {requiredNews.isLoading === false ? (
+                    "Daha Çox Xəbər"
+                  ) : (
+                    <div class="loader-1 center">
+                      <span></span>
+                    </div>
+                  )}
+                </Link>
               </div>
               {/* <div className='newsDetail__raitings'>
                                 <div className='newsDetail__raitings--title'>
