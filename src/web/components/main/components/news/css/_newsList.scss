@@ -130,6 +130,10 @@
         line-height: 16px;
         color: #6f6f6f;
 
+        &:last-child {
+          display: none;
+        }
+
         svg {
           margin-right: 5px;
         }
