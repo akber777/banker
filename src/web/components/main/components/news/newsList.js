@@ -100,7 +100,9 @@ const NewsList = () => {
     {
       refetchOnWindowFocus: true,
       onSuccess: function (succ) {
-        setNewsLastItem(succ.data.news.data);
+        if (page <= 1) {
+          setNewsLastItem(succ.data.news.data);
+        }
       },
     }
   );
@@ -373,7 +375,7 @@ const NewsList = () => {
                         </NavLink>
                       </Col>
                     ))}
-                {relatedCategory.isLoading === true &&
+                {isLoading === true &&
                   newsLastItem.map((item, index) => (
                     <Col md="6" lg="4" className="mb-4" key={index}>
                       <NavLink to={"/" + item.slug}>
