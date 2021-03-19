@@ -29,3 +29,9 @@ export const numberMostRead = atom({
   key: "numberMostRead",
   default: 20,
 });
+
+export const newsList = atom({
+  key: "newsListAll",
+  default: [],
+});
+

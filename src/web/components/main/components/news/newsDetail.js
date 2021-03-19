@@ -151,10 +151,6 @@ const NewsDetail = () => {
     };
   }, [data]);
 
-  useLayoutEffect(() => {
-    setApiVal("/latest");
-  });
-
   let [checked, setChecked] = useState(false);
 
   let [apiVal, setApiVal] = useRecoilState(apiValue);
@@ -186,6 +182,10 @@ const NewsDetail = () => {
       }
     },
   });
+
+  useLayoutEffect(() => {
+    setApiVal("/latest");
+  }, []);
 
   let mutation = useMutation((data) => data);
 

@@ -1,6 +1,5 @@
-export const newsList = [
-    'news',
-    'related'
+export const newsListCategory = [
+    'news'
 ]
 
 
