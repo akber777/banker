@@ -35,3 +35,9 @@ export const newsList = atom({
   default: [],
 });
 
+export const newsTitle = atom({
+  key: "newsTitle",
+  default: [],
+});
+
+

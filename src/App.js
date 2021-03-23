@@ -127,7 +127,9 @@ function App() {
   let windowWith = window.innerWidth;
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    if (pathname.split("/")[1] !== "category") {
+      window.scrollTo(0, 0);
+    }
   }, [pathname]);
 
   return (

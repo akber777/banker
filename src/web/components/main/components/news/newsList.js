@@ -36,7 +36,7 @@ import { newsListCategory } from "../../../api/include";
 import { useRecoilState } from "recoil";
 
 //atom
-import { apiValue, newsList } from "../../../atoms/atoms";
+import { apiValue, newsList, newsTitle } from "../../../atoms/atoms";
 
 // query func
 
@@ -45,11 +45,7 @@ import { requiredNew } from "../../../queries/queries";
 // jquery
 import $ from "jquery";
 
-import {
-  detectItemList,
-  detectItemNews,
-  detectItemListEnd,
-} from "../../../helper/helper";
+import { detectItemNews } from "../../../helper/helper";
 
 const NewsList = () => {
   const responsive = {
@@ -78,6 +74,8 @@ const NewsList = () => {
   let [news, setNews] = useState([]);
 
   let [newsLastItem, setNewsLastItem] = useRecoilState(newsList);
+
+  let [newsTitleState, setNewsTitleState] = useRecoilState(newsTitle);
 
   let [relatedCategoryState, setRelatedCategory] = useState([]);
 
@@ -265,7 +263,8 @@ const NewsList = () => {
       <div className="newsList__content">
         <Container>
           <div className="newsList__content--title">
-            <h1>{isLoading === false && data.data.name}</h1>
+            {isLoading === false && setNewsTitleState(data.data.name)}
+            <h1>{isLoading === false ? data.data.name : newsTitleState}</h1>
           </div>
           <div className="newsList__slider">
             {/* {isLoading === true && (
