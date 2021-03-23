@@ -1,18 +1,32 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
+
+// reactstrap
 import { Container } from "react-bootstrap";
+
+// react router dom
 import { NavLink } from "react-router-dom";
 
-// csss
-
+// css
 import "./css/_news.scss";
 
+// jquery
+import $ from "jquery";
+
 const News = () => {
+  useLayoutEffect(() => {
+    $(".newsMobile__items button:first").addClass("active");
+    $(".newsMobile__items button").on("click", function () {
+      $(".newsMobile__items button").removeClass("active");
+      $(this).addClass("active");
+    });
+  }, []);
+
   return (
     <div className="newsMobile">
       <div className="newsMobile__items">
         <div className="newsMobile__buttons">
-          <button className="noActive">Xəbərlər</button>
-          <button className="active">Son xəbərlər</button>
+          <button>Xəbərlər</button>
+          <button>Son xəbərlər</button>
         </div>
         <Container>
           <div className="newsMobile__newsSelf">
@@ -99,7 +113,10 @@ const News = () => {
         </Container>
       </div>
       <div className="mobileHome__banner">
-        <img src={'https://banker.az/wp-content/uploads/2020/09/investaz.az_.gif'} alt="" />
+        <img
+          src={"https://banker.az/wp-content/uploads/2020/09/investaz.az_.gif"}
+          alt=""
+        />
       </div>
     </div>
   );
