@@ -105,21 +105,13 @@ const NewsPart = React.memo(function MultiSlider() {
                                 </div>
                                 <div className="newsPart__info">
                                   <div className="share">
-                                    <span>
-                                      {subitem.post_date
-                                        .split(" ")[1]
-                                        .split(":")[0] +
-                                        ":" +
-                                        subitem.post_date
-                                          .split(" ")[1]
-                                          .split(":")[1]}
-                                    </span>
-                                    {subitem.viewcount.data.length !== 0 && (
+                                    <span>{subitem.post_date}</span>
+                                    {/* {subitem.viewcount.data.length !== 0 && (
                                       <p>
                                         <FontAwesomeIcon icon={faEye} />
                                         {subitem.viewcount.data.count}
                                       </p>
-                                    )}
+                                    )} */}
                                   </div>
                                   <div className="share">
                                     <FontAwesomeIcon icon={faShare} />

@@ -738,11 +738,7 @@ const BlogDetail = () => {
                           </div>
                           <div className="newsDetail__tools">
                             <div className="newsDetail__tools--left">
-                              <p>4 dekabr 2020, saat 14:35</p>
-                              <p>
-                                <FontAwesomeIcon icon={faEye} />
-                                298
-                              </p>
+                              <p>{data.data.post_date}</p>
                             </div>
                           </div>
                         </div>

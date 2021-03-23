@@ -44,12 +44,12 @@ const Blog = (props) => {
                                                                 item.post_date
                                                             }
                                                         </p>
-                                                        <p>
+                                                        {/* <p>
                                                             <FontAwesomeIcon icon={faEye} />
                                                             {
                                                                 item.viewcount.data.count
                                                             }
-                                                        </p>
+                                                        </p> */}
                                                     </div>
                                                     <div>
                                                         <FontAwesomeIcon icon={faShare} />

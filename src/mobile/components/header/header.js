@@ -68,7 +68,7 @@ const Header = () => {
             <header className='headerMobile'>
                 {/* monile open menu */}
                 <div className='headerMobile__banner'>
-                    <img src={require('../images/bannerTop.png').default} alt='' />
+                    <img src={'https://banker.az/wp-content/uploads/2020/09/investaz.az_.gif'} alt='' />
                 </div>
                 <div className='headerMobile__menuBox'>
                     <Container>

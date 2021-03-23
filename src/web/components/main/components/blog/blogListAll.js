@@ -32,7 +32,7 @@ import { baseUrl } from "../../../api/api";
 import { useRecoilState } from "recoil";
 
 //atom
-import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
+import { apiValue } from "../../../atoms/atoms";
 
 // query func
 

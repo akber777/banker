@@ -37,13 +37,7 @@ import { baseUrl } from "../../../api/api";
 import { useRecoilState } from "recoil";
 
 // atoms
-import {
-  apiLatest,
-  pageRequired,
-  numberRequired,
-  pageMostRead,
-  numberMostRead,
-} from "../../../atoms/atoms";
+import { apiLatest } from "../../../atoms/atoms";
 
 // query func
 
@@ -242,13 +236,18 @@ const HomePage = (...props) => {
             <img src={require("../../../images/up.png").default} alt="" />
           </p>
         </div>
-        <div className="home__bannerTop" style={{ backgroundColor: "#fff" }}>
-          <img
-            src={
-              "https://banker.az/wp-content/uploads/2020/12/DevOps-19DEK-static-banner-970x90-1.png"
-            }
-            alt=""
-          />
+        <div className="home__bannerTop" style={{ backgroundColor: "#d1d2e2" }}>
+          <iframe
+            id="rv-h5-b6deb72736"
+            name="rv-h5-b6deb72736"
+            src="https://ads.adviad.com/www/images/e4e6180feb387eda3685ed63327df9ac/index.html?clickTag=https://ads2.adviad.com/www/delivery/ck.php?oaparams=2__bannerid=3037__zoneid=958__cb=b6deb72736__campaignid=1700__p1=1616538068__p2=8e3686f21f4274a605a69d4805bf__p3=634886914.bba5e399d158bad1b00631aa6a2c8329f05d941d__oadest=https%3A%2F%2Fibar.az%2Faz%2Fyazfurseti%3Futm_source%3Dbanker.az%26utm_medium%3Dbanner%2520news%26utm_campaign%3DYaz%2520furseti%26utm_content%3DAdviad%26utm_source%3Dbanker.az%26utm_medium%3Diab_banner%26utm_campaign%3DABB_Banker.az_desk_2186x185"
+            marginwidth="0"
+            marginheight="0"
+            scrolling="no"
+            frameborder="0"
+            width="970"
+            height="90"
+          ></iframe>
         </div>
         <div className="home__sectionOne">
           <div className="home__leftBox">

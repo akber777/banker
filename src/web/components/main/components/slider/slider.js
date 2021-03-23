@@ -34,9 +34,6 @@ import PropTypes from "prop-types";
 const Slides = ({ ...props }) => {
   return (
     <div className="slider">
-      {
-        console.log(props)
-      }
       {props.slides === true ? (
         <CarouselProvider
           naturalSlideWidth={100}

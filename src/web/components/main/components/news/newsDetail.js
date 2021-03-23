@@ -782,53 +782,7 @@ const NewsDetail = () => {
                         </div>
                         <div className="newsDetail__tools">
                           <div className="newsDetail__tools--left">
-                            <p>
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).years !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).years + " il"}
-                                </span>
-                              )}
-
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).months !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).months + " ay"}
-                                </span>
-                              )}
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).hours !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).hours + " saat"}
-                                </span>
-                              )}
-                              {datetimeDifference(
-                                new Date(data.data.post_date),
-                                new Date()
-                              ).minutes !== 0 && (
-                                <span>
-                                  {datetimeDifference(
-                                    new Date(data.data.post_date),
-                                    new Date()
-                                  ).minutes + " dəqiqə"}
-                                </span>
-                              )}
-                            </p>
+                            <p>{data.data.post_date}</p>
                             {/* <p>
                               <FontAwesomeIcon icon={faEye} />
                               {same.viewcount.data.count}

@@ -68,7 +68,7 @@ const CategorySlider = (props) => {
                             <h4>SOCAR  və “Snam” TAP ilə hidrogen nəqli ilə bağlı birgə tədqiqat aparacaq</h4>
                             <p>
                                 <span>
-                                    Dünən, 16:45
+                                    2021-01-17 10:30:36
                             </span>
                                 <span>
                                     <svg width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +83,7 @@ const CategorySlider = (props) => {
                             <h4>SOCAR  və “Snam” TAP ilə hidrogen nəqli ilə bağlı birgə tədqiqat aparacaq</h4>
                             <p>
                                 <span>
-                                    Dünən, 16:45
+                                    2021-01-17 10:30:36
                             </span>
                                 <span>
                                     <svg width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +98,7 @@ const CategorySlider = (props) => {
                             <h4>SOCAR  və “Snam” TAP ilə hidrogen nəqli ilə bağlı birgə tədqiqat aparacaq</h4>
                             <p>
                                 <span>
-                                    Dünən, 16:45
+                                    2021-01-17 10:30:36
                             </span>
                                 <span>
                                     <svg width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,7 +113,7 @@ const CategorySlider = (props) => {
                             <h4>SOCAR  və “Snam” TAP ilə hidrogen nəqli ilə bağlı birgə tədqiqat aparacaq</h4>
                             <p>
                                 <span>
-                                    Dünən, 16:45
+                                    2021-01-17 10:30:36
                             </span>
                                 <span>
                                     <svg width="20" height="25" viewBox="0 0 20 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -126,7 +126,7 @@ const CategorySlider = (props) => {
                 </Container>
             </div>
             <div className='mobileHome__banner'>
-                <img src={require('../../components/images/bannerTop.png').default} alt='' />
+                <img src={'https://banker.az/wp-content/uploads/2020/09/investaz.az_.gif'} alt='' />
             </div>
         </div>
     );
