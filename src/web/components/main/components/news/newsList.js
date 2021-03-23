@@ -42,10 +42,10 @@ import { apiValue, newsList, newsTitle } from "../../../atoms/atoms";
 
 import { requiredNew } from "../../../queries/queries";
 
-// jquery
-import $ from "jquery";
-
 import { detectItemNews } from "../../../helper/helper";
+
+// react splide
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 
 const NewsList = () => {
   const responsive = {
@@ -280,7 +280,37 @@ const NewsList = () => {
                 </div>
               </div>
             )} */}
-            <Carousel
+            <Splide
+              options={{
+                rewind: true,
+                gap: "1rem",
+                perPage: 9,
+                arrows: false,
+                fixedWidth: "auto",
+                pagination: false
+              }}
+            >
+              {relatedCategory.isLoading === false
+                ? relatedCategory.data.data.map((subitem) => (
+                    <SplideSlide>
+                      <div className="newsList__slider--item" key={subitem.id}>
+                        <NavLink to={"/category/" + subitem.slug}>
+                          <span>{subitem.name}</span>
+                        </NavLink>
+                      </div>
+                    </SplideSlide>
+                  ))
+                : relatedCategoryState.map((item) => (
+                    <SplideSlide>
+                      <div className="newsList__slider--item" key={item.id}>
+                        <NavLink to={"/category/" + item.slug}>
+                          <span>{item.name}</span>
+                        </NavLink>
+                      </div>
+                    </SplideSlide>
+                  ))}
+            </Splide>
+            {/* <Carousel
               responsive={responsive}
               arrows={false}
               autoPlaySpeed={3000}
@@ -291,22 +321,8 @@ const NewsList = () => {
               focusOnSelect={false}
               itemClass="carousel-item-padding"
             >
-              {relatedCategory.isLoading === false
-                ? relatedCategory.data.data.map((subitem) => (
-                    <div className="newsList__slider--item" key={subitem.id}>
-                      <NavLink to={"/category/" + subitem.slug}>
-                        <span>{subitem.name}</span>
-                      </NavLink>
-                    </div>
-                  ))
-                : relatedCategoryState.map((item) => (
-                    <div className="newsList__slider--item" key={item.id}>
-                      <NavLink to={"/category/" + item.slug}>
-                        <span>{item.name}</span>
-                      </NavLink>
-                    </div>
-                  ))}
-            </Carousel>
+             
+            </Carousel> */}
           </div>
           <div className="newsList__flexBox">
             <div className="newsList__left">

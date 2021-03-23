@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
 // tools
+import "@splidejs/splide/dist/css/themes/splide-default.min.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import "react-multi-carousel/lib/styles.css";
