@@ -42,7 +42,11 @@ import { apiValue, newsList, newsTitle } from "../../../atoms/atoms";
 
 import { requiredNew } from "../../../queries/queries";
 
-import { detectItemNews } from "../../../helper/helper";
+import {
+  detectItemNews,
+  detectItemListEnd,
+  detectItemList,
+} from "../../../helper/helper";
 
 // react splide
 import { Splide, SplideSlide } from "@splidejs/react-splide";
@@ -139,7 +143,7 @@ const NewsList = () => {
         window.pageYOffset + window.innerHeight >=
         document.body.clientHeight -
           document.querySelector(".footer").clientHeight -
-          200
+          50
       ) {
         if (data.data.news.data.length !== 0) {
           setPage((page = page + 1));
@@ -287,7 +291,7 @@ const NewsList = () => {
                 perPage: 9,
                 arrows: false,
                 fixedWidth: "auto",
-                pagination: false
+                pagination: false,
               }}
             >
               {relatedCategory.isLoading === false
@@ -310,23 +314,12 @@ const NewsList = () => {
                     </SplideSlide>
                   ))}
             </Splide>
-            {/* <Carousel
-              responsive={responsive}
-              arrows={false}
-              autoPlaySpeed={3000}
-              autoPlay={false}
-              centerMode={false}
-              showDots={false}
-              infinite={true}
-              focusOnSelect={false}
-              itemClass="carousel-item-padding"
-            >
-             
-            </Carousel> */}
           </div>
           <div className="newsList__flexBox">
             <div className="newsList__left">
-              {/* {isLoading === true && <Row>{detectItemList(21)}</Row>} */}
+              {newsLastItem.length === 0 && isLoading !== false && (
+                <Row>{detectItemList(21)}</Row>
+              )}
               <Row>
                 {isLoading === false && news.length === 0
                   ? data.data.news.data.map((item, index) => (
@@ -344,7 +337,7 @@ const NewsList = () => {
                                 <p>{item.title}</p>
                               </div>
                               <div className="newsList__flex--bottom">
-                                <p>{item.post_date.split(" ")[0]}</p>
+                                <p>{item.post_date}</p>
                                 {/* {item.viewcount.data.length !== 0 && (
                                   <p>
                                     <svg
@@ -414,7 +407,7 @@ const NewsList = () => {
                     </Col>
                   ))}
               </Row>
-              {/* {isLoading === true && <Row>{detectItemListEnd(3)}</Row>} */}
+              {isLoading === true && <Row>{detectItemListEnd(3)}</Row>}
             </div>
             <div className="newsList__right">
               <div className="news__title">
