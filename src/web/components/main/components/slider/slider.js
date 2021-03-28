@@ -87,31 +87,29 @@ const Slides = ({ ...props }) => {
               (item, index) =>
                 index < 2 && (
                   <div className="slider__box" key={index}>
-                    <NavLink to={item.news.data.slug}>
-                      <div className="gradientNews"></div>
-                      <img
-                        src={
-                          item.news.data.img !== null &&
-                          item.news.data.img &&
-                          item.news.data.img.slider
-                        }
-                        alt=""
-                      />
-                      <div className="slider__info">
-                        <h4>{item.news.data.title}</h4>
-                        <div className="slider__info--item">
-                          <p>
-                            <FontAwesomeIcon icon={faClock} />
-                            {item.news.data.post_date}
-                          </p>
-                          {/* <p>
+                    {
+                      <NavLink to={item.slug}>
+                        <div className="gradientNews"></div>
+                        <img
+                          src={item.img !== null && item.img && item.img.cover}
+                          alt=""
+                        />
+                        <div className="slider__info">
+                          <h4>{item.title}</h4>
+                          <div className="slider__info--item">
+                            <p>
+                              <FontAwesomeIcon icon={faClock} />
+                              {item.post_date}
+                            </p>
+                            {/* <p>
                             <FontAwesomeIcon icon={faEye} />
-                            {item.news.data.viewcount.data.count}
+                            {item.viewcount.data.count}
                           </p> */}
-                          {/* <p>{item.news.data.post_date.split(" ")[1]}</p> */}
+                            {/* <p>{item.post_date.split(" ")[1]}</p> */}
+                          </div>
                         </div>
-                      </div>
-                    </NavLink>
+                      </NavLink>
+                    }
                   </div>
                 )
             )

@@ -14,6 +14,8 @@ import "react-multi-carousel/lib/styles.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./web/components/baseCss/_base.scss";
+import "./web/components/baseCss/keyframes.css";
+
 // recoil
 
 import { RecoilRoot } from "recoil";

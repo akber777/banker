@@ -32,25 +32,25 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                   <div className="news__wrapper" key={index}>
                     <div className="news__contentLeft">
                       <span>
-                        {item.news.data.post_date.split(" ")[1].split(":")[0] +
+                        {item.post_date.split(" ")[1].split(":")[0] +
                           ":" +
-                          item.news.data.post_date.split(" ")[1].split(":")[1]}
+                          item.post_date.split(" ")[1].split(":")[1]}
                       </span>
                     </div>
                     <div className="news__contentRight">
-                      <NavLink to={item.news.data.slug}>
-                        <p>{item.news.data.title}</p>
+                      <NavLink to={item.slug}>
+                        <p>{item.title}</p>
                         <div className="news__contentInfo">
                           <div className="share">
                             <p style={{ fontSize: 10, marginLeft: 0 }}>
                               {props.icon === true && (
                                 <FontAwesomeIcon icon={faClock} />
                               )}
-                              {item.news.data.post_date}
+                              {item.post_date}
                             </p>
                             {/* <p>
                               <FontAwesomeIcon icon={faEye} />
-                              {item.news.data.viewcount.data.count}
+                              {item.viewcount.data.count}
                             </p> */}
                           </div>
                           <div className="share">
@@ -77,14 +77,14 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                 <div className="news__wrapper" key={index}>
                   <div className="news__contentLeft">
                     <span>
-                      {item.news.data.post_date.split(" ")[1].split(":")[0] +
+                      {item.post_date.split(" ")[1].split(":")[0] +
                         ":" +
-                        item.news.data.post_date.split(" ")[1].split(":")[1]}
+                        item.post_date.split(" ")[1].split(":")[1]}
                     </span>
                   </div>
                   <div className="news__contentRight">
-                    <NavLink to={"/" + item.news.data.slug}>
-                      <p>{item.news.data.title}</p>
+                    <NavLink to={"/" + item.slug}>
+                      <p>{item.title}</p>
                       <div className="news__contentInfo">
                         <div className="share">
                           <p>
@@ -95,7 +95,7 @@ const NewsPage = React.memo(function NewsPage({ ...props }) {
                           </p>
                           <p>
                             <FontAwesomeIcon icon={faEye} />
-                            {/* <span>{item.news.data.viewcount.data.count}</span> */}
+                            {/* <span>{item.viewcount.data.count}</span> */}
                           </p>
                         </div>
                         <div className="share">

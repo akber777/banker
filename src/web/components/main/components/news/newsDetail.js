@@ -54,14 +54,20 @@ import { requiredNew, relatedNews } from "../../../queries/queries";
 import { checkSalary, detectItemNews } from "../../../helper/helper";
 
 const NewsDetail = () => {
+  useLayoutEffect(() => {
+    window.scroll({
+      top: 0,
+    });
+  }, []);
+
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 6,
+      items: 4,
     },
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
-      items: 5,
+      items: 4,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
@@ -82,9 +88,7 @@ const NewsDetail = () => {
   let { data, isLoading } = useQuery(
     ["newsDetail", pathDetail],
     async () => {
-      const res = await axios.get(
-        baseUrl + newsDetail.toString() + pathDetail + "?include=sames"
-      );
+      const res = await axios.get(baseUrl + newsDetail.toString() + pathDetail);
 
       return res.data;
     },
@@ -219,6 +223,44 @@ const NewsDetail = () => {
       refetchIntervalInBackground: false,
     }
   );
+
+  // news next
+
+  let [pageSlug, setPageSlug] = useState(pathDetail);
+
+  let [nextNews, setNextNews] = useState([]);
+
+  let newsNext = useQuery(
+    ["newsNext", pageSlug],
+    async () => {
+      const res = await axios.get(baseUrl + "news/next/" + pageSlug);
+      return res.data;
+    },
+    {
+      refetchOnWindowFocus: false,
+      refetchIntervalInBackground: true,
+      onSuccess: function (succ) {
+        if (nextNews.includes(succ.data) === false) {
+          setNextNews((oldArray) => [...oldArray, succ.data]);
+        }
+      },
+    }
+  );
+
+  window.onscroll = function () {
+    if (newsNext.isLoading === false) {
+      if (
+        window.pageYOffset + window.innerHeight >=
+        document.body.clientHeight -
+          document.querySelector(".footer").clientHeight -
+          500
+      ) {
+        if (newsNext.length !== 0 && newsNext.data !== undefined) {
+          setPageSlug(newsNext.data.data.slug);
+        }
+      }
+    }
+  };
 
   return (
     <main className="newsDetail" style={{ minHeight: 500 }}>
@@ -451,7 +493,7 @@ const NewsDetail = () => {
                         </div>
                       )}
                       {data !== undefined && (
-                        <img src={data.data.img.original} alt="" />
+                        <img src={data.data.img.detail} alt="" />
                       )}
                     </div>
                     <div className="newsDetail__tools">
@@ -746,7 +788,7 @@ const NewsDetail = () => {
                           <div className="leayoutItem"></div>
                           <img
                             src={
-                              item.img !== null && item.img && item.img.thumb
+                              item.img !== null && item.img && item.img.cover
                             }
                             alt=""
                           />
@@ -760,79 +802,211 @@ const NewsDetail = () => {
               )}
             </div>
             <div className="newsDetail__multiNews">
-              <div className="newsDetail__left p-0">
-                {isLoading === false &&
-                  data !== undefined &&
-                  data.data.sames.data.length !== 0 &&
-                  data.data.sames.data.map((same) => (
-                    <NavLink to={same.slug} key={same.id}>
-                      <div className="newsDetail__newsBox">
+              <div className="newsDetail__left l100">
+                {nextNews.length !== 0 &&
+                  nextNews.map((data) => (
+                    <div className="newsDetail__next">
+                      <div className="newsDetail__next--left">
                         <div className="newsDetail__title">
-                          <h1>{same.title}</h1>
+                          {isLoading === true && (
+                            <div
+                              className="placeholder wave"
+                              style={{ height: 90 + "px" }}
+                            >
+                              <div className="line"></div>
+                              <div className="line"></div>
+                              <div className="line"></div>
+                            </div>
+                          )}
+                          {isLoading === false && data !== undefined && (
+                            <h1>{data.title}</h1>
+                          )}
                         </div>
-                        <div className="newsDetail__newsBox--imgBox">
+                        <div className="newsDetail__buttonTop">
+                          {data === undefined && (
+                            <div className="placeholder wave categoriesWave">
+                              <div className="line"></div>
+                              <div className="line"></div>
+                              <div className="line"></div>
+                            </div>
+                          )}
+                          {data !== undefined &&
+                            data.categories.data.length !== 0 &&
+                            data.categories.data.map((category) => (
+                              <NavLink
+                                to={"/category/xeberler/" + category.slug}
+                                key={category.id}
+                              >
+                                {category.name}
+                              </NavLink>
+                            ))}
+                        </div>
+                        <div className="home__bannerTop">
                           <img
                             src={
-                              same.img !== null &&
-                              same.img !== undefined &&
-                              same.img.slider
+                              require("../../../images/bannerDetail.png")
+                                .default
                             }
                             alt=""
                           />
                         </div>
-                        <div className="newsDetail__tools">
-                          <div className="newsDetail__tools--left">
-                            <p>{data.data.post_date}</p>
-                            {/* <p>
-                              <FontAwesomeIcon icon={faEye} />
-                              {same.viewcount.data.count}
-                            </p> */}
+                        <div
+                          className="newsDetail__newsBox"
+                          style={{ marginRight: 0 }}
+                        >
+                          <div className="newsDetail__newsBox--imgBox">
+                            {data === undefined && (
+                              <div
+                                className="placeholder wave"
+                                style={{ height: "auto" }}
+                              >
+                                <div
+                                  style={{ height: "500px" }}
+                                  className="square"
+                                ></div>
+                              </div>
+                            )}
+                            {data !== undefined && (
+                              <img src={data.img.detail} alt="" />
+                            )}
+                          </div>
+                          <div className="newsDetail__tools">
+                            <div className="newsDetail__tools--left">
+                              {data !== undefined && (
+                                <>
+                                  <p>{data.post_date}</p>
+                                  {/* <p>
+                                <FontAwesomeIcon icon={faEye} />
+                                {data.data.viewcount.data.count}
+                              </p> */}
+                                </>
+                              )}
+                            </div>
+                            <div className="newsDetail__tools--right">
+                              <p>Mətn ölçüsü</p>
+                              <div className="newsDetail__btnAll">
+                                <button className="minus">-</button>
+                                <span className="showFont">18</span>
+                                <button className="plus">+</button>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="linkBox">
-                        Hamısını oxu
-                        <svg
-                          width="9"
-                          height="14"
-                          viewBox="0 0 9 14"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div className="newsDetail__social">
+                          <a href="2#">
+                            <p>
+                              <svg
+                                width="15"
+                                height="17"
+                                viewBox="0 0 15 17"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M0.078125 8.79689V15.5508C0.078125 15.8792 0.343457 16.1445 0.671875 16.1445H1.87793V8.20314H0.671875C0.343457 8.20314 0.078125 8.46848 0.078125 8.79689ZM14.4376 8.90266C14.7493 8.49074 14.9219 7.98605 14.9219 7.46096C14.9219 6.62785 14.4562 5.83742 13.7065 5.40139C13.5136 5.28819 13.2938 5.22862 13.0701 5.22883H8.61885L8.73018 2.94846C8.75801 2.39738 8.56318 1.87414 8.18281 1.47522C7.9972 1.27839 7.77312 1.12182 7.52448 1.01521C7.27584 0.908607 7.00793 0.854241 6.7374 0.85549C5.77256 0.85549 4.91904 1.5049 4.66299 2.43449L3.071 8.20129L3.06543 16.1427H11.8251C11.9977 16.1427 12.1628 16.1093 12.3168 16.0425C13.2 15.6658 13.7696 14.803 13.7696 13.8456C13.7696 13.6118 13.7362 13.3818 13.6694 13.1591C13.9812 12.7472 14.1537 12.2425 14.1537 11.7174C14.1537 11.4836 14.1203 11.2535 14.0535 11.0309C14.3652 10.619 14.5378 10.1143 14.5378 9.58918C14.5378 9.35539 14.5044 9.12531 14.4376 8.90266ZM13.2223 8.25881L12.8159 8.61135L13.0757 9.08449C13.1607 9.23974 13.2047 9.41406 13.2037 9.59103C13.2037 9.89719 13.072 10.1885 12.84 10.3889L12.4337 10.7414L12.6916 11.2127C12.7766 11.368 12.8206 11.5423 12.8196 11.7193C12.8196 12.0254 12.6879 12.3167 12.456 12.5171L12.0496 12.8696L12.3075 13.3409C12.3925 13.4962 12.4365 13.6705 12.4355 13.8475C12.4355 14.2631 12.1906 14.6379 11.8121 14.8086H4.40137V8.40353C4.74648 7.15666 5.2623 5.28635 5.95068 2.79074C5.99878 2.61958 6.1011 2.46863 6.24229 2.36056C6.38347 2.2525 6.5559 2.19315 6.73369 2.19143C6.87285 2.18957 7.01201 2.23225 7.1252 2.31574C7.30889 2.45305 7.40723 2.66086 7.39609 2.88166L7.21797 6.56291H13.0516C13.3818 6.76516 13.5859 7.10656 13.5859 7.46096C13.5859 7.76711 13.4542 8.05842 13.2223 8.25881Z"
+                                  fill="white"
+                                />
+                              </svg>
+                              Bizi izləyin
+                            </p>
+                            <span>facebook</span>
+                          </a>
+                          <a href="2#">
+                            <p>
+                              <svg
+                                width="21"
+                                height="16"
+                                viewBox="0 0 21 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M18.665 0.407207L0.934973 6.67446C-0.275027 7.11996 -0.268027 7.73871 0.712973 8.01462L5.26497 9.31629L15.797 3.22504C16.295 2.94729 16.75 3.09671 16.376 3.40104L7.84297 10.4603H7.84097L7.84297 10.4612L7.52897 14.7622C7.98897 14.7622 8.19197 14.5688 8.44997 14.3405L10.661 12.3697L15.26 15.4836C16.108 15.9117 16.717 15.6917 16.928 14.764L19.947 1.72171C20.256 0.585957 19.474 0.0717071 18.665 0.407207Z"
+                                  fill="white"
+                                />
+                              </svg>
+                              Bizə qoşulun
+                            </p>
+                            <span>Telegram</span>
+                          </a>
+                        </div>
+                        <div
+                          className="home__bannerTop"
+                          style={{ backgroundColor: "#010101" }}
                         >
-                          <path
-                            d="M0.307251 11.9728L5.26892 7.00031L0.307251 2.02781L1.83475 0.500305L8.33475 7.00031L1.83475 13.5003L0.307251 11.9728Z"
-                            fill="#014577"
+                          <img
+                            src={
+                              "https://banker.az/wp-content/uploads/2021/01/XB-SWISSTOOL-1450x300px.jpg"
+                            }
+                            alt=""
                           />
-                        </svg>
+                        </div>
+                        <div className="newsDetail__self">
+                          {data !== undefined && renderHTML(data.content)}
+                        </div>
+                        <div className="home__bannerTop">
+                          <img
+                            src={
+                              "https://banker.az/wp-content/uploads/2021/02/1450x300-2.jpg"
+                            }
+                            alt=""
+                          />
+                        </div>
+                        {newsNext.isLoading === true && (
+                          <div class="loader">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        )}
                       </div>
-                    </NavLink>
+                    </div>
                   ))}
               </div>
               <div className="newsDetail__right">
-                <div className="newsDetail__bannerRight">
-                  <img
-                    src={require("../../../images/turanBank.jpg").default}
-                    alt=""
-                  />
-                </div>
-                <div className="newsDetail__bannerRight">
-                  <img
-                    src={require("../../../images/masin.jpg").default}
-                    alt=""
-                  />
-                </div>
-                <div className="newsDetail__bannerRight">
-                  <img
-                    src={require("../../../images/ziraat.jpg").default}
-                    alt=""
-                  />
-                </div>
-                <div className="newsDetail__bannerRight">
-                  <img
-                    src={require("../../../images/masin.jpg").default}
-                    alt=""
-                  />
-                </div>
+                {nextNews.length !== 0 &&
+                  nextNews.map((data) => (
+                    <>
+                      <div className="newsDetail__bannerRight">
+                        <img
+                          src={
+                            "https://banker.az/wp-content/uploads/2021/01/banker.jpg"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="newsDetail__bannerRight">
+                        <img
+                          src={
+                            "https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="newsDetail__bannerRight">
+                        <img
+                          src={
+                            "https://banker.az/wp-content/uploads/2020/12/360x380-1.jpg"
+                          }
+                          alt=""
+                        />
+                      </div>
+                      <div className="newsDetail__bannerRight">
+                        <img
+                          src={
+                            "https://banker.az/wp-content/uploads/2020/08/400x420.gif"
+                          }
+                          alt=""
+                        />
+                      </div>
+                    </>
+                  ))}
               </div>
             </div>
           </div>

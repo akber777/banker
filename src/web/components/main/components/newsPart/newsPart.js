@@ -41,7 +41,7 @@ const NewsPart = React.memo(function MultiSlider() {
     ["requiredNews", ""],
     async () => {
       const res = await axios.get(
-        baseUrl + `news/home${"/category/"}?include=homeNews,parent`
+        baseUrl + `news/home${"/category/"}?include=homeNews`
       );
 
       return res.data;
@@ -125,15 +125,12 @@ const NewsPart = React.memo(function MultiSlider() {
                       <NavLink
                         to={
                           `/category/${
-                            item.parent.data.slug !== undefined
-                              ? item.parent.data.slug + "/"
-                              : ""
-                          }` + item.slug
+                            item.slug
+                          }`
                         }
                         className="newsPart__allNews"
                       >
                         Daha çox
-                        {}
                         <svg
                           width="8"
                           height="12"

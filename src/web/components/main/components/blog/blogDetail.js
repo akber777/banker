@@ -424,7 +424,7 @@ const BlogDetail = () => {
                           </div>
                         )}
                         {data !== undefined && (
-                          <img src={data.data.img.original} alt="" />
+                          <img src={data.data.img.detail} alt="" />
                         )}
                       </div>
                       <div className="newsDetail__tools">

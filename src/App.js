@@ -40,6 +40,11 @@ const NewsDetail = Loadable({
   loading: Loading,
 });
 
+const NewsAll = Loadable({
+  loader: () => import("./web/components/main/components/news/newsAll"),
+  loading: Loading,
+});
+
 const NewsList = Loadable({
   loader: () => import("./web/components/main/components/news/newsList"),
   loading: Loading,
@@ -145,6 +150,7 @@ function App() {
             </Route>
             {pathname !== "/" &&
               pathname.split("/")[1] !== "jobs" &&
+              pathname.split("/")[1] !== "xeber-lenti" &&
               pathname.split("/")[1] !== "category" &&
               pathname.split("/")[1] !== "reklam" &&
               pathname.split("/")[1] !== "blog" &&
@@ -224,6 +230,10 @@ function App() {
               <CalcWork />
             </Route>
 
+            {/* newsAll */}
+            <Route path="/xeber-lenti">
+              <NewsAll />
+            </Route>
             {/* work calculator new*/}
             <Route path="/emekhaqqi2019">
               <CalcWorkNew />

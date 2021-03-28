@@ -135,10 +135,10 @@
 */
 
 .placeholder.wave div {
-  animation: wave 1s infinite linear forwards;
-  -webkit-animation: wave 1s infinite linear forwards;
+  // animation: wave 1s infinite linear forwards;
+  // -webkit-animation: wave 1s infinite linear forwards;
   background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  // background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
   background-size: 901px 104px !important;
 }
 
@@ -887,5 +887,67 @@
   }
   100% {
     transform: rotate(140deg);
+  }
+}
+
+// css loader
+$black: #252525;
+$gradient: linear-gradient(to top right, #9733ee, #49e691);
+
+.loader {
+  display: grid;
+  position: relative;
+  grid-template-columns: 33% 33% 33%;
+  grid-gap: 3px;
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+  margin-top: 73px;
+}
+
+.loader div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: $gradient;
+  border-radius: 1px;
+  transform-origin: center center;
+  animation: loader 1.2s infinite linear;
+
+  &:nth-of-type(7) {
+  }
+  &:nth-of-type(1),
+  &:nth-of-type(5),
+  &:nth-of-type(9) {
+    animation-delay: 0.4s;
+  }
+
+  &:nth-of-type(4),
+  &:nth-of-type(8) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-of-type(2),
+  &:nth-of-type(6) {
+    animation-delay: 0.6s;
+  }
+
+  &:nth-of-type(3) {
+    animation-delay: 0.8s;
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
   }
 }

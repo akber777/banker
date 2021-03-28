@@ -1,5 +1,21 @@
 .newsDetail {
   position: relative;
+  background-color: #eee;
+
+  .l100 {
+    padding-left: 0;
+  }
+
+  &__next {
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    margin-top: 15px;
+
+    &:last-child {
+      margin-bottom: 20px;
+    }
+  }
 
   &__contentBox {
     width: calc((100% - 260px) - 15px);
@@ -19,6 +35,7 @@
 
   &__right {
     width: 331px;
+    padding-left: 21px;
   }
 
   &__title {
@@ -510,7 +527,7 @@
       img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        // object-fit: cover;
       }
 
       &__in {

@@ -51,26 +51,7 @@ import {
 // react splide
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-const NewsList = () => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 9,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 6,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 5,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
+const NewsAll = () => {
   let { pathname } = useLocation();
 
   let [page, setPage] = useState(1);
@@ -86,33 +67,7 @@ const NewsList = () => {
   let { data, isLoading } = useQuery(
     ["newsList", pathname, page],
     async () => {
-      const res = await axios.get(
-        baseUrl + "news" + pathname + `?include=${newsListCategory.toString()}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            page: page,
-            number: 21,
-          },
-        }
-      );
-
-      return (await res).data;
-    },
-    {
-      refetchOnWindowFocus: true,
-      onSuccess: function (succ) {
-        if (page <= 1) {
-          setNewsLastItem(succ.data.news.data);
-        }
-      },
-    }
-  );
-
-  let relatedCategory = useQuery(
-    ["relatedCategory", pathname],
-    async () => {
-      const res = await axios.get(baseUrl + "news" + "/related" + pathname, {
+      const res = await axios.get(baseUrl + "news/news", {
         headers: {
           "Content-Type": "application/json",
           page: page,
@@ -125,8 +80,8 @@ const NewsList = () => {
     {
       refetchOnWindowFocus: true,
       onSuccess: function (succ) {
-        if (succ.data !== undefined) {
-          setRelatedCategory(succ.data);
+        if (page <= 1) {
+          setNewsLastItem(succ.data);
         }
       },
     }
@@ -137,15 +92,6 @@ const NewsList = () => {
     setNews([]);
   }, [pathname]);
 
-  useLayoutEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
-
-    setNewsLastItem([]);
-    setNewsTitleState([])
-  }, []);
-
   window.onscroll = function () {
     if (isLoading === false) {
       if (
@@ -154,11 +100,11 @@ const NewsList = () => {
           document.querySelector(".footer").clientHeight -
           50
       ) {
-        if (data.data.news.data.length !== 0) {
+        if (data.data.length !== 0) {
           setPage((page = page + 1));
           if (isLoading === false) {
-            if (news.includes(...data.data.news.data) === false) {
-              setNews((oldArray) => [...oldArray, ...data.data.news.data]);
+            if (news.includes(...data.data) === false) {
+              setNews((oldArray) => [...oldArray, ...data.data]);
             }
           }
         }
@@ -277,53 +223,9 @@ const NewsList = () => {
         <Container>
           <div className="newsList__content--title">
             {isLoading === false && setNewsTitleState(data.data.name)}
-            <h1>{isLoading === false ? data.data.name : newsTitleState}</h1>
+            <h1>Xəbər Lenti</h1>
           </div>
-          <div className="newsList__slider">
-            {/* {isLoading === true && (
-              <div className="flexLine">
-                <div className="placeholder wave" style={{ height: "auto" }}>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                  <div className="line"></div>
-                </div>
-              </div>
-            )} */}
-            <Splide
-              options={{
-                rewind: true,
-                gap: "1rem",
-                perPage: 9,
-                arrows: false,
-                fixedWidth: "auto",
-                pagination: false,
-              }}
-            >
-              {relatedCategory.isLoading === false
-                ? relatedCategory.data.data.map((subitem) => (
-                    <SplideSlide>
-                      <div className="newsList__slider--item" key={subitem.id}>
-                        <NavLink to={"/category/" + subitem.slug}>
-                          <span>{subitem.name}</span>
-                        </NavLink>
-                      </div>
-                    </SplideSlide>
-                  ))
-                : relatedCategoryState.map((item) => (
-                    <SplideSlide>
-                      <div className="newsList__slider--item" key={item.id}>
-                        <NavLink to={"/category/" + item.slug}>
-                          <span>{item.name}</span>
-                        </NavLink>
-                      </div>
-                    </SplideSlide>
-                  ))}
-            </Splide>
-          </div>
+          <div className="newsList__slider"></div>
           <div className="newsList__flexBox">
             <div className="newsList__left">
               {newsLastItem.length === 0 && isLoading !== false && (
@@ -331,7 +233,7 @@ const NewsList = () => {
               )}
               <Row>
                 {isLoading === false && news.length === 0
-                  ? data.data.news.data.map((item, index) => (
+                  ? data.data.map((item, index) => (
                       <Col md="6" lg="4" className="mb-4" key={index}>
                         <NavLink to={"/" + item.slug}>
                           <div className="newsList__flex">
@@ -522,4 +424,4 @@ const NewsList = () => {
   );
 };
 
-export default NewsList;
+export default NewsAll;
