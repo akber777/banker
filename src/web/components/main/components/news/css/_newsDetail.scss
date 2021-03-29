@@ -3,6 +3,7 @@
 
   .l100 {
     padding-left: 0;
+    width: 100% !important;
   }
 
   &__next {
@@ -11,6 +12,11 @@
     background-color: #fff;
     display: flex;
     margin-top: 15px;
+
+    &--left {
+      width: calc((100% - 260px) - 15px);
+      margin-right: 15px;
+    }
 
     &:last-child {
       margin-bottom: 20px;
@@ -310,7 +316,7 @@
 
   &__vacancies {
     margin-top: 25px;
-    background-color: #ffff;
+    background-color: #eee;
     width: calc((100% - 260px) - 71px);
 
     &--title {
@@ -472,6 +478,7 @@
     // padding-left: 80px;
     margin-top: 30px;
     margin-bottom: 63px;
+    padding-bottom: 26px;
 
     &--info {
       width: calc((100% - 260px) - 41px);

@@ -190,8 +190,6 @@ const NewsDetail = () => {
         if (nextNews.includes(succ.data) === false) {
           setNextNews((oldArray) => [...oldArray, succ.data]);
         }
-
-        
       },
     }
   );
@@ -261,8 +259,8 @@ const NewsDetail = () => {
 
   return (
     <main
-      className="newsDetail"
-      style={{ minHeight: 500, backgroundColor: "#eee" }}
+      className="newsDetail backColor"
+      style={{ minHeight: 500 }}
     >
       <React.Fragment>
         <div className="home__leftBanner">
@@ -953,41 +951,60 @@ const NewsDetail = () => {
                             alt=""
                           />
                         </div>
-                        {newsNext.isLoading === true && (
-                          <div class="loader">
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                      </div>
+                      <div className="newsDetail__right">
+                        <div className="adsBox">
+                          <div className="newsDetail__bannerRight">
+                            <img
+                              src={
+                                "https://banker.az/wp-content/uploads/2021/01/banker.jpg"
+                              }
+                              alt=""
+                            />
                           </div>
-                        )}
+                          <div className="newsDetail__bannerRight">
+                            <img
+                              src={
+                                "https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div className="newsDetail__bannerRight">
+                            <img
+                              src={
+                                "https://banker.az/wp-content/uploads/2020/12/360x380-1.jpg"
+                              }
+                              alt=""
+                            />
+                          </div>
+                          <div className="newsDetail__bannerRight">
+                            <img
+                              src={
+                                "https://banker.az/wp-content/uploads/2020/08/400x420.gif"
+                              }
+                              alt=""
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
               </div>
-              <div className="newsDetail__right">
-                {nextNews.length !== 0 &&
-                  nextNews.map((data) => (
-                    <>
-                      <div className="adsBox">
-                        <div className="newsDetail__bannerRight">
-                          <img
-                            src={
-                              "https://banker.az/wp-content/uploads/2021/01/banker.jpg"
-                            }
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    </>
-                  ))}
-              </div>
             </div>
+            {newsNext.isLoading !== "qwdqd" && (
+              <div class="loader">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
           </div>
         </Container>
       </React.Fragment>
