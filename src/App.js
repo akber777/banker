@@ -26,7 +26,17 @@ import $ from "jquery";
 
 const Loading = () => (
   <div className="loadableCom">
-    <div class="load"></div>
+    <div class="loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 );
 

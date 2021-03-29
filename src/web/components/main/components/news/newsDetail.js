@@ -43,22 +43,24 @@ import Switch from "react-switch";
 import { useRecoilState } from "recoil";
 
 // atoms
-import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
+import { apiValue } from "../../../atoms/atoms";
 
 // query func
 
 import { requiredNew, relatedNews } from "../../../queries/queries";
 
 // helper
-
 import { checkSalary, detectItemNews } from "../../../helper/helper";
 
+// jquery
+import $ from "jquery";
+
 const NewsDetail = () => {
-  useLayoutEffect(() => {
+  window.addEventListener("beforeunload", function (e) {
     window.scroll({
       top: 0,
     });
-  }, []);
+  });
 
   const responsive = {
     superLargeDesktop: {
@@ -97,63 +99,6 @@ const NewsDetail = () => {
       refetchIntervalInBackground: true,
     }
   );
-
-  useLayoutEffect(() => {
-    document.querySelector(".minus") !== null &&
-      (document.querySelector(".minus").onclick = () => {
-        document
-          .querySelectorAll(".newsDetail__self,.newsDetail__self p")
-          .forEach((element) => {
-            let style = getComputedStyle(element).fontSize;
-
-            let splitFont = style.split("px")[0];
-
-            if (splitFont > 13) {
-              splitFont--;
-              document.querySelector(".showFont").innerHTML = splitFont;
-              element.style.fontSize = splitFont + "px";
-            }
-          });
-      });
-
-    document.querySelector(".plus") !== null &&
-      (document.querySelector(".plus").onclick = () => {
-        document
-          .querySelectorAll(".newsDetail__self,.newsDetail__self p")
-          .forEach((element) => {
-            let style = getComputedStyle(element).fontSize;
-
-            let splitFont = style.split("px")[0];
-
-            if (splitFont < 25) {
-              splitFont++;
-              document.querySelector(".showFont").innerHTML = splitFont;
-              element.style.fontSize = splitFont + "px";
-            }
-          });
-      });
-
-    // fixed social icon
-    let contentBox = document.querySelector(".newsDetail__contentBox");
-
-    window.onscroll = function () {
-      if (document.querySelector(".newsDetail__socialFixed") !== null) {
-        if (this.scrollY > 480) {
-          document.querySelector(".newsDetail__socialFixed").style.position =
-            "fixed";
-          document.querySelector(".newsDetail__socialFixed").style.left =
-            contentBox.offsetLeft + "px";
-          document.querySelector(".newsDetail__socialFixed").style.top =
-            contentBox.offsetTop + "px";
-        } else {
-          document.querySelector(".newsDetail__socialFixed").style.position =
-            "absolute";
-          document.querySelector(".newsDetail__socialFixed").style.left = "0";
-          document.querySelector(".newsDetail__socialFixed").style.top = "0";
-        }
-      }
-    };
-  }, [data]);
 
   let [checked, setChecked] = useState(false);
 
@@ -230,6 +175,8 @@ const NewsDetail = () => {
 
   let [nextNews, setNextNews] = useState([]);
 
+  let [font, setFont] = useState(20);
+
   let newsNext = useQuery(
     ["newsNext", pageSlug],
     async () => {
@@ -243,27 +190,80 @@ const NewsDetail = () => {
         if (nextNews.includes(succ.data) === false) {
           setNextNews((oldArray) => [...oldArray, succ.data]);
         }
+
+        
       },
     }
   );
 
-  window.onscroll = function () {
-    if (newsNext.isLoading === false) {
-      if (
-        window.pageYOffset + window.innerHeight >=
-        document.body.clientHeight -
-          document.querySelector(".footer").clientHeight -
-          500
-      ) {
-        if (newsNext.length !== 0 && newsNext.data !== undefined) {
-          setPageSlug(newsNext.data.data.slug);
+  useLayoutEffect(() => {
+    setNextNews([]);
+  }, [pathDetail]);
+
+  useLayoutEffect(() => {
+    $(".showFont").html(font);
+
+    $(".plus").on("click", function () {
+      if (font < 26) {
+        setFont((font = font + 1));
+        $(".newsDetail__self,.newsDetail__self *").css(
+          "font-size",
+          font + "px"
+        );
+      }
+    });
+
+    $(".minus").on("click", function () {
+      if (font > 13) {
+        setFont((font = font - 1));
+        $(".newsDetail__self,.newsDetail__self *").css(
+          "font-size",
+          font + "px"
+        );
+      }
+    });
+
+    if (font <= 26 && font > 13) {
+      $(".newsDetail__self,.newsDetail__self *").css("font-size", font + "px");
+    }
+  }, [newsNext]);
+
+  useLayoutEffect(() => {
+    // fixed social icon
+    let contentBox = document.querySelector(".newsDetail__contentBox");
+
+    window.onscroll = function () {
+      if (document.querySelector(".newsDetail__socialFixed") !== null) {
+        if (this.scrollY > 480) {
+          document.querySelector(".newsDetail__socialFixed").style.position =
+            "fixed";
+          document.querySelector(".newsDetail__socialFixed").style.left =
+            contentBox.offsetLeft + 7 + "px";
+          document.querySelector(".newsDetail__socialFixed").style.top =
+            contentBox.offsetTop + "px";
+        } else {
+          document.querySelector(".newsDetail__socialFixed").style.position =
+            "absolute";
+          document.querySelector(".newsDetail__socialFixed").style.left =
+            "-7px";
+          document.querySelector(".newsDetail__socialFixed").style.top = "0";
         }
       }
-    }
-  };
+
+      if (nextNews.length !== 0) {
+        if ($(".newsDetail__next:last").offset().top < this.scrollY)
+          if (newsNext.data !== undefined && newsNext.isLoading === false) {
+            setPageSlug(newsNext.data.data.slug);
+          }
+      }
+    };
+  });
 
   return (
-    <main className="newsDetail" style={{ minHeight: 500 }}>
+    <main
+      className="newsDetail"
+      style={{ minHeight: 500, backgroundColor: "#eee" }}
+    >
       <React.Fragment>
         <div className="home__leftBanner">
           <a href="https://banker.az/wp-content/uploads/2020/12/Banker.az-151-X-751.jpg">
@@ -580,52 +580,7 @@ const NewsDetail = () => {
                       alt=""
                     />
                   </div>
-                  <div className="newsDetail__vacancies">
-                    <div className="newsDetail__vacancies--title">
-                      <h4>Vakansiyalar</h4>
-                      {/* <NavLink to={''}>
-                                                        <span>+</span>
-                                                         Əlavə et
-                                                  </NavLink> */}
-                    </div>
-                    <div className="newsDetail__vacancies--content">
-                      {vacancyLatest.isLoading === false &&
-                        vacancyLatest.data !== undefined &&
-                        vacancyLatest.data.data.map((item) => (
-                          <div key={item.id}>
-                            <p>
-                              <NavLink to={"/jobs/" + item.slug}>
-                                {item.title}
-                              </NavLink>
-                            </p>
-                            <p>
-                              <img src={item.company.data.logo.cover} alt="" />
-                              {item.company.data.name}
-                            </p>
-                            <p>{item.category.data.name}</p>
-                            <p>{checkSalary(item)}</p>
-                          </div>
-                        ))}
-                    </div>
-                    <div className="newsDetail__vacancies--end">
-                      <p></p>
-                      <p>
-                        <NavLink to={"/jobs"}>Daha çox göstər</NavLink>
-                        <svg
-                          width="14"
-                          height="9"
-                          viewBox="0 0 14 9"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M2.02725 0.307189L6.99975 5.26886L11.9723 0.30719L13.4998 1.83469L6.99975 8.33469L0.499754 1.83469L2.02725 0.307189Z"
-                            fill="#014577"
-                          />
-                        </svg>
-                      </p>
-                    </div>
-                  </div>
+
                   {/* <Subscription /> */}
                 </div>
               </div>
@@ -751,6 +706,52 @@ const NewsDetail = () => {
                     alt=""
                   />
                 </div>
+              </div>
+            </div>
+            <div className="newsDetail__vacancies">
+              <div className="newsDetail__vacancies--title">
+                <h4>Vakansiyalar</h4>
+                {/* <NavLink to={''}>
+                                                        <span>+</span>
+                                                         Əlavə et
+                                                  </NavLink> */}
+              </div>
+              <div className="newsDetail__vacancies--content">
+                {vacancyLatest.isLoading === false &&
+                  vacancyLatest.data !== undefined &&
+                  vacancyLatest.data.data.map((item) => (
+                    <div key={item.id}>
+                      <p>
+                        <NavLink to={"/jobs/" + item.slug}>
+                          {item.title}
+                        </NavLink>
+                      </p>
+                      <p>
+                        <img src={item.company.data.logo.cover} alt="" />
+                        {item.company.data.name}
+                      </p>
+                      <p>{item.category.data.name}</p>
+                      <p>{checkSalary(item)}</p>
+                    </div>
+                  ))}
+              </div>
+              <div className="newsDetail__vacancies--end">
+                <p></p>
+                <p>
+                  <NavLink to={"/jobs"}>Daha çox göstər</NavLink>
+                  <svg
+                    width="14"
+                    height="9"
+                    viewBox="0 0 14 9"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2.02725 0.307189L6.99975 5.26886L11.9723 0.30719L13.4998 1.83469L6.99975 8.33469L0.499754 1.83469L2.02725 0.307189Z"
+                      fill="#014577"
+                    />
+                  </svg>
+                </p>
               </div>
             </div>
           </Container>
@@ -973,37 +974,15 @@ const NewsDetail = () => {
                 {nextNews.length !== 0 &&
                   nextNews.map((data) => (
                     <>
-                      <div className="newsDetail__bannerRight">
-                        <img
-                          src={
-                            "https://banker.az/wp-content/uploads/2021/01/banker.jpg"
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div className="newsDetail__bannerRight">
-                        <img
-                          src={
-                            "https://banker.az/wp-content/uploads/2021/02/Azerbaycan_internet_Bankaciligi_Mobil_Banner_500x500.png"
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div className="newsDetail__bannerRight">
-                        <img
-                          src={
-                            "https://banker.az/wp-content/uploads/2020/12/360x380-1.jpg"
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div className="newsDetail__bannerRight">
-                        <img
-                          src={
-                            "https://banker.az/wp-content/uploads/2020/08/400x420.gif"
-                          }
-                          alt=""
-                        />
+                      <div className="adsBox">
+                        <div className="newsDetail__bannerRight">
+                          <img
+                            src={
+                              "https://banker.az/wp-content/uploads/2021/01/banker.jpg"
+                            }
+                            alt=""
+                          />
+                        </div>
                       </div>
                     </>
                   ))}
