@@ -177,7 +177,7 @@ const NewsDetail = () => {
 
   let [font, setFont] = useState(20);
 
-  let newsNext = useQuery(
+  let newsNext = useQuery(  
     ["newsNext", pageSlug],
     async () => {
       const res = await axios.get(baseUrl + "news/next/" + pageSlug);
@@ -578,7 +578,56 @@ const NewsDetail = () => {
                       alt=""
                     />
                   </div>
-
+                  <div className="newsDetail__vacancies">
+                    <div className="newsDetail__vacancies--title">
+                      <h4>Vakansiyalar</h4>
+                      {/* <NavLink to={''}>
+                                                        <span>+</span>
+                                                         Əlavə et
+                                                  </NavLink> */}
+                    </div>
+                    <div className="newsDetail__vacancies--content">
+                      {vacancyLatest.isLoading === false &&
+                        vacancyLatest.data !== undefined &&
+                        vacancyLatest.data.data.map((item) => (
+                          <div key={item.id}>
+                            <p>
+                              <NavLink to={"/jobs/" + item.slug}>
+                                {item.title}
+                              </NavLink>
+                            </p>
+                            <p>
+                              <img src={item.company.data.logo.cover} alt="" />
+                              {item.company.data.name}
+                            </p>
+                            <p>{item.category.data.name}</p>
+                            <p>{checkSalary(item)}</p>
+                          </div>
+                        ))}
+                    </div>
+                    <div className="newsDetail__vacancies--end">
+                      {/* <p>
+                        <NavLink to={""} className="addVacancies">
+                          Vakansiya Yerləşdir
+                        </NavLink>
+                      </p> */}
+                      <p>
+                        <NavLink to={"/jobs"}>Daha çox göstər</NavLink>
+                        <svg
+                          width="14"
+                          height="9"
+                          viewBox="0 0 14 9"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M2.02725 0.307189L6.99975 5.26886L11.9723 0.30719L13.4998 1.83469L6.99975 8.33469L0.499754 1.83469L2.02725 0.307189Z"
+                            fill="#014577"
+                          />
+                        </svg>
+                      </p>
+                    </div>
+                  </div>
                   {/* <Subscription /> */}
                 </div>
               </div>
@@ -704,52 +753,6 @@ const NewsDetail = () => {
                     alt=""
                   />
                 </div>
-              </div>
-            </div>
-            <div className="newsDetail__vacancies">
-              <div className="newsDetail__vacancies--title">
-                <h4>Vakansiyalar</h4>
-                {/* <NavLink to={''}>
-                                                        <span>+</span>
-                                                         Əlavə et
-                                                  </NavLink> */}
-              </div>
-              <div className="newsDetail__vacancies--content">
-                {vacancyLatest.isLoading === false &&
-                  vacancyLatest.data !== undefined &&
-                  vacancyLatest.data.data.map((item) => (
-                    <div key={item.id}>
-                      <p>
-                        <NavLink to={"/jobs/" + item.slug}>
-                          {item.title}
-                        </NavLink>
-                      </p>
-                      <p>
-                        <img src={item.company.data.logo.cover} alt="" />
-                        {item.company.data.name}
-                      </p>
-                      <p>{item.category.data.name}</p>
-                      <p>{checkSalary(item)}</p>
-                    </div>
-                  ))}
-              </div>
-              <div className="newsDetail__vacancies--end">
-                <p></p>
-                <p>
-                  <NavLink to={"/jobs"}>Daha çox göstər</NavLink>
-                  <svg
-                    width="14"
-                    height="9"
-                    viewBox="0 0 14 9"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M2.02725 0.307189L6.99975 5.26886L11.9723 0.30719L13.4998 1.83469L6.99975 8.33469L0.499754 1.83469L2.02725 0.307189Z"
-                      fill="#014577"
-                    />
-                  </svg>
-                </p>
               </div>
             </div>
           </Container>
@@ -992,7 +995,7 @@ const NewsDetail = () => {
                   ))}
               </div>
             </div>
-            {newsNext.isLoading !== "qwdqd" && (
+            {newsNext.isLoading !== false && (
               <div class="loader">
                 <div></div>
                 <div></div>

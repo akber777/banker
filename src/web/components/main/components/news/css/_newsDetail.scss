@@ -317,9 +317,11 @@
   }
 
   &__vacancies {
+    position: relative;
+    z-index: 10000;
     margin-top: 25px;
     background-color: #eee;
-    width: calc((100% - 260px) - 71px);
+    width: 100%;
 
     &--title {
       display: flex;
@@ -363,12 +365,16 @@
         padding: 15px 35px;
         padding-right: 0;
 
+        &:not(:last-child) {
+          border-bottom: 1px solid #fff;
+        }
+
         &:nth-child(even) {
-          background-color: #f3f3f3;
+          background-color: #014577;
         }
 
         &:nth-child(odd) {
-          background-color: #fff;
+          background-color: #014577;
         }
       }
 
@@ -378,20 +384,24 @@
         font-weight: 500;
         font-size: 14px;
         line-height: 15px;
-        color: #5e5e5e;
+        color: #fff;
         align-items: center;
         margin-bottom: 0;
         padding-right: 15px;
+        font-weight: bold;
+
 
         a {
           font-style: normal;
           font-weight: 500;
           font-size: 14px;
           line-height: 15px;
-          color: #5e5e5e;
+          color: #fff;
           align-items: center;
           margin-bottom: 0;
           padding-right: 15px;
+        font-weight: bold;
+
         }
 
         &:first-child {
@@ -420,11 +430,12 @@
 
     &--end {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       padding: 25px;
       padding-left: 35px;
       padding-right: 35px;
       margin-bottom: 25px;
+      background-color: #014577;
 
       p {
         margin-bottom: 0;
@@ -432,18 +443,26 @@
         font-weight: 600;
         font-size: 15px;
         line-height: 15px;
-        color: #014577;
+        color: #fff;
+
+        &:not(:last-child) {
+          margin-right: 10px;
+        }
 
         a {
           font-style: normal;
           font-weight: 600;
           font-size: 15px;
           line-height: 15px;
-          color: #014577;
+          color: #fff;
         }
 
         svg {
           margin-left: 10px;
+
+          path {
+            fill: #fff !important;
+          }
         }
       }
     }
@@ -676,5 +695,13 @@
     align-items: center;
     justify-content: center;
     height: 500px;
+  }
+
+  .addVacancies {
+    padding: 10px;
+    background-color: #fff;
+    color: #014577;
+    border-radius: 5px;
+    margin-right: 10px;
   }
 }

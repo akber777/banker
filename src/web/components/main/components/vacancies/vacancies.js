@@ -32,6 +32,10 @@ import Scrollbars from "react-scrollbar";
 // renderHTML
 import renderHTML from "react-render-html";
 
+// fontawesome
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 function useQueryData() {
   return new URLSearchParams(useLocation().search);
 }
@@ -676,9 +680,20 @@ const Vacancies = () => {
     is_nagotiable: is_nagotiable[0],
   };
 
-  let filterVacanc = useQuery(["filterVacancy", params], filterVacancy, {
-    refetchOnWindowFocus: true,
-  });
+  let [vacancPage, setVacancPage] = useState(1);
+
+  let [totalPage, setTotalPage] = useState();
+
+  let filterVacanc = useQuery(
+    ["filterVacancy", params, vacancPage],
+    filterVacancy,
+    {
+      refetchOnWindowFocus: true,
+      onSuccess: function (succ) {
+        setTotalPage(succ.meta.pagination.total_pages);
+      },
+    }
+  );
 
   useLayoutEffect(() => {
     window.scrollTo({
@@ -1249,13 +1264,31 @@ const Vacancies = () => {
                     filterVacanc.data.data.map((item) => (
                       <Col lg="6" key={item.id}>
                         <div className="vcItem">
-                          <h4>{item.title}</h4>
+                          <h4>
+                            <NavLink to={"/jobs/" + item.slug}>
+                              {item.title}
+                            </NavLink>
+                          </h4>
                           <span>{item.company_name}</span>
-                          <p>500 — 750 AZN</p>
-                          <div className="vcItem__content">
+                          <span>
+                            <FontAwesomeIcon
+                              icon={faClock}
+                              style={{ marginRight: 5 }}
+                            />
+                            {item.created_at}
+                          </span>
+                          {item.salary === 1 && <p>{item.salaryfix}</p>}
+                          {item.salary === 2 && (
+                            <p>
+                              {item.minsalary}-{item.maxsalary}
+                            </p>
+                          )}
+                          {item.salary === 3 && <p>Razılaşma</p>}
+
+                          {/* <div className="vcItem__content">
                             {renderHTML(item.aboutjob)}
                             <div className="gradient"></div>
-                          </div>
+                          </div> */}
                           <div className="end">
                             <NavLink to={"/jobs/" + item.slug}>
                               Daha ətraflı
@@ -1283,7 +1316,14 @@ const Vacancies = () => {
                     ))}
                 </Row>
                 <div className="jobPagination pagiEnd">
-                  <span className="prev">
+                  <span
+                    className="prev"
+                    onClick={() => {
+                      if (vacancPage > 1) {
+                        setVacancPage((vacancPage = vacancPage - 1));
+                      }
+                    }}
+                  >
                     <svg
                       width="7"
                       height="11"
@@ -1297,11 +1337,21 @@ const Vacancies = () => {
                       />
                     </svg>
                   </span>
-                  <p>54-dən</p>
+                  <p>{totalPage + " - dən"}</p>
                   <div className="showPagi">
-                    <span>2</span>
+                    <span>{vacancPage}</span>
                   </div>
-                  <span className="next">
+                  <span
+                    className="next"
+                    onClick={() => {
+                      if (
+                        filterVacanc.data.data.length !== 0 &&
+                        vacancPage > totalPage
+                      ) {
+                        setVacancPage((vacancPage = vacancPage + 1));
+                      }
+                    }}
+                  >
                     <svg
                       width="7"
                       height="11"

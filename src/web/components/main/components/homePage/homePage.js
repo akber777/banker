@@ -50,7 +50,6 @@ import { detectItemNews } from "../../../helper/helper";
 
 // router dom
 import { Link, useLocation } from "react-router-dom";
-import { data } from "jquery";
 
 const HomePage = (...props) => {
   // home page first slider

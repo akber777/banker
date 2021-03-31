@@ -44,7 +44,13 @@ export const vacancySelect = async (key, data) => {
 };
 
 export const filterVacancy = async (key, data) => {
-  const res = await axios.post(baseUrl + `vacancy/job`, key.queryKey[1]);
+  const res = await axios.post(baseUrl + `vacancy/job`, key.queryKey[1], {
+    headers: {
+      "Content-Type": "application/json",
+      page: key.queryKey[2],
+      number: 20,
+    },
+  });
 
   return res.data;
 };
