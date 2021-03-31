@@ -3,15 +3,20 @@
   background: #01345a;
   z-index: 555;
 
-
-  &__leftBanner50{
+  &__leftBanner50 {
     display: flex;
     justify-content: flex-end;
 
-
-    &:last-child{
+    &:last-child {
       justify-content: flex-start;
     }
+  }
+
+  &__webMenuBack {
+    position: relative;
+    background-color: #fff;
+    padding-bottom: 31px;
+    padding-top: 31px;
   }
 
   &__searchBoxContent {
@@ -143,7 +148,7 @@
     display: inline-flex;
     align-items: center;
 
-    .header__webMenuClose{
+    .header__webMenuClose {
       position: absolute;
       right: 100px;
       top: 50px;
@@ -154,18 +159,18 @@
     }
 
     .header__webMenu {
-      position: fixed;
+      position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(1, 52, 90, 1);
+      // background-color: rgba(1, 52, 90, 1);
       z-index: 555;
-      padding-top:150px;
+      padding-top: 150px;
       display: flex;
     }
 
-    .header__webBox{
+    .header__webBox {
       display: flex;
     }
 
@@ -173,26 +178,22 @@
       width: calc(100% / 4);
       padding: 0 15px;
 
-      @media(max-width:1438px)
-      {
+      @media (max-width: 1438px) {
         width: calc(100% / 2);
       }
 
-      h4{
+      h4 {
         color: #8e9aaf;
         font-size: 25px;
         margin-bottom: 25px;
       }
-      
-      a{
+
+      a {
         color: #fff;
         margin-bottom: 15px;
         display: flex;
       }
     }
-
-
-    
   }
 
   &__navSelf {

@@ -9,9 +9,6 @@ import News from "../news/newsPage";
 
 // tools
 
-// sider
-import Carousel from "react-multi-carousel";
-
 import { NavLink, useLocation, Link } from "react-router-dom";
 
 // switch
@@ -64,10 +61,14 @@ const NewsAll = () => {
 
   let [relatedCategoryState, setRelatedCategory] = useState([]);
 
-  let { data, isLoading } = useQuery(
-    ["newsList", pathname, page],
+  let splitPath = pathname.split("/")[pathname.split("/").length - 1];
+
+  let [startRequest, setStartRequest] = useState(true);
+
+  let relatedCategory = useQuery(
+    ["relatedCategoryAllList", ""],
     async () => {
-      const res = await axios.get(baseUrl + "news/news", {
+      const res = await axios.get(baseUrl + "news" + "/category", {
         headers: {
           "Content-Type": "application/json",
           page: page,
@@ -80,8 +81,37 @@ const NewsAll = () => {
     {
       refetchOnWindowFocus: true,
       onSuccess: function (succ) {
-        if (page <= 1) {
-          setNewsLastItem(succ.data);
+        if (succ.data !== undefined) {
+          setRelatedCategory(succ.data);
+        }
+      },
+    }
+  );
+
+  let { data, isLoading } = useQuery(
+    ["newsAllList", pathname, splitPath, page],
+    async () => {
+      const res = await axios.get(
+        baseUrl +
+          (pathname === "/xeber-lenti"
+            ? `news/news`
+            : `news/category/${splitPath}?include=news`),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            page: page,
+            number: 21,
+          },
+        }
+      );
+
+      return (await res).data;
+    },
+    {
+      refetchOnWindowFocus: true,
+      onSuccess: function (succ) {
+        if (page <= 1 && pathname !== "/xeber-lenti") {
+          setNewsLastItem(succ.data.news.data);
         }
       },
     }
@@ -101,10 +131,10 @@ const NewsAll = () => {
           50
       ) {
         if (data.data.length !== 0) {
-          setPage((page = page + 1));
           if (isLoading === false) {
-            if (news.includes(...data.data) === false) {
-              setNews((oldArray) => [...oldArray, ...data.data]);
+            setPage((page = page + 1));
+            if (news.includes(...data.data.news.data) === false) {
+              setNews((oldArray) => [...oldArray, ...data.data.news.data]);
             }
           }
         }
@@ -225,31 +255,65 @@ const NewsAll = () => {
             {isLoading === false && setNewsTitleState(data.data.name)}
             <h1>Xəbər Lenti</h1>
           </div>
-          <div className="newsList__slider"></div>
+          <div className="newsList__slider">
+            <Splide
+              options={{
+                rewind: true,
+                gap: "1rem",
+                perPage: 9,
+                arrows: false,
+                fixedWidth: "auto",
+                pagination: false,
+              }}
+            >
+              {relatedCategory.isLoading === false
+                ? relatedCategory.data.data.map((subitem) => (
+                    <SplideSlide>
+                      <div className="newsList__slider--item" key={subitem.id}>
+                        <NavLink to={"/xeber-lenti/" + subitem.slug}>
+                          <span>{subitem.name}</span>
+                        </NavLink>
+                      </div>
+                    </SplideSlide>
+                  ))
+                : relatedCategoryState.map((item) => (
+                    <SplideSlide>
+                      <div className="newsList__slider--item" key={item.id}>
+                        <NavLink to={"/xeber-lenti/" + item.slug}>
+                          <span>{item.name}</span>
+                        </NavLink>
+                      </div>
+                    </SplideSlide>
+                  ))}
+            </Splide>
+          </div>
           <div className="newsList__flexBox">
             <div className="newsList__left">
               {newsLastItem.length === 0 && isLoading !== false && (
                 <Row>{detectItemList(21)}</Row>
               )}
-              <Row>
-                {isLoading === false && news.length === 0
-                  ? data.data.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
-                        <NavLink to={"/" + item.slug}>
-                          <div className="newsList__flex">
-                            <div className="newsList__flex--img">
-                              <img
-                                src={item.img !== null && item.img.cover}
-                                alt=""
-                              />
-                            </div>
-                            <div className="newsList__wrapper">
-                              <div className="newsList__flex--info">
-                                <p>{item.title}</p>
+              {
+                <Row>
+                  {isLoading === false &&
+                  news.length === 0 &&
+                  pathname !== "/xeber-lenti"
+                    ? data.data.news.data.map((item, index) => (
+                        <Col md="6" lg="4" className="mb-4" key={index}>
+                          <NavLink to={"/" + item.slug}>
+                            <div className="newsList__flex">
+                              <div className="newsList__flex--img">
+                                <img
+                                  src={item.img !== null && item.img.cover}
+                                  alt=""
+                                />
                               </div>
-                              <div className="newsList__flex--bottom">
-                                <p>{item.post_date}</p>
-                                {/* {item.viewcount.data.length !== 0 && (
+                              <div className="newsList__wrapper">
+                                <div className="newsList__flex--info">
+                                  <p>{item.title}</p>
+                                </div>
+                                <div className="newsList__flex--bottom">
+                                  <p>{item.post_date}</p>
+                                  {/* {item.viewcount.data.length !== 0 && (
                                   <p>
                                     <svg
                                       width="18"
@@ -266,13 +330,36 @@ const NewsAll = () => {
                                     <span>{item.viewcount.data.count}</span>
                                   </p>
                                 )} */}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </NavLink>
-                      </Col>
-                    ))
-                  : news.map((item, index) => (
+                          </NavLink>
+                        </Col>
+                      ))
+                    : news.map((item, index) => (
+                        <Col md="6" lg="4" className="mb-4" key={index}>
+                          <NavLink to={"/" + item.slug}>
+                            <div className="newsList__flex">
+                              <div className="newsList__flex--img">
+                                <img
+                                  src={item.img !== null && item.img.cover}
+                                  alt=""
+                                />
+                              </div>
+                              <div className="newsList__wrapper">
+                                <div className="newsList__flex--info">
+                                  <p>{item.title}</p>
+                                </div>
+                                <div className="newsList__flex--bottom">
+                                  <p>{item.post_date.split(" ")[0]}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </NavLink>
+                        </Col>
+                      ))}
+                  {isLoading === true &&
+                    newsLastItem.map((item, index) => (
                       <Col md="6" lg="4" className="mb-4" key={index}>
                         <NavLink to={"/" + item.slug}>
                           <div className="newsList__flex">
@@ -294,30 +381,32 @@ const NewsAll = () => {
                         </NavLink>
                       </Col>
                     ))}
-                {isLoading === true &&
-                  newsLastItem.map((item, index) => (
-                    <Col md="6" lg="4" className="mb-4" key={index}>
-                      <NavLink to={"/" + item.slug}>
-                        <div className="newsList__flex">
-                          <div className="newsList__flex--img">
-                            <img
-                              src={item.img !== null && item.img.cover}
-                              alt=""
-                            />
-                          </div>
-                          <div className="newsList__wrapper">
-                            <div className="newsList__flex--info">
-                              <p>{item.title}</p>
+                  {isLoading === false &&
+                    pathname === "/xeber-lenti" &&
+                    data.data.map((item, index) => (
+                      <Col md="6" lg="4" className="mb-4" key={index}>
+                        <NavLink to={"/" + item.slug}>
+                          <div className="newsList__flex">
+                            <div className="newsList__flex--img">
+                              <img
+                                src={item.img !== null && item.img.cover}
+                                alt=""
+                              />
                             </div>
-                            <div className="newsList__flex--bottom">
-                              <p>{item.post_date.split(" ")[0]}</p>
+                            <div className="newsList__wrapper">
+                              <div className="newsList__flex--info">
+                                <p>{item.title}</p>
+                              </div>
+                              <div className="newsList__flex--bottom">
+                                <p>{item.post_date.split(" ")[0]}</p>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </NavLink>
-                    </Col>
-                  ))}
-              </Row>
+                        </NavLink>
+                      </Col>
+                    ))}
+                </Row>
+              }
               {isLoading === true && <Row>{detectItemListEnd(3)}</Row>}
             </div>
             <div className="newsList__right">

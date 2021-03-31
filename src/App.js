@@ -142,7 +142,7 @@ function App() {
   let windowWith = window.innerWidth;
 
   useLayoutEffect(() => {
-    if (pathname.split("/")[1] !== "category") {
+    if (pathname.split("/")[1] !== "category" && pathname.split("/")[1] !== "xeber-lenti") {
       window.scrollTo(0, 0);
     }
   }, [pathname]);

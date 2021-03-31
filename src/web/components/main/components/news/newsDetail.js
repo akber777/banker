@@ -248,9 +248,12 @@ const NewsDetail = () => {
         }
       }
 
-      if (nextNews.length !== 0) {
-        if ($(".newsDetail__next:last").offset().top < this.scrollY)
-          if (newsNext.data !== undefined && newsNext.isLoading === false) {
+      if (nextNews.length !== 0 && $(".newsDetail__next:last").length !== 0) {
+        if (
+          $(".newsDetail__next:last").offset().top < this.scrollY &&
+          newsNext.isLoading === false
+        )
+          if (newsNext.data !== undefined) {
             setPageSlug(newsNext.data.data.slug);
           }
       }
@@ -258,10 +261,7 @@ const NewsDetail = () => {
   });
 
   return (
-    <main
-      className="newsDetail backColor"
-      style={{ minHeight: 500 }}
-    >
+    <main className="newsDetail backColor" style={{ minHeight: 500 }}>
       <React.Fragment>
         <div className="home__leftBanner">
           <a href="https://banker.az/wp-content/uploads/2020/12/Banker.az-151-X-751.jpg">

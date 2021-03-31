@@ -43,7 +43,7 @@
 
   &__right {
     width: 331px;
-    padding-left: 21px;
+    // padding-left: 21px;
   }
 
   &__title {
@@ -250,13 +250,13 @@
 
       img {
         max-width: 100%;
-        height: auto;
+        height: auto !important;
       }
     }
 
     img {
       max-width: 100%;
-      height: auto;
+      height: auto !important;
     }
 
     iframe {

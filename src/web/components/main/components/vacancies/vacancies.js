@@ -825,6 +825,7 @@ const Vacancies = () => {
                     >
                       <ul className="listed">
                         {vacancySelectable.isLoading === false &&
+                          vacancySelectable.data !== undefined &&
                           vacancySelectable.data.data.categories.data.map(
                             (item) => (
                               <li className="home listCategory" key={item.id}>
@@ -1248,17 +1249,11 @@ const Vacancies = () => {
                     filterVacanc.data.data.map((item) => (
                       <Col lg="6" key={item.id}>
                         <div className="vcItem">
-                          <h4>{renderHTML(item.aboutjob)}</h4>
+                          <h4>{item.title}</h4>
                           <span>{item.company_name}</span>
                           <p>500 — 750 AZN</p>
                           <div className="vcItem__content">
-                            <p>
-                              - Gündəlik və həftəlik post planın hazırlanması -
-                              Gündəlik olaraq postların hazırlanması - Kreativ
-                              post ideyalarının təklifi - İş saatı: 09:00-dan
-                              18:00-dək (6 tam iş günü) - Əmək haqqı: 500 +
-                              bonus
-                            </p>
+                            {renderHTML(item.aboutjob)}
                             <div className="gradient"></div>
                           </div>
                           <div className="end">

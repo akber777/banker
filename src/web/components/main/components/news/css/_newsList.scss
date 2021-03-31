@@ -30,6 +30,13 @@
   }
 
   &__slider {
+    position: sticky;
+    top: 32px;
+    z-index: 2;
+    background: #fff;
+    padding: 30px 0;
+    z-index: 100;
+
     &--item {
       display: flex;
       align-items: center;
