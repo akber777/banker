@@ -131,10 +131,17 @@ const NewsAll = () => {
           50
       ) {
         if (data.data.length !== 0) {
-          if (isLoading === false) {
+          if (data.data.news.data.length !== 0) {
             setPage((page = page + 1));
+          }
+
+          if (isLoading === false && pathname !== "/xeber-lenti") {
             if (news.includes(...data.data.news.data) === false) {
               setNews((oldArray) => [...oldArray, ...data.data.news.data]);
+            }
+          } else {
+            if (news.includes(...data.data) === false) {
+              setNews((oldArray) => [...oldArray, ...data.data]);
             }
           }
         }
