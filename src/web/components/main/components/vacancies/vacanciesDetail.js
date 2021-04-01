@@ -212,15 +212,17 @@ const VacanciesDetail = () => {
                         <span>Bakı</span>
                         <span>IT - Rəqəmsal</span>
                       </p>
-                      <p style={{marginTop:15}}>
-                          {
-                              data.data.deadline
-                          }
-                      </p>
+                      <p style={{ marginTop: 15 }}>{data.data.deadline}</p>
                     </div>
                     <div className="vacanciesDetailItems">
                       <p>
-                        {data.data.minsalary}-{data.data.maxsalary}
+                        {data.data.salary === 1 && <p>{data.data.salaryfix}</p>}
+                        {data.data.salary === 2 && (
+                          <p>
+                            {data.data.minsalary}-{data.data.maxsalary}
+                          </p>
+                        )}
+                        {data.data.salary === 3 && <p>Razılaşma</p>}
                       </p>
                     </div>
                   </div>
