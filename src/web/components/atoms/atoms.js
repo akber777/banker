@@ -41,3 +41,9 @@ export const newsTitle = atom({
 });
 
 
+export const newsLentState = atom({
+  key: "news",
+  default: [],
+});
+
+

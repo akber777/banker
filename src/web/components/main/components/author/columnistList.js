@@ -25,7 +25,7 @@ import Switch from "react-switch";
 
 // helper
 
-import { detectItemList, detectItemListEnd } from "../../../helper/helper";
+import { detectItemList, detectItemListEnd, startAos,detectItemNews } from "../../../helper/helper";
 
 // query
 
@@ -51,8 +51,6 @@ import { apiValue, pageRequired, numberRequired } from "../../../atoms/atoms";
 
 import { requiredNew } from "../../../queries/queries";
 
-// helper
-import { detectItemNews } from "../../../helper/helper";
 
 const ColumnList = () => {
   let { pathname } = useLocation();
@@ -84,11 +82,12 @@ const ColumnList = () => {
 
   useLayoutEffect(() => {
     setOpinion([]);
-
+    startAos()
     setPage(1);
   }, [pathname]);
 
   window.onscroll = function () {
+    startAos()
     if (isLoading === false) {
       if (
         window.pageYOffset + window.innerHeight >=
@@ -153,6 +152,7 @@ const ColumnList = () => {
     window.scrollTo({
       top: 0,
     });
+    startAos()
   }, [pathname]);
 
   let mutation = useMutation((data) => data);
@@ -247,7 +247,7 @@ const ColumnList = () => {
               <Row>
                 {isLoading === false && opinion.length === 0
                   ? data.data.opinions.data.map((item) => (
-                      <Col md="6" lg="4" key={item.id}>
+                      <Col md="6" lg="4" key={item.id} data-aos="zoom-in-up">
                         <NavLink to={"/opinion/" + item.slug}>
                           <div className="blog__imgBox">
                             <img
@@ -291,7 +291,7 @@ const ColumnList = () => {
                       </Col>
                     ))
                   : opinion.map((item) => (
-                      <Col md="6" lg="4" key={item.id}>
+                      <Col md="6" lg="4" key={item.id} data-aos="zoom-in-up">
                         <NavLink to={"/opinion/" + item.slug}>
                           <div className="blog__imgBox">
                             <img

@@ -48,6 +48,7 @@ import {
   detectItemNews,
   detectItemList,
   detectItemListEnd,
+  startAos
 } from "../../../helper/helper";
 
 const BlogList = React.memo(function BlogList() {
@@ -102,11 +103,16 @@ const BlogList = React.memo(function BlogList() {
   // pagination
   useLayoutEffect(() => {
     setBlogs([]);
-
     setPage(1);
+    startAos()
   }, [pathname]);
 
+
+
   window.onscroll = function () {
+
+    startAos()
+
     if (isLoading === false) {
       if (
         window.pageYOffset + window.innerHeight >=
@@ -284,7 +290,7 @@ const BlogList = React.memo(function BlogList() {
               <Row>
                 {isLoading === false && data !== undefined && blogs.length === 0
                   ? data.data.blogs.data.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
                         <NavLink to={"/blog/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">
@@ -321,7 +327,7 @@ const BlogList = React.memo(function BlogList() {
                       </Col>
                     ))
                   : blogs.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
                         <NavLink to={"/blog/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">

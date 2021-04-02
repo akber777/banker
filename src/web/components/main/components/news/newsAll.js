@@ -43,10 +43,14 @@ import {
   detectItemNews,
   detectItemListEnd,
   detectItemList,
+  startAos
 } from "../../../helper/helper";
 
 // react splide
 import { Splide, SplideSlide } from "@splidejs/react-splide";
+
+
+
 
 const NewsAll = () => {
   let { pathname } = useLocation();
@@ -150,6 +154,8 @@ const NewsAll = () => {
     window.scroll({
       top: 400,
     });
+
+    startAos()
   }, [pathname]);
 
   window.onscroll = function () {
@@ -332,7 +338,13 @@ const NewsAll = () => {
               <Row>
                 {news.length !== 0 &&
                   news[index].map((item, index) => (
-                    <Col md="6" lg="4" className="mb-4" key={index}>
+                    <Col
+                      md="6"
+                      lg="4"
+                      className="mb-4"
+                      key={index}
+                      data-aos="zoom-in-up"
+                    >
                       <NavLink to={"/" + item.slug}>
                         <div className="newsList__flex">
                           <div className="newsList__flex--img">

@@ -15,6 +15,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./web/components/baseCss/_base.scss";
 import "./web/components/baseCss/keyframes.css";
+import "aos/dist/aos.css";
 
 // recoil
 

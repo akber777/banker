@@ -42,6 +42,7 @@ import {
   detectItemList,
   detectItemNews,
   detectItemListEnd,
+  startAos
 } from "../../../helper/helper";
 
 const BlogListAll = () => {
@@ -90,10 +91,12 @@ const BlogListAll = () => {
 
   useLayoutEffect(() => {
     setPage(1);
+  
     setNews([]);
   }, [pathname]);
 
   window.onscroll = function () {
+    startAos()
     if (isLoading === false) {
       if (
         window.pageYOffset + window.innerHeight >=
@@ -155,6 +158,7 @@ const BlogListAll = () => {
 
   useLayoutEffect(() => {
     setApiVal("/latest");
+    startAos()
   }, []);
 
   let mutation = useMutation((data) => data);
@@ -242,7 +246,7 @@ const BlogListAll = () => {
               <Row>
                 {news.length === 0 && isLoading === false
                   ? data.data.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index} data-aos="zoom-in-up">
                         <NavLink to={"/blog/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">
@@ -281,7 +285,7 @@ const BlogListAll = () => {
                       </Col>
                     ))
                   : news.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index} data-aos="zoom-in-up">
                         <NavLink to={"/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">

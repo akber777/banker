@@ -50,7 +50,7 @@ import { apiValue } from "../../../atoms/atoms";
 import { requiredNew, relatedNews } from "../../../queries/queries";
 
 // helper
-import { checkSalary, detectItemNews } from "../../../helper/helper";
+import { checkSalary, detectItemNews, startAos } from "../../../helper/helper";
 
 // jquery
 import $ from "jquery";
@@ -196,6 +196,7 @@ const NewsDetail = () => {
 
   useLayoutEffect(() => {
     setNextNews([]);
+    startAos()
   }, [pathDetail]);
 
   useLayoutEffect(() => {
@@ -807,7 +808,7 @@ const NewsDetail = () => {
               <div className="newsDetail__left l100">
                 {nextNews.length !== 0 &&
                   nextNews.map((data) => (
-                    <div className="newsDetail__next">
+                    <div className="newsDetail__next" data-aos="zoom-in-up">
                       <div className="newsDetail__next--left">
                         <div className="newsDetail__title">
                           {isLoading === true && (
@@ -996,7 +997,7 @@ const NewsDetail = () => {
               </div>
             </div>
             {newsNext.isLoading !== false && (
-              <div class="loader">
+              <div class="loader" data-aos="zoom-in-up">
                 <div></div>
                 <div></div>
                 <div></div>

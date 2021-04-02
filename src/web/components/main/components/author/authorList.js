@@ -42,6 +42,7 @@ import {
   detectItemList,
   detectItemNews,
   detectItemListEnd,
+  startAos
 } from "../../../helper/helper";
 
 // recoil
@@ -61,6 +62,7 @@ const AuthorList = () => {
     window.scrollTo({
       top: 0,
     });
+    startAos()
   }, [pathname]);
 
   let mutation = useMutation((data) => data);
@@ -88,6 +90,7 @@ const AuthorList = () => {
   );
 
   window.onscroll = function () {
+    startAos()
     if (isLoading === false) {
       if (
         window.pageYOffset + window.innerHeight >=
@@ -143,6 +146,7 @@ const AuthorList = () => {
 
   useLayoutEffect(() => {
     setApiVal("/latest");
+
   }, []);
 
   let onOf = (checked) => {
@@ -228,7 +232,7 @@ const AuthorList = () => {
               <Row>
                 {isLoading === false && author.length === 0
                   ? data.data.map((item) => (
-                      <Col md="6" lg="4" key={item.id}>
+                      <Col md="6" lg="4" key={item.id} data-aos="zoom-in-up">
                         <NavLink to={"/opinion/" + item.slug}>
                           <div className="blog__imgBox">
                             <img
@@ -273,7 +277,7 @@ const AuthorList = () => {
                     ))
                   : author.map((item, index) => (
                       <Col md="6" lg="4" key={index}>
-                        <NavLink to={"/opinion/" + item.slug}>
+                        <NavLink to={"/opinion/" + item.slug} data-aos="zoom-in-up">
                           <div className="blog__imgBox">
                             <img
                               src={

@@ -46,6 +46,7 @@ import {
   detectItemNews,
   detectItemListEnd,
   detectItemList,
+  startAos
 } from "../../../helper/helper";
 
 // react splide
@@ -135,6 +136,7 @@ const NewsList = () => {
   useLayoutEffect(() => {
     setPage(1);
     setNews([]);
+    startAos()
   }, [pathname]);
 
   useLayoutEffect(() => {
@@ -332,7 +334,7 @@ const NewsList = () => {
               <Row>
                 {isLoading === false && news.length === 0
                   ? data.data.news.data.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
                         <NavLink to={"/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">
@@ -371,7 +373,7 @@ const NewsList = () => {
                       </Col>
                     ))
                   : news.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}>
+                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
                         <NavLink to={"/" + item.slug}>
                           <div className="newsList__flex">
                             <div className="newsList__flex--img">
@@ -394,7 +396,7 @@ const NewsList = () => {
                     ))}
                 {isLoading === true &&
                   newsLastItem.map((item, index) => (
-                    <Col md="6" lg="4" className="mb-4" key={index}>
+                    <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
                       <NavLink to={"/" + item.slug}>
                         <div className="newsList__flex">
                           <div className="newsList__flex--img">
