@@ -133,8 +133,11 @@ const NewsAll = () => {
     {
       refetchOnWindowFocus: true,
       onSuccess: function (succ) {
-        if (succ) {
-          if (news[index] !== undefined) {
+        if (succ && splitPath !== "xeber-lenti") {
+          if (
+            news[index] !== undefined &&
+            news[index].includes(...succ.data.news.data) === false
+          ) {
             news[index].push(...succ.data.news.data);
           }
         }
@@ -144,10 +147,17 @@ const NewsAll = () => {
 
   useLayoutEffect(() => {
     setPage(2);
+    window.scroll({
+      top: 400,
+    });
   }, [pathname]);
 
   window.onscroll = function () {
-    if (scrollNews.isLoading === false) {
+    if (
+      scrollNews.isLoading === false &&
+      splitPath !== "xeber-lenti" &&
+      scrollNews.data.data.news.data.length !== 0
+    ) {
       if (
         window.pageYOffset + window.innerHeight >=
         document.body.clientHeight -
@@ -208,7 +218,6 @@ const NewsAll = () => {
 
   return (
     <main className="newsList">
-      {console.log(news[index])}
       <div className="home__leftBanner">
         <img src={require("../../../images/left.jpg").default} alt="" />
       </div>
@@ -345,7 +354,9 @@ const NewsAll = () => {
                     </Col>
                   ))}
               </Row>
-              {isLoading === true && <Row>{detectItemListEnd(3)}</Row>}
+              {scrollNews.isLoading === true && splitPath !== "xeber-lenti" && (
+                <Row>{detectItemListEnd(3)}</Row>
+              )}
             </div>
             <div className="newsList__right">
               <div className="news__title">
