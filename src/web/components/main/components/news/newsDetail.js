@@ -177,7 +177,7 @@ const NewsDetail = () => {
 
   let [font, setFont] = useState(20);
 
-  let newsNext = useQuery(  
+  let newsNext = useQuery(
     ["newsNext", pageSlug],
     async () => {
       const res = await axios.get(baseUrl + "news/next/" + pageSlug);
@@ -196,7 +196,7 @@ const NewsDetail = () => {
 
   useLayoutEffect(() => {
     setNextNews([]);
-    startAos()
+    startAos();
   }, [pathDetail]);
 
   useLayoutEffect(() => {

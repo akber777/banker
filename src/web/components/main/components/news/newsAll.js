@@ -43,14 +43,16 @@ import {
   detectItemNews,
   detectItemListEnd,
   detectItemList,
-  startAos
+  startAos,
 } from "../../../helper/helper";
+
+
 
 // react splide
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 
-
-
+// jquery
+import $ from "jquery";
 
 const NewsAll = () => {
   let { pathname } = useLocation();
@@ -154,9 +156,10 @@ const NewsAll = () => {
     window.scroll({
       top: 400,
     });
-
-    startAos()
+    startAos();
   }, [pathname]);
+
+
 
   window.onscroll = function () {
     if (

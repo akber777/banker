@@ -321,9 +321,9 @@ const Header = () => {
             }}
           >
             <img
-              src={
-                "https://ads.netant.az/www/images/f7438e76f421f513dd256a988d6c7a43.png"
-              }
+                src={
+                  require('../images/topBanner.png').default
+                }
               alt=""
             />
           </div>

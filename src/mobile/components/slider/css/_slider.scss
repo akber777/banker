@@ -1,72 +1,78 @@
 .mobSlider {
-    position: relative;
-    margin-bottom: 20px;
+  position: relative;
+  margin-bottom: 20px;
 
-    &__title {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        margin-top: 41px;
-        border-bottom: 2px solid #01345a;
-        padding-bottom: 10px;
-        margin-bottom: 32px;
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    margin-top: 41px;
+    border-bottom: 2px solid #01345a;
+    padding-bottom: 10px;
+    margin-bottom: 32px;
 
-        h1 {
-            font-style: normal;
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 25px;
-            color: #01345a;
-        }
-
-        a {
-            font-style: normal;
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 22px;
-            color: #01345a;
-
-            svg {
-                margin-left: 13px;
-            }
-        }
+    h1 {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 18px;
+      line-height: 25px;
+      color: #01345a;
     }
 
-    &__slide {
-        &--items {
-            box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.15);
-            border-radius: 5px;
-        }
+    a {
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 22px;
+      color: #01345a;
+
+      svg {
+        margin-left: 13px;
+      }
     }
+  }
 
-    &__imgBox {
-        // height: 202px;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
+  &__slide {
+    &--items {
+      box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
     }
+  }
 
-    &__info {
-        padding: 20px 21px;
+  &__imgBox {
+    // height: 202px;
 
-        p {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 18px;
-            line-height: 23px;
-            color: #202020;
-            margin-bottom: 0;
-        }
+    img {
+      width: 100%;
+      height: 200px;
     }
+  }
 
-    .react-multi-carousel-item {
-        padding: 0 15px;
-    }
+  &__info {
+    padding: 20px 21px;
 
-    .react-multi-carousel-track {
-        padding-bottom: 40px;
+    p {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 18px;
+      color: #202020;
+      margin-bottom: 0;
+      display: -webkit-box;
+      line-height: 24px;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      text-overflow: ellipsis;
+      height: 77px;
+      overflow: hidden;
     }
+  }
+
+  .react-multi-carousel-item {
+    padding: 0 15px;
+  }
+
+  .react-multi-carousel-track {
+    padding-bottom: 40px;
+  }
 }

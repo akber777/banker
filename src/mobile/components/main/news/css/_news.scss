@@ -3,13 +3,16 @@
 
   &__wrapper {
     margin-top: 42px;
+    position: absolute;
+    bottom: 43px;
+    padding: 0 15px;
 
     h4 {
       font-style: normal;
       font-weight: 600;
       font-size: 20px;
       line-height: 23px;
-      color: #202020;
+      color: #fff;
     }
   }
 
@@ -17,7 +20,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 32px;
+    margin-bottom: 10px;
     margin-top: 14px;
 
     p {
@@ -26,7 +29,7 @@
       font-weight: normal;
       font-size: 12px;
       line-height: 16px;
-      color: #6f6f6f;
+      color: #fff;
     }
 
     span {
@@ -119,12 +122,17 @@
     justify-content: center;
     margin-bottom: 35px;
 
+
     .showMore {
+      height: 48px;
       background: #005a9d;
       border-radius: 3px;
       display: inline-flex;
+      align-items: center;
+      justify-content: center;
       padding: 10px 25px;
       color: #fff;
+      min-width: 130px;
     }
   }
 }

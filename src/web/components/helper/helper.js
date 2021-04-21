@@ -116,6 +116,4 @@ export const startAos = () => {
   AOS.init({
     duration: 500,
   });
-
-  AOS.refresh()
 };

@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import React, {useLayoutEffect, useState} from "react";
+import {Container, Row, Col} from "react-bootstrap";
 
 // css
 import "./css/_newsList.scss";
@@ -12,14 +12,14 @@ import News from "../news/newsPage";
 // sider
 import Carousel from "react-multi-carousel";
 
-import { NavLink, useLocation, Link } from "react-router-dom";
+import {NavLink, useLocation, Link} from "react-router-dom";
 
 // switch
 import Switch from "react-switch";
 
 // query
 
-import { useQuery, useMutation } from "react-query";
+import {useQuery, useMutation} from "react-query";
 
 // axios
 
@@ -27,262 +27,262 @@ import axios from "axios";
 
 // api
 
-import { baseUrl } from "../../../api/api";
+import {baseUrl} from "../../../api/api";
 
 // include
-import { newsListCategory } from "../../../api/include";
+import {newsListCategory} from "../../../api/include";
 
 // recoil
-import { useRecoilState } from "recoil";
+import {useRecoilState} from "recoil";
 
 //atom
-import { apiValue, newsList, newsTitle } from "../../../atoms/atoms";
+import {apiValue, newsList, newsTitle} from "../../../atoms/atoms";
 
 // query func
 
-import { requiredNew } from "../../../queries/queries";
+import {requiredNew} from "../../../queries/queries";
 
 import {
-  detectItemNews,
-  detectItemListEnd,
-  detectItemList,
-  startAos
+    detectItemNews,
+    detectItemListEnd,
+    detectItemList,
+    startAos
 } from "../../../helper/helper";
 
 // react splide
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import {Splide, SplideSlide} from "@splidejs/react-splide";
 
 const NewsList = () => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 9,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 6,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 5,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
-
-  let { pathname } = useLocation();
-
-  let [page, setPage] = useState(1);
-
-  let [news, setNews] = useState([]);
-
-  let [newsLastItem, setNewsLastItem] = useRecoilState(newsList);
-
-  let [newsTitleState, setNewsTitleState] = useRecoilState(newsTitle);
-
-  let [relatedCategoryState, setRelatedCategory] = useState([]);
-
-  let { data, isLoading } = useQuery(
-    ["newsList", pathname, page],
-    async () => {
-      const res = await axios.get(
-        baseUrl + "news" + pathname + `?include=${newsListCategory.toString()}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            page: page,
-            number: 21,
-          },
-        }
-      );
-
-      return (await res).data;
-    },
-    {
-      refetchOnWindowFocus: true,
-      onSuccess: function (succ) {
-        if (page <= 1) {
-          setNewsLastItem(succ.data.news.data);
-        }
-      },
-    }
-  );
-
-  let relatedCategory = useQuery(
-    ["relatedCategory", pathname],
-    async () => {
-      const res = await axios.get(baseUrl + "news" + "/related" + pathname, {
-        headers: {
-          "Content-Type": "application/json",
-          page: page,
-          number: 21,
+    const responsive = {
+        superLargeDesktop: {
+            breakpoint: {max: 4000, min: 3000},
+            items: 9,
         },
-      });
+        desktop: {
+            breakpoint: {max: 3000, min: 1024},
+            items: 6,
+        },
+        tablet: {
+            breakpoint: {max: 1024, min: 464},
+            items: 5,
+        },
+        mobile: {
+            breakpoint: {max: 464, min: 0},
+            items: 1,
+        },
+    };
 
-      return (await res).data;
-    },
-    {
-      refetchOnWindowFocus: true,
-      onSuccess: function (succ) {
-        if (succ.data !== undefined) {
-          setRelatedCategory(succ.data);
+    let {pathname} = useLocation();
+
+    let [page, setPage] = useState(1);
+
+    let [news, setNews] = useState([]);
+
+    let [newsLastItem, setNewsLastItem] = useRecoilState(newsList);
+
+    let [newsTitleState, setNewsTitleState] = useRecoilState(newsTitle);
+
+    let [relatedCategoryState, setRelatedCategory] = useState([]);
+
+    let {data, isLoading} = useQuery(
+        ["newsList", pathname, page],
+        async () => {
+            const res = await axios.get(
+                baseUrl + "news" + pathname + `?include=${newsListCategory.toString()}`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        page: page,
+                        number: 21,
+                    },
+                }
+            );
+
+            return (await res).data;
+        },
+        {
+            refetchOnWindowFocus: true,
+            onSuccess: function (succ) {
+                if (page <= 1) {
+                    setNewsLastItem(succ.data.news.data);
+                }
+            },
         }
-      },
-    }
-  );
+    );
 
-  useLayoutEffect(() => {
-    setPage(1);
-    setNews([]);
-    startAos()
-  }, [pathname]);
+    let relatedCategory = useQuery(
+        ["relatedCategory", pathname],
+        async () => {
+            const res = await axios.get(baseUrl + "news" + "/related" + pathname, {
+                headers: {
+                    "Content-Type": "application/json",
+                    page: page,
+                    number: 21,
+                },
+            });
 
-  useLayoutEffect(() => {
-    window.scrollTo({
-      top: 0,
-    });
+            return (await res).data;
+        },
+        {
+            refetchOnWindowFocus: true,
+            onSuccess: function (succ) {
+                if (succ.data !== undefined) {
+                    setRelatedCategory(succ.data);
+                }
+            },
+        }
+    );
 
-    setNewsLastItem([]);
-    setNewsTitleState([])
-  }, []);
+    useLayoutEffect(() => {
+        setPage(1);
+        setNews([]);
+        startAos()
+    }, [pathname]);
 
-  window.onscroll = function () {
-    if (isLoading === false) {
-      if (
-        window.pageYOffset + window.innerHeight >=
-        document.body.clientHeight -
-          document.querySelector(".footer").clientHeight -
-          50
-      ) {
-        if (data.data.news.data.length !== 0) {
-          setPage((page = page + 1));
-          if (isLoading === false) {
-            if (news.includes(...data.data.news.data) === false) {
-              setNews((oldArray) => [...oldArray, ...data.data.news.data]);
+    useLayoutEffect(() => {
+        window.scrollTo({
+            top: 0,
+        });
+
+        setNewsLastItem([]);
+        setNewsTitleState([])
+    }, []);
+
+    window.onscroll = function () {
+        if (isLoading === false) {
+            if (
+                window.pageYOffset + window.innerHeight >=
+                document.body.clientHeight -
+                document.querySelector(".footer").clientHeight -
+                50
+            ) {
+                if (data.data.news.data.length !== 0) {
+                    setPage((page = page + 1));
+                    if (isLoading === false) {
+                        if (news.includes(...data.data.news.data) === false) {
+                            setNews((oldArray) => [...oldArray, ...data.data.news.data]);
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }
-  };
+    };
 
-  // required news
+    // required news
 
-  let [checked, setChecked] = useState(false);
+    let [checked, setChecked] = useState(false);
 
-  let [apiVal, setApiVal] = useRecoilState(apiValue);
+    let [apiVal, setApiVal] = useRecoilState(apiValue);
 
-  // scrollData
-  let [pageRequ, setPageRequ] = useState(1);
-  let [dataRequLatest, setDataRequLatest] = useState([]);
-  let [dataRequImportant, setDataRequImportant] = useState([]);
+    // scrollData
+    let [pageRequ, setPageRequ] = useState(1);
+    let [dataRequLatest, setDataRequLatest] = useState([]);
+    let [dataRequImportant, setDataRequImportant] = useState([]);
 
-  // required news
-  let requiredNews = useQuery(["requiredNews", apiVal, pageRequ], requiredNew, {
-    refetchOnWindowFocus: false,
-    refetchIntervalInBackground: true,
-    onSuccess: function (succ) {
-      if (
-        dataRequLatest.includes(...succ.data) === false &&
-        succ.data.length !== 0 &&
-        apiVal === "/latest"
-      ) {
-        setDataRequLatest((oldArray) => [...oldArray, ...succ.data]);
-      }
+    // required news
+    let requiredNews = useQuery(["requiredNews", apiVal, pageRequ], requiredNew, {
+        refetchOnWindowFocus: false,
+        refetchIntervalInBackground: true,
+        onSuccess: function (succ) {
+            if (
+                dataRequLatest.includes(...succ.data) === false &&
+                succ.data.length !== 0 &&
+                apiVal === "/latest"
+            ) {
+                setDataRequLatest((oldArray) => [...oldArray, ...succ.data]);
+            }
 
-      if (
-        dataRequImportant.includes(...succ.data) === false &&
-        succ.data.length !== 0 &&
-        apiVal === "/important"
-      ) {
-        setDataRequImportant((oldArray) => [...oldArray, ...succ.data]);
-      }
-    },
-  });
-  // required news
+            if (
+                dataRequImportant.includes(...succ.data) === false &&
+                succ.data.length !== 0 &&
+                apiVal === "/important"
+            ) {
+                setDataRequImportant((oldArray) => [...oldArray, ...succ.data]);
+            }
+        },
+    });
+    // required news
 
-  let mutation = useMutation((data) => data);
+    let mutation = useMutation((data) => data);
 
-  let onOf = (checked) => {
-    setChecked(checked);
+    let onOf = (checked) => {
+        setChecked(checked);
 
-    if (checked === true) {
-      mutation.mutate(setApiVal("/important"));
-    } else {
-      mutation.mutate(setApiVal("/latest"));
-    }
-  };
+        if (checked === true) {
+            mutation.mutate(setApiVal("/important"));
+        } else {
+            mutation.mutate(setApiVal("/latest"));
+        }
+    };
 
-  return (
-    <main className="newsList">
-      <div className="home__leftBanner">
-        <img src={require("../../../images/left.jpg").default} alt="" />
-      </div>
-      <div className="home__rightBanner">
-        <img src={require("../../../images/left.jpg").default} alt="" />
-      </div>
-      <Container>
-        <div className="home__currency">
-          <p>
-            USD
-            <span style={{ color: "#202020" }}>1.7000</span>
-            <img src={require("../../../images/natural.png").default} alt="" />
-          </p>
-          <p>
-            EUR
-            <span style={{ color: "#2CA900" }}>2.0272</span>
-            <img src={require("../../../images/up.png").default} alt="" />
-          </p>
-          <p>
-            RUB
-            <span style={{ color: "#A40031" }}>0.0225</span>
-            <img src={require("../../../images/down.png").default} alt="" />
-          </p>
-          <p>
-            USD
-            <span style={{ color: "#202020" }}>1.7000</span>
-            <img src={require("../../../images/natural.png").default} alt="" />
-          </p>
-          <p>
-            EUR
-            <span style={{ color: "#2CA900" }}>2.0272</span>
-            <img src={require("../../../images/up.png").default} alt="" />
-          </p>
-          <p>
-            RUB
-            <span style={{ color: "#A40031" }}>0.0225</span>
-            <img src={require("../../../images/down.png").default} alt="" />
-          </p>
-          <p>
-            USD
-            <span style={{ color: "#202020" }}>1.7000</span>
-            <img src={require("../../../images/natural.png").default} alt="" />
-          </p>
-          <p>
-            EUR
-            <span style={{ color: "#2CA900" }}>2.0272</span>
-            <img src={require("../../../images/up.png").default} alt="" />
-          </p>
-          <p>
-            EUR
-            <span style={{ color: "#2CA900" }}>2.0272</span>
-            <img src={require("../../../images/up.png").default} alt="" />
-          </p>
-        </div>
-        <div className="home__bannerTop">
-          <img src={require("../../../images/pasha.jpg").default} alt="" />
-        </div>
-      </Container>
-      <div className="newsList__content">
-        <Container>
-          <div className="newsList__content--title">
-            {isLoading === false && setNewsTitleState(data.data.name)}
-            <h1>{isLoading === false ? data.data.name : newsTitleState}</h1>
-          </div>
-          <div className="newsList__slider">
-            {/* {isLoading === true && (
+    return (
+        <main className="newsList">
+            <div className="home__leftBanner">
+                <img src={require("../../../images/left.jpg").default} alt=""/>
+            </div>
+            <div className="home__rightBanner">
+                <img src={require("../../../images/left.jpg").default} alt=""/>
+            </div>
+            <Container>
+                <div className="home__currency">
+                    <p>
+                        USD
+                        <span style={{color: "#202020"}}>1.7000</span>
+                        <img src={require("../../../images/natural.png").default} alt=""/>
+                    </p>
+                    <p>
+                        EUR
+                        <span style={{color: "#2CA900"}}>2.0272</span>
+                        <img src={require("../../../images/up.png").default} alt=""/>
+                    </p>
+                    <p>
+                        RUB
+                        <span style={{color: "#A40031"}}>0.0225</span>
+                        <img src={require("../../../images/down.png").default} alt=""/>
+                    </p>
+                    <p>
+                        USD
+                        <span style={{color: "#202020"}}>1.7000</span>
+                        <img src={require("../../../images/natural.png").default} alt=""/>
+                    </p>
+                    <p>
+                        EUR
+                        <span style={{color: "#2CA900"}}>2.0272</span>
+                        <img src={require("../../../images/up.png").default} alt=""/>
+                    </p>
+                    <p>
+                        RUB
+                        <span style={{color: "#A40031"}}>0.0225</span>
+                        <img src={require("../../../images/down.png").default} alt=""/>
+                    </p>
+                    <p>
+                        USD
+                        <span style={{color: "#202020"}}>1.7000</span>
+                        <img src={require("../../../images/natural.png").default} alt=""/>
+                    </p>
+                    <p>
+                        EUR
+                        <span style={{color: "#2CA900"}}>2.0272</span>
+                        <img src={require("../../../images/up.png").default} alt=""/>
+                    </p>
+                    <p>
+                        EUR
+                        <span style={{color: "#2CA900"}}>2.0272</span>
+                        <img src={require("../../../images/up.png").default} alt=""/>
+                    </p>
+                </div>
+                <div className="home__bannerTop">
+                    <img src={require("../../../images/pasha.jpg").default} alt=""/>
+                </div>
+            </Container>
+            <div className="newsList__content">
+                <Container>
+                    <div className="newsList__content--title">
+                        {isLoading === false && setNewsTitleState(data.data.name)}
+                        <h1>{isLoading === false ? data.data.name : newsTitleState}</h1>
+                    </div>
+                    <div className="newsList__slider">
+                        {/* {isLoading === true && (
               <div className="flexLine">
                 <div className="placeholder wave" style={{ height: "auto" }}>
                   <div className="line"></div>
@@ -295,61 +295,61 @@ const NewsList = () => {
                 </div>
               </div>
             )} */}
-            <Splide
-              options={{
-                rewind: true,
-                gap: "1rem",
-                perPage: 9,
-                arrows: false,
-                fixedWidth: "auto",
-                pagination: false,
-              }}
-            >
-              {relatedCategory.isLoading === false
-                ? relatedCategory.data.data.map((subitem) => (
-                    <SplideSlide>
-                      <div className="newsList__slider--item" key={subitem.id}>
-                        <NavLink to={"/category/" + subitem.slug}>
-                          <span>{subitem.name}</span>
-                        </NavLink>
-                      </div>
-                    </SplideSlide>
-                  ))
-                : relatedCategoryState.map((item) => (
-                    <SplideSlide>
-                      <div className="newsList__slider--item" key={item.id}>
-                        <NavLink to={"/category/" + item.slug}>
-                          <span>{item.name}</span>
-                        </NavLink>
-                      </div>
-                    </SplideSlide>
-                  ))}
-            </Splide>
-          </div>
-          <div className="newsList__flexBox">
-            <div className="newsList__left">
-              {newsLastItem.length === 0 && isLoading !== false && (
-                <Row>{detectItemList(21)}</Row>
-              )}
-              <Row>
-                {isLoading === false && news.length === 0
-                  ? data.data.news.data.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
-                        <NavLink to={"/" + item.slug}>
-                          <div className="newsList__flex">
-                            <div className="newsList__flex--img">
-                              <img
-                                src={item.img !== null && item.img.cover}
-                                alt=""
-                              />
-                            </div>
-                            <div className="newsList__wrapper">
-                              <div className="newsList__flex--info">
-                                <p>{item.title}</p>
-                              </div>
-                              <div className="newsList__flex--bottom">
-                                <p>{item.post_date}</p>
-                                {/* {item.viewcount.data.length !== 0 && (
+                        <Splide
+                            options={{
+                                rewind: true,
+                                gap: "1rem",
+                                perPage: 9,
+                                arrows: false,
+                                fixedWidth: "auto",
+                                pagination: false,
+                            }}
+                        >
+                            {relatedCategory.isLoading === false
+                                ? relatedCategory.data.data.map((subitem) => (
+                                    <SplideSlide>
+                                        <div className="newsList__slider--item" key={subitem.id}>
+                                            <NavLink to={"/category/" + subitem.slug}>
+                                                <span>{subitem.name}</span>
+                                            </NavLink>
+                                        </div>
+                                    </SplideSlide>
+                                ))
+                                : relatedCategoryState.map((item) => (
+                                    <SplideSlide>
+                                        <div className="newsList__slider--item" key={item.id}>
+                                            <NavLink to={"/category/" + item.slug}>
+                                                <span>{item.name}</span>
+                                            </NavLink>
+                                        </div>
+                                    </SplideSlide>
+                                ))}
+                        </Splide>
+                    </div>
+                    <div className="newsList__flexBox">
+                        <div className="newsList__left">
+                            {newsLastItem.length === 0 && isLoading !== false && (
+                                <Row>{detectItemList(21)}</Row>
+                            )}
+                            <Row>
+                                {isLoading === false && news.length === 0
+                                    ? data.data.news.data.map((item, index) => (
+                                        <Col md="6" lg="4" className="mb-4" key={index} data-aos="zoom-in-up">
+                                            <NavLink to={"/" + item.slug}>
+                                                <div className="newsList__flex">
+                                                    <div className="newsList__flex--img">
+                                                        <img
+                                                            src={item.img !== null && item.img.cover}
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <div className="newsList__wrapper">
+                                                        <div className="newsList__flex--info">
+                                                            <p>{item.title}</p>
+                                                        </div>
+                                                        <div className="newsList__flex--bottom">
+                                                            <p>{item.post_date}</p>
+                                                            {/* {item.viewcount.data.length !== 0 && (
                                   <p>
                                     <svg
                                       width="18"
@@ -366,123 +366,123 @@ const NewsList = () => {
                                     <span>{item.viewcount.data.count}</span>
                                   </p>
                                 )} */}
-                              </div>
-                            </div>
-                          </div>
-                        </NavLink>
-                      </Col>
-                    ))
-                  : news.map((item, index) => (
-                      <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
-                        <NavLink to={"/" + item.slug}>
-                          <div className="newsList__flex">
-                            <div className="newsList__flex--img">
-                              <img
-                                src={item.img !== null && item.img.cover}
-                                alt=""
-                              />
-                            </div>
-                            <div className="newsList__wrapper">
-                              <div className="newsList__flex--info">
-                                <p>{item.title}</p>
-                              </div>
-                              <div className="newsList__flex--bottom">
-                                <p>{item.post_date.split(" ")[0]}</p>
-                              </div>
-                            </div>
-                          </div>
-                        </NavLink>
-                      </Col>
-                    ))}
-                {isLoading === true &&
-                  newsLastItem.map((item, index) => (
-                    <Col md="6" lg="4" className="mb-4" key={index}  data-aos="zoom-in-up">
-                      <NavLink to={"/" + item.slug}>
-                        <div className="newsList__flex">
-                          <div className="newsList__flex--img">
-                            <img
-                              src={item.img !== null && item.img.cover}
-                              alt=""
-                            />
-                          </div>
-                          <div className="newsList__wrapper">
-                            <div className="newsList__flex--info">
-                              <p>{item.title}</p>
-                            </div>
-                            <div className="newsList__flex--bottom">
-                              <p>{item.post_date.split(" ")[0]}</p>
-                            </div>
-                          </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </NavLink>
+                                        </Col>
+                                    ))
+                                    : news.map((item, index) => (
+                                        <Col md="6" lg="4" className="mb-4" key={index} data-aos="zoom-in-up">
+                                            <NavLink to={"/" + item.slug}>
+                                                <div className="newsList__flex">
+                                                    <div className="newsList__flex--img">
+                                                        <img
+                                                            src={item.img !== null && item.img.cover}
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <div className="newsList__wrapper">
+                                                        <div className="newsList__flex--info">
+                                                            <p>{item.title}</p>
+                                                        </div>
+                                                        <div className="newsList__flex--bottom">
+                                                            <p>{item.post_date.split(" ")[0]}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </NavLink>
+                                        </Col>
+                                    ))}
+                                {isLoading === true &&
+                                newsLastItem.map((item, index) => (
+                                    <Col md="6" lg="4" className="mb-4" key={index} data-aos="zoom-in-up">
+                                        <NavLink to={"/" + item.slug}>
+                                            <div className="newsList__flex">
+                                                <div className="newsList__flex--img">
+                                                    <img
+                                                        src={item.img !== null && item.img.cover}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                                <div className="newsList__wrapper">
+                                                    <div className="newsList__flex--info">
+                                                        <p>{item.title}</p>
+                                                    </div>
+                                                    <div className="newsList__flex--bottom">
+                                                        <p>{item.post_date.split(" ")[0]}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </NavLink>
+                                    </Col>
+                                ))}
+                            </Row>
+                            {isLoading === true && <Row>{detectItemListEnd(3)}</Row>}
                         </div>
-                      </NavLink>
-                    </Col>
-                  ))}
-              </Row>
-              {isLoading === true && <Row>{detectItemListEnd(3)}</Row>}
-            </div>
-            <div className="newsList__right">
-              <div className="news__title">
-                <h1>{"Xeberler"}</h1>
-                <Switch
-                  onChange={onOf}
-                  checked={checked}
-                  onColor="#B4B4B4"
-                  onHandleColor="#fff"
-                  handleDiameter={12}
-                  uncheckedIcon={false}
-                  checkedIcon={false}
-                  height={18}
-                  width={35}
-                  className="react-switch"
-                />
-              </div>
-              <div
-                className={`newsDetailed ${
-                  requiredNews.isLoading === true ? "overNews" : ""
-                }`}
-              >
-                {requiredNews.isLoading === true &&
-                  dataRequLatest.length === 0 &&
-                  detectItemNews(15)}
-                {requiredNews.isLoading === false &&
-                dataRequLatest.length === 0 ? (
-                  <News
-                    title={"data"}
-                    switch={true}
-                    requNews={requiredNews.data.data}
-                    icon={true}
-                  />
-                ) : (
-                  <News
-                    title={"data"}
-                    switch={true}
-                    requNews={
-                      apiVal === "/latest" ? dataRequLatest : dataRequImportant
-                    }
-                    icon={true}
-                  />
-                )}
-              </div>
-              <div
-                style={{ marginBottom: 15 }}
-                className="moreNewsBtn"
-                onClick={() => {
-                  if (requiredNews.isLoading === false) {
-                    setPageRequ((pageRequ = pageRequ + 1));
-                  }
-                }}
-              >
-                <Link to={pathname}>
-                  {requiredNews.isLoading === false ? (
-                    "Daha Çox Xəbər"
-                  ) : (
-                    <div class="loader-1 center">
-                      <span></span>
-                    </div>
-                  )}
-                </Link>
-              </div>
-              {/* <div className='newsDetail__raitings'>
+                        <div className="newsList__right">
+                            <div className="news__title">
+                                <h1>{"Xeberler"}</h1>
+                                <Switch
+                                    onChange={onOf}
+                                    checked={checked}
+                                    onColor="#B4B4B4"
+                                    onHandleColor="#fff"
+                                    handleDiameter={12}
+                                    uncheckedIcon={false}
+                                    checkedIcon={false}
+                                    height={18}
+                                    width={35}
+                                    className="react-switch"
+                                />
+                            </div>
+                            <div
+                                className={`newsDetailed ${
+                                    requiredNews.isLoading === true ? "overNews" : ""
+                                }`}
+                            >
+                                {requiredNews.isLoading === true &&
+                                dataRequLatest.length === 0 &&
+                                detectItemNews(15)}
+                                {requiredNews.isLoading === false &&
+                                dataRequLatest.length === 0 ? (
+                                    <News
+                                        title={"data"}
+                                        switch={true}
+                                        requNews={requiredNews.data.data}
+                                        icon={true}
+                                    />
+                                ) : (
+                                    <News
+                                        title={"data"}
+                                        switch={true}
+                                        requNews={
+                                            apiVal === "/latest" ? dataRequLatest : dataRequImportant
+                                        }
+                                        icon={true}
+                                    />
+                                )}
+                            </div>
+                            <div
+                                style={{marginBottom: 15}}
+                                className="moreNewsBtn"
+                                onClick={() => {
+                                    if (requiredNews.isLoading === false) {
+                                        setPageRequ((pageRequ = pageRequ + 1));
+                                    }
+                                }}
+                            >
+                                <Link to={pathname}>
+                                    {requiredNews.isLoading === false ? (
+                                        "Daha Çox Xəbər"
+                                    ) : (
+                                        <div class="loader-1 center">
+                                            <span></span>
+                                        </div>
+                                    )}
+                                </Link>
+                            </div>
+                            {/* <div className='newsDetail__raitings'>
                                 <div className='newsDetail__raitings--title'>
                                     <h4>{isLoading === false && (data.data.name)}</h4>
                                 </div>
@@ -504,24 +504,24 @@ const NewsList = () => {
                                     </p>
                                 </div>
                             </div> */}
-              <div className="newsDetail__bannerRight">
-                <img
-                  src={require("../../../images/ziraat.jpg").default}
-                  alt=""
-                />
-              </div>
-              <div className="newsDetail__bannerRight">
-                <img
-                  src={require("../../../images/masin.jpg").default}
-                  alt=""
-                />
-              </div>
+                            <div className="newsDetail__bannerRight">
+                                <img
+                                    src={require("../../../images/ziraat.jpg").default}
+                                    alt=""
+                                />
+                            </div>
+                            <div className="newsDetail__bannerRight">
+                                <img
+                                    src={require("../../../images/masin.jpg").default}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </Container>
             </div>
-          </div>
-        </Container>
-      </div>
-    </main>
-  );
+        </main>
+    );
 };
 
 export default NewsList;
