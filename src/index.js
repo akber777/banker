@@ -4,7 +4,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 // import Router
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 
 // tools
 import "@splidejs/splide/dist/css/themes/splide-default.min.css";
@@ -19,26 +19,26 @@ import "aos/dist/aos.css";
 
 // recoil
 
-import { RecoilRoot } from "recoil";
+import {RecoilRoot} from "recoil";
 
-import { QueryClient, QueryClientProvider } from "react-query";
+import {QueryClient, QueryClientProvider} from "react-query";
 
-import { ReactQueryDevtools } from "react-query/devtools";
+import {ReactQueryDevtools} from "react-query/devtools";
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <App />
-        </RecoilRoot>
-      </QueryClientProvider>
-    </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById("root")
+    <React.StrictMode>
+        <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+                <RecoilRoot>
+                    <ReactQueryDevtools initialIsOpen={false}/>
+                    <Route component={App}/>
+                </RecoilRoot>
+            </QueryClientProvider>
+        </BrowserRouter>
+    </React.StrictMode>,
+    document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
