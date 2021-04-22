@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "datetime-difference": "^1.0.2",
+    "env-cmd": "^10.1.0",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
@@ -52,9 +53,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:staging": "env-cmd -f .env.staging npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "zip": "webpack --watch"
+    "zip": "webpack --watch",
+    "ssr": "node server.js"
   },
   "eslintConfig": {
     "extends": [
