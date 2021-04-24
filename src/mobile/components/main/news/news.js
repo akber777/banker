@@ -111,7 +111,7 @@ const News = () => {
                     </button>
                     <button onClick={() => {
                         setPath('latest')
-                    }}>Son xəbərlər
+                    }}>Əsas xəbərlər
                     </button>
                 </div>
                 <Container>
@@ -216,12 +216,7 @@ const News = () => {
                     </div>
                 </Container>
             </div>
-            <div className="mobileHome__banner">
-                <img
-                    src={"https://banker.az/wp-content/uploads/2020/09/investaz.az_.gif"}
-                    alt=""
-                />
-            </div>
+
         </div>
     );
 };

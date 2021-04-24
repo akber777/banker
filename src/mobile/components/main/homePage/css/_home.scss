@@ -1,4 +1,16 @@
 .mobileHome {
+
+  &__category{
+    position: absolute;
+    top:8px;
+    left: 8px;
+    z-index: 1;
+    color: #fff;
+    padding: 7px;
+    background: #01345a;
+    font-size: 12px;
+  }
+
   &__slider {
     position: relative;
 
